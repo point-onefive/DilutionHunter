@@ -1,0 +1,128 @@
+name: DilutionHunter Scan
+
+on:
+  # Scheduled runs - 3x per day (9am, 1pm, 5pm ET roughly)
+  schedule:
+    - cron: "0 14 * * 1-5"  # 2pm UTC = 9am ET (weekdays only)
+    - cron: "0 18 * * 1-5"  # 6pm UTC = 1pm ET
+    - cron: "0 22 * * 1-5"  # 10pm UTC = 5pm ET
+  
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run in DRY_RUN mode (no tweets)'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      mock_fmp:
+        description: 'Use mock FMP data'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+env:
+  # Default to DRY_RUN for safety
+  DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
+  MOCK_FMP: ${{ github.event.inputs.mock_fmp || 'false' }}
+  VERBOSE: 'false'
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run Scanner
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+        run: node src/scanner.js
+      
+      - name: Commit data changes
+        run: |
+          git config --global user.name "DilutionHunter Bot"
+          git config --global user.email "bot@dilutionhunter.local"
+          
+          # Only commit if there are changes
+          if [ -n "$(git status --porcelain data/)" ]; then
+            git add data/
+            git commit -m "📊 Update signals and performance [automated]"
+            git push
+          else
+            echo "No data changes to commit"
+          fi
+
+  # Separate job for performance updates (runs once per day after market close)
+  performance_update:
+    runs-on: ubuntu-latest
+    # Only run at end of day
+    if: github.event.schedule == '0 22 * * 1-5' || github.event_name == 'workflow_dispatch'
+    needs: scan
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # Pull latest in case scan job made changes
+          fetch-depth: 0
+      
+      - name: Pull latest changes
+        run: git pull origin main
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run Performance Update
+        env:
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+        run: node src/updatePerformance.js
+      
+      - name: Commit performance data
+        run: |
+          git config --global user.name "DilutionHunter Bot"
+          git config --global user.email "bot@dilutionhunter.local"
+          
+          if [ -n "$(git status --porcelain data/)" ]; then
+            git add data/
+            git commit -m "📈 Daily performance update [automated]"
+            git push
+          else
+            echo "No performance changes to commit"
+          fi

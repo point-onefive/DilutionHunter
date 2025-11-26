@@ -1,0 +1,32 @@
+{
+  "name": "dilutionhunter",
+  "version": "1.0.0",
+  "description": "Automated market scanner for detecting dilution risk in parabolic small-cap runners",
+  "type": "module",
+  "main": "src/scanner.js",
+  "scripts": {
+    "scan": "node src/scanner.js",
+    "update": "node src/updatePerformance.js",
+    "test": "node --test",
+    "dry-run": "DRY_RUN=true node src/scanner.js",
+    "live": "DRY_RUN=false node src/scanner.js"
+  },
+  "keywords": [
+    "stocks",
+    "dilution",
+    "scanner",
+    "trading",
+    "twitter",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "canvas": "^3.2.0",
+    "dotenv": "^17.2.3",
+    "openai": "^6.9.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

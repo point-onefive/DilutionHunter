@@ -1,0 +1,16 @@
+{
+  "runs": [
+    {
+      "date": "2025-11-26",
+      "timestamp": "2025-11-26T21:14:37.881Z",
+      "symbolsScanned": 40,
+      "apiCallsUsed": 40,
+      "newSignals": 0,
+      "skipped": 0,
+      "errors": 40,
+      "durationMs": 11454
+    }
+  ],
+  "signals": [],
+  "tweets": []
+}
