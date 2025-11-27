@@ -121,30 +121,42 @@ async function uploadMedia(imagePath) {
   const mediaId = initData.media_id_string;
   console.log(`   ✓ INIT complete, media_id: ${mediaId}`);
 
-  // Step 2: APPEND (send the actual data)
+  // Step 2: APPEND (send the actual data using multipart/form-data)
   const base64Image = imageData.toString('base64');
   
-  // For APPEND, media_data should NOT be in OAuth signature
-  const appendParams = {
-    command: 'APPEND',
-    media_id: mediaId,
-    segment_index: '0',
-  };
+  // For APPEND with multipart, we need to build form data manually
+  // OAuth signature should NOT include body params for multipart
+  const appendAuth = generateOAuthHeader('POST', uploadUrl, {});
   
-  const appendAuth = generateOAuthHeader('POST', uploadUrl, appendParams);
-  
-  const appendBody = new URLSearchParams({
-    ...appendParams,
-    media_data: base64Image,
-  });
+  // Build multipart form data
+  const boundary = '----WebKitFormBoundary' + crypto.randomBytes(16).toString('hex');
+  const formParts = [
+    `--${boundary}`,
+    'Content-Disposition: form-data; name="command"',
+    '',
+    'APPEND',
+    `--${boundary}`,
+    'Content-Disposition: form-data; name="media_id"',
+    '',
+    mediaId,
+    `--${boundary}`,
+    'Content-Disposition: form-data; name="segment_index"',
+    '',
+    '0',
+    `--${boundary}`,
+    'Content-Disposition: form-data; name="media_data"',
+    '',
+    base64Image,
+    `--${boundary}--`,
+  ].join('\r\n');
   
   const appendResponse = await fetch(uploadUrl, {
     method: 'POST',
     headers: {
       'Authorization': appendAuth,
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': `multipart/form-data; boundary=${boundary}`,
     },
-    body: appendBody.toString(),
+    body: formParts,
   });
 
   if (!appendResponse.ok) {
@@ -240,9 +252,10 @@ async function postTweet(text, options = {}) {
  * @param {string} hook - The main hook tweet
  * @param {string|string[]} breakdown - Single tweet or array of breakdown tweets  
  * @param {string} chartPath - Path to chart image
+ * @param {Object} options - { skipPreflight: boolean, preflightMediaId: string }
  * @returns {Object} Results with tweet IDs
  */
-export async function postAlertThread(hook, breakdown, chartPath) {
+export async function postAlertThread(hook, breakdown, chartPath, options = {}) {
   console.log('\n🐦 POSTING ALERT THREAD...');
   console.log(`   DRY_RUN: ${isDryRun()}`);
   
@@ -251,34 +264,32 @@ export async function postAlertThread(hook, breakdown, chartPath) {
   
   const results = { tweets: [], mediaId: null };
   
-  try {
-    // Step 1: Upload chart image (skip if fails - Free tier doesn't support media)
+  // In DRY_RUN mode, just simulate
+  if (isDryRun()) {
     if (chartPath && fs.existsSync(chartPath)) {
-      console.log('   📤 Uploading chart...');
-      if (!isDryRun()) {
-        try {
-          results.mediaId = await uploadMedia(chartPath);
-          console.log(`   ✅ Media ID: ${results.mediaId}`);
-        } catch (mediaErr) {
-          console.log(`   ⚠️  Media upload failed: ${mediaErr.message}`);
-          console.log(`   ⚠️  Posting without image (Free tier limitation)`);
-          results.mediaId = null;
-        }
-      } else {
-        console.log('   [DRY_RUN] Would upload:', chartPath);
-        results.mediaId = 'dry-run-media-id';
-      }
+      console.log('   [DRY_RUN] Would upload:', chartPath);
+      results.mediaId = 'dry-run-media-id';
     }
-    
-    // Step 2: Post main tweet with chart
-    console.log('   📝 Posting hook tweet (1/${breakdownTweets.length + 1})...');
+  } else {
+    // LIVE MODE: Run preflight check first
+    const preflight = await preflightCheck(chartPath);
+    if (!preflight.success) {
+      throw new Error('Preflight check failed - aborting post');
+    }
+    // Use the already-uploaded media from preflight
+    results.mediaId = preflight.mediaId;
+  }
+  
+  try {
+    // Step 1: Post main tweet with chart (media already uploaded in preflight)
+    console.log(`   📝 Posting hook tweet (1/${breakdownTweets.length + 1})...`);
     const mainTweet = await postTweet(hook, {
       mediaIds: results.mediaId ? [results.mediaId] : []
     });
     results.tweets.push(mainTweet);
     console.log(`   ✅ Tweet 1: ${mainTweet.id}`);
     
-    // Step 3: Post breakdown tweets as thread
+    // Step 2: Post breakdown tweets as thread
     let lastTweetId = mainTweet.id;
     for (let i = 0; i < breakdownTweets.length; i++) {
       const tweet = breakdownTweets[i];
@@ -327,43 +338,120 @@ export function validateTwitterConfig() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// TEST
+// PREFLIGHT CHECK - Validate 100% before posting
+// ═══════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Run comprehensive preflight checks before posting
+ * Tests: credentials, account access, media upload capability
+ * @param {string} chartPath - Path to chart image to test upload
+ * @returns {Object} { success: boolean, mediaId: string|null, checks: Object }
+ */
+export async function preflightCheck(chartPath) {
+  console.log('\n🔍 PREFLIGHT CHECK - Validating before posting...\n');
+  
+  const checks = {
+    credentials: false,
+    accountAccess: false,
+    mediaUpload: false,
+  };
+  
+  let mediaId = null;
+  
+  // Check 1: Credentials present
+  console.log('   [1/3] Checking credentials...');
+  if (!validateTwitterConfig()) {
+    console.log('   ❌ Credentials missing\n');
+    return { success: false, mediaId: null, checks };
+  }
+  checks.credentials = true;
+  console.log('   ✅ Credentials present');
+  
+  // Check 2: Account access (verify_credentials endpoint)
+  console.log('   [2/3] Verifying account access...');
+  try {
+    const verifyUrl = `${API_BASE}/1.1/account/verify_credentials.json`;
+    const authHeader = generateOAuthHeader('GET', verifyUrl);
+    
+    const response = await fetch(verifyUrl, {
+      method: 'GET',
+      headers: { 'Authorization': authHeader },
+    });
+    
+    if (!response.ok) {
+      const error = await response.text();
+      console.log(`   ❌ Account verification failed: ${response.status}`);
+      console.log(`      ${error}`);
+      return { success: false, mediaId: null, checks };
+    }
+    
+    const userData = await response.json();
+    checks.accountAccess = true;
+    console.log(`   ✅ Account verified: @${userData.screen_name}`);
+    
+  } catch (error) {
+    console.log(`   ❌ Account verification error: ${error.message}`);
+    return { success: false, mediaId: null, checks };
+  }
+  
+  // Check 3: Media upload capability
+  console.log('   [3/3] Testing media upload...');
+  if (!chartPath || !fs.existsSync(chartPath)) {
+    console.log(`   ⚠️  No chart found at: ${chartPath}`);
+    console.log('   ⚠️  Skipping media upload test (will post without image)');
+  } else {
+    try {
+      mediaId = await uploadMedia(chartPath);
+      checks.mediaUpload = true;
+      console.log(`   ✅ Media upload successful: ${mediaId}`);
+      console.log('   ℹ️  Media will be attached to first tweet');
+    } catch (error) {
+      console.log(`   ❌ Media upload failed: ${error.message}`);
+      console.log('   ⚠️  Will attempt to post without image');
+      // Don't fail entirely - we can post without media
+    }
+  }
+  
+  // Summary
+  const allPassed = checks.credentials && checks.accountAccess;
+  console.log('\n   ─────────────────────────────────');
+  console.log(`   PREFLIGHT: ${allPassed ? '✅ PASSED' : '❌ FAILED'}`);
+  if (checks.mediaUpload) {
+    console.log('   MEDIA: ✅ Ready (will attach to tweet)');
+  } else {
+    console.log('   MEDIA: ⚠️  Not available (posting text-only)');
+  }
+  console.log('   ─────────────────────────────────\n');
+  
+  return { success: allPassed, mediaId, checks };
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CLI - Run preflight check directly
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const isMainModule = process.argv[1]?.includes('twitterPoster');
 if (isMainModule) {
-  console.log('🐦 Twitter Poster Test\n');
-  console.log(`DRY_RUN: ${isDryRun()}`);
+  const args = process.argv.slice(2);
+  const chartPath = args.find(a => a.endsWith('.png')) || './output/charts/latest.png';
   
-  if (!validateTwitterConfig()) {
-    console.log('\n⚠️  Configure Twitter credentials to test posting.');
-  }
+  console.log('🐦 Twitter Preflight Check\n');
   
-  // Test with mock data
-  const mockThesis = `🚨 FFIE Alert: Dilution Risk Detected!
-
-With 320% gains in 30 days and only 2 months runway, the math is brutal.
-
-$150M offering shelf (33% of market cap) is loaded and ready.
-
-First red candle forming. Volume fading.
-
-This is how it starts. 👀`;
-
-  const mockStats = `📊 FFIE Key Stats:
-• Price: $2.45 | MCap: $450M
-• 7D: +187% | 30D: +320%
-• Cash/Debt: 0.16x
-• Runway: 2.1 months
-• Float: 28%
-• Shelf: $150M (33% impact)
-• ATM Status: 🔴 ACTIVE`;
-
-  const chartPath = './output/test-chart.png';
-  
-  postAlertThread(mockThesis, mockStats, chartPath)
+  // Just run preflight - no posting
+  preflightCheck(chartPath)
     .then(result => {
-      console.log('\n📋 Result:', JSON.stringify(result, null, 2));
+      if (result.success) {
+        console.log('🎯 Ready to post! Run: node src/post.js <TICKER> --live');
+        if (result.mediaId) {
+          console.log(`   Media ID ${result.mediaId} will expire in ~24h`);
+        }
+      } else {
+        console.log('❌ Fix issues above before posting.');
+        process.exit(1);
+      }
     })
-    .catch(console.error);
+    .catch(err => {
+      console.error('❌ Preflight error:', err.message);
+      process.exit(1);
+    });
 }
