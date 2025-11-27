@@ -1,0 +1,32 @@
+{
+  "tweets": [
+    {
+      "ticker": "MNDR",
+      "bucket": "CASE_STUDY",
+      "date": "2025-11-27",
+      "timestamp": "2025-11-27T08:25:35.808Z",
+      "peakGain": 215.11627906976747,
+      "currentGain": 54.06976744186046,
+      "notes": "Posted via post.js"
+    },
+    {
+      "ticker": "MNDR",
+      "bucket": "CASE_STUDY",
+      "date": "2025-11-27",
+      "timestamp": "2025-11-27T08:26:53.937Z",
+      "peakGain": 215.11627906976747,
+      "currentGain": 54.06976744186046,
+      "notes": "Posted via post.js"
+    },
+    {
+      "ticker": "MNDR",
+      "bucket": "CASE_STUDY",
+      "date": "2025-11-27",
+      "timestamp": "2025-11-27T08:27:48.128Z",
+      "peakGain": 215.11627906976747,
+      "currentGain": 54.06976744186046,
+      "notes": "Posted via post.js"
+    }
+  ],
+  "lastUpdated": "2025-11-27T08:27:48.128Z"
+}

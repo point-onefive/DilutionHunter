@@ -280,26 +280,20 @@ export async function generateChart(ticker, candles, annotations = {}, options =
     let filingIdx = -1;
     let isBeforeWindow = false;
     
-    // Check if filing date falls within our chart window
-    for (let i = 0; i < chartCandles.length; i++) {
-      const candleDate = chartCandles[i].date.split('T')[0];
-      if (candleDate === filingDateStr) {
-        filingIdx = i;
-        break;
-      }
-      // Also check if filing is between candles
-      if (candleDate > filingDateStr && filingIdx === -1) {
-        filingIdx = i; // Filing was before this candle
-        break;
-      }
-    }
-    
-    // If filing date is before chart window, draw line at left edge with arrow
-    if (filingIdx === -1 && chartCandles.length > 0) {
-      const firstCandleDate = chartCandles[0].date.split('T')[0];
-      if (filingDateStr < firstCandleDate) {
-        filingIdx = -0.5; // Draw at left edge
-        isBeforeWindow = true;
+    // First, check if filing date is before chart window
+    const firstCandleDate = chartCandles[0]?.date?.split('T')[0];
+    if (firstCandleDate && filingDateStr < firstCandleDate) {
+      // Filing is BEFORE the chart window - draw arrow at left edge
+      filingIdx = -0.5;
+      isBeforeWindow = true;
+    } else {
+      // Check if filing date falls within our chart window
+      for (let i = 0; i < chartCandles.length; i++) {
+        const candleDate = chartCandles[i].date.split('T')[0];
+        if (candleDate === filingDateStr) {
+          filingIdx = i;
+          break;
+        }
       }
     }
     

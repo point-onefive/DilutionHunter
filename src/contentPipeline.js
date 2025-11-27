@@ -116,7 +116,7 @@ Return JSON with:
    Format exactly like this:
    "Additional context:
    • Volume fading — early signs of distribution
-   • Small float (~estimate shares) → dilution hits harder
+   • Small float → dilution hits harder per share
    • ${context.pullbackFromPeak?.toFixed(0)}% off highs — first cracks visible
    Likely motive: company may need funding soon."
    
@@ -257,10 +257,18 @@ export async function runPipeline(ticker, options = {}) {
   // Step 1: Get ticker data
   console.log(`📊 Step 1: Fetching data for ${ticker}...`);
   const tickerData = await getTickerData(ticker);
+  
+  // Override with passed filing date if available
+  if (options.fileDate) {
+    tickerData.fileDate = options.fileDate;
+    tickerData.daysSinceFiling = options.daysSinceFiling || Math.floor((Date.now() - new Date(options.fileDate).getTime()) / (24 * 60 * 60 * 1000));
+  }
+  
   console.log(`   ✓ Price: $${tickerData.price.toFixed(2)}`);
   console.log(`   ✓ Peak Gain (7d): +${tickerData.peakGain.toFixed(1)}%`);
   console.log(`   ✓ Current: ${tickerData.currentGain >= 0 ? '+' : ''}${tickerData.currentGain.toFixed(1)}%`);
   console.log(`   ✓ Pullback: -${tickerData.pullback.toFixed(1)}%`);
+  console.log(`   ✓ Filing Date: ${tickerData.fileDate} (${tickerData.daysSinceFiling} days ago)`);
   
   // Step 2: Classify
   console.log(`\n🏷️  Step 2: Classifying...`);

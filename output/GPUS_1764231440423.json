@@ -1,0 +1,70 @@
+{
+  "ticker": "GPUS",
+  "generatedAt": "2025-11-27T08:17:20.423Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 73% — needs bigger run for ideal setup"
+  },
+  "tweets": {
+    "hook": "$GPUS up +66.5% after a +72.5% peak — but a 424B5 filing 23 days ago introduces potential dilution risk. Here's why Hyperscale Data, Inc.'s move might be fragile. 🧵",
+    "breakdown": [
+      "ATM = At-The-Market offering. Company can sell new shares anytime → more supply → weaker price. Like adding water to coffee — same brew, less flavor. ☕",
+      "Why this caught my eye:\n• Market cap: $36.4M (tiny = vulnerable)\n• ATM filed: 2025-11-04 (23 days ago)\n• Price spiked +72.5% → now +66.5%\nHigh price + likely cash need = prime dilution setup",
+      "Additional context:\n• Volume fading — early signs of distribution\n• Small float → dilution hits harder per share\n• 6% off highs — first cracks visible\nLikely motive: company may need funding soon.",
+      "Bear thesis builds if:\n• Heavy red candle with elevated sell volume\n• Price fails to reclaim highs\n• ATM usage confirmed\n\nBull case: strong volume breakout → ATM may pause.\nTraders get trapped when dilution lands during pullbacks — not the run.",
+      "This isn't advice — just pattern recognition.\n\nBig spike + small cap + fresh ATM = elevated risk profile.\n\nWatch how it reacts to selling pressure — that's where dilution becomes visible. 🦅"
+    ],
+    "hashtags": [
+      "#GPUS",
+      "#StockWatch",
+      "#DilutionRisk",
+      "#MicroCap"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/GPUS_1764231440405.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "danger",
+        "startDay": 3,
+        "endDay": 7,
+        "label": "72.5% Peak"
+      },
+      {
+        "type": "watch",
+        "startDay": 7,
+        "endDay": 14,
+        "label": "Post-peak pullback"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 7,
+        "direction": "down",
+        "label": "Pullback starts"
+      }
+    ],
+    "circles": [
+      {
+        "day": 7,
+        "target": "high",
+        "label": "Peak Gain"
+      },
+      {
+        "day": 14,
+        "target": "close",
+        "label": "Current Gain"
+      }
+    ],
+    "volumeNote": "Volume fading after peak, indicating potential distribution.",
+    "overallStyle": "cautious"
+  },
+  "tickerData": {
+    "price": 0.333,
+    "marketCap": 36368806,
+    "peakGain": 72.55,
+    "currentGain": 66.5,
+    "pullback": 6.049999999999997
+  },
+  "rationale": "The company can issue new shares anytime, which might dilute the stock value, especially critical given the recent price spike."
+}

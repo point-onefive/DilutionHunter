@@ -1,0 +1,70 @@
+{
+  "ticker": "AMZE",
+  "generatedAt": "2025-11-27T08:24:23.413Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 56% — needs bigger run for ideal setup"
+  },
+  "tweets": {
+    "hook": "$AMZE up +56% at peak, now +22% — but a fresh ATM filing 6 days ago raises dilution flags. Here's why this setup demands attention. 🧵",
+    "breakdown": [
+      "ATM = At-The-Market offering. Company can sell new shares anytime → more supply → weaker price. Like splitting a pizza into more slices — same pie, smaller pieces. 🍕",
+      "Why this caught my eye:\n• Market cap: $2.3M (tiny = vulnerable)\n• ATM filed: 2025-11-21 (6 days ago)\n• Price spiked +56% → now +22%\nHigh price + likely cash need = prime dilution setup",
+      "Additional context:\n• Volume fading — early signs of distribution\n• Small float → dilution hits harder per share\n• 34% off highs — first cracks visible\nLikely motive: company may need funding soon.",
+      "Bear thesis builds if:\n• Heavy red candle with elevated sell volume\n• Price fails to reclaim highs\n• ATM usage confirmed\n\nBull case: strong volume breakout → ATM may pause.\nTraders get trapped when dilution lands during pullbacks — not the run.",
+      "This isn't advice — just pattern recognition.\n\nBig spike + small cap + fresh ATM = elevated risk profile.\n\nWatch how it reacts to selling pressure — that's where dilution becomes visible. 🦅"
+    ],
+    "hashtags": [
+      "#StockWatch",
+      "#MicroCap",
+      "#DilutionAlert",
+      "#AMZE"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/AMZE_1764231863395.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "entry",
+        "startDay": 1,
+        "endDay": 3,
+        "label": "Initial Spike"
+      },
+      {
+        "type": "danger",
+        "startDay": 5,
+        "endDay": 7,
+        "label": "Potential Dilution Zone"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 7,
+        "direction": "down",
+        "label": "Peak Pullback"
+      }
+    ],
+    "circles": [
+      {
+        "day": 7,
+        "target": "high",
+        "label": "56% Peak"
+      },
+      {
+        "day": 7,
+        "target": "close",
+        "label": "Current Price"
+      }
+    ],
+    "volumeNote": "Volume decline suggests reduced buying interest.",
+    "overallStyle": "cautious_warning"
+  },
+  "tickerData": {
+    "price": 0.396,
+    "marketCap": 2306772,
+    "peakGain": 56.15384615384613,
+    "currentGain": 21.846153846153847,
+    "pullback": 34.307692307692285
+  },
+  "rationale": "A fresh ATM filing suggests more shares might be sold, potentially weakening the stock price."
+}

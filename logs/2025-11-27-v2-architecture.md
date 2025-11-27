@@ -2,7 +2,7 @@
 
 **Date:** November 27, 2025  
 **Status:** Production Ready (Manual Approval Mode)  
-**Version:** 2.0  
+**Version:** 2.1  
 
 ---
 
@@ -17,6 +17,31 @@ DilutionHunter v2 is a complete rebuild focused on **ATM (At-The-Market) offerin
 - Professional 5-6 tweet thread format
 - Manual approval workflow before posting
 - ATM filing date visualization on charts
+- **Caching system** to reduce API calls (1-hour TTL)
+- **Fresher filings prioritized** in selection
+
+---
+
+## Recent Updates (v2.1)
+
+### Caching System
+- Candidates cached for 1 hour in `/data/candidates_cache.json`
+- Use `--no-cache` flag to force fresh API calls
+- Reduces FMP API usage from ~164 calls/run to 0 on repeat runs
+
+### Selection Priority
+- **Fresher ATM filings now prioritized** over older ones
+- Within 7 days: sort by peak gain
+- Beyond 7 days apart: fresher filing wins
+
+### Chart Fixes
+- Fixed ATM filing date line placement for dates before chart window
+- Now shows arrow at left edge when filing predates visible candles
+
+### Twitter Integration
+- Chunked media upload (INIT → APPEND → FINALIZE)
+- 3-second delays between tweets to avoid rate limiting
+- `--live` flag properly overrides DRY_RUN setting
 
 ---
 

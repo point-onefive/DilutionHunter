@@ -65,13 +65,14 @@ DRY_RUN=true
 Scan for ATM candidates and generate content:
 
 ```bash
-node src/dailyRun.js
+node src/dailyRun.js              # Uses cache (fast, no API calls if recent)
+node src/dailyRun.js --no-cache   # Force fresh API calls
 ```
 
 This will:
 - Scan recent ATM filings from SEC EDGAR
-- Enrich with FMP price data
-- Select top 2 candidates
+- Enrich with FMP price data (cached for 1 hour)
+- Select top 2 candidates (fresher filings prioritized)
 - Generate tweet threads + charts
 - Save to `/output/` folder
 
@@ -90,11 +91,11 @@ open output/charts/TICKER_*.png
 After reviewing, manually post approved tickers:
 
 ```bash
-# Preview mode (respects DRY_RUN)
-node src/post.js ANVS
+# Preview mode (respects DRY_RUN in .env)
+node src/post.js MNDR
 
-# Live posting
-node src/post.js ANVS --live
+# Live posting (overrides DRY_RUN)
+node src/post.js MNDR --live
 ```
 
 ---

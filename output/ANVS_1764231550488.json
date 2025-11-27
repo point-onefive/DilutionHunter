@@ -1,0 +1,69 @@
+{
+  "ticker": "ANVS",
+  "generatedAt": "2025-11-27T08:19:10.488Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 75% — needs bigger run for ideal setup"
+  },
+  "tweets": {
+    "hook": "$ANVS up +65% after a +75% peak — but an ATM filing 30 days ago makes this move *fragile.* This is how dilution traps form. 🧵",
+    "breakdown": [
+      "ATM = At-The-Market offering. Company can sell new shares anytime → more supply → weaker price. Like splitting a pizza into more slices — same pie, smaller pieces. 🍕",
+      "Why this caught my eye: • Market cap: $97M (tiny = vulnerable) • ATM filed: 2025-10-28 (30 days ago) • Price spiked +75% → now +65% High price + likely cash need = prime dilution setup",
+      "Additional context: • Volume fading — early signs of distribution • Small float → dilution hits harder per share • 10% off highs — first cracks visible Likely motive: company may need funding soon.",
+      "Bear thesis builds if: • Heavy red candle with elevated sell volume • Price fails to reclaim highs • ATM usage confirmed Bull case: strong volume breakout → ATM may pause. Traders get trapped when dilution lands during pullbacks — not the run.",
+      "This isn't advice — just pattern recognition. Big spike + small cap + fresh ATM = elevated risk profile. Watch how it reacts to selling pressure — that's where dilution becomes visible. 🦅"
+    ],
+    "hashtags": [
+      "#StockAnalysis",
+      "#DilutionWatch",
+      "#ANVS"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/ANVS_1764231550470.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "entry",
+        "startDay": 1,
+        "endDay": 7,
+        "label": "Initial Spike"
+      },
+      {
+        "type": "danger",
+        "startDay": 7,
+        "endDay": 14,
+        "label": "Potential Dilution Zone"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 7,
+        "direction": "up",
+        "label": "Peak Day"
+      },
+      {
+        "day": 14,
+        "direction": "down",
+        "label": "Watch for Red Candle"
+      }
+    ],
+    "circles": [
+      {
+        "day": 14,
+        "target": "close",
+        "label": "65% Gain"
+      }
+    ],
+    "volumeNote": "Volume has been decreasing, signaling distribution",
+    "overallStyle": "bullish_warning"
+  },
+  "tickerData": {
+    "price": 4.92,
+    "marketCap": 96794186,
+    "peakGain": 75.16778523489933,
+    "currentGain": 65.1006711409396,
+    "pullback": 10.06711409395973
+  },
+  "rationale": "A big price spike in a small company with a recent ATM filing suggests potential dilution, which could weaken the stock's value."
+}

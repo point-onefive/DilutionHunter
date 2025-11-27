@@ -15,7 +15,10 @@ import fs from 'fs';
 // CONFIG
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const DRY_RUN = process.env.DRY_RUN !== 'false';
+// Check DRY_RUN dynamically (allows runtime override)
+function isDryRun() {
+  return process.env.DRY_RUN !== 'false';
+}
 
 const TWITTER_CONFIG = {
   apiKey: process.env.TWITTER_API_KEY,
@@ -75,7 +78,7 @@ function generateOAuthHeader(method, url, params = {}) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// MEDIA UPLOAD (v1.1 endpoint - still required for media)
+// MEDIA UPLOAD (v1.1 chunked upload - more reliable)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 async function uploadMedia(imagePath) {
@@ -84,36 +87,99 @@ async function uploadMedia(imagePath) {
   }
 
   const imageData = fs.readFileSync(imagePath);
-  const base64Image = imageData.toString('base64');
+  const totalBytes = imageData.length;
   const mediaType = 'image/png';
-
-  const uploadUrl = 'https://upload.twitter.com/1.1/media/upload.json';
   
-  const params = {
-    media_data: base64Image,
+  const uploadUrl = 'https://upload.twitter.com/1.1/media/upload.json';
+
+  // Step 1: INIT
+  const initParams = {
+    command: 'INIT',
+    total_bytes: totalBytes.toString(),
+    media_type: mediaType,
   };
-
-  const authHeader = generateOAuthHeader('POST', uploadUrl, params);
-
-  const formBody = new URLSearchParams();
-  formBody.append('media_data', base64Image);
-
-  const response = await fetch(uploadUrl, {
+  
+  const initAuth = generateOAuthHeader('POST', uploadUrl, initParams);
+  const initBody = new URLSearchParams(initParams);
+  
+  const initResponse = await fetch(uploadUrl, {
     method: 'POST',
     headers: {
-      'Authorization': authHeader,
+      'Authorization': initAuth,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: formBody.toString(),
+    body: initBody.toString(),
   });
 
-  if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`Media upload failed: ${response.status} - ${error}`);
+  if (!initResponse.ok) {
+    const error = await initResponse.text();
+    console.error('   INIT error:', error);
+    throw new Error(`Media INIT failed: ${initResponse.status} - ${error}`);
   }
 
-  const data = await response.json();
-  return data.media_id_string;
+  const initData = await initResponse.json();
+  const mediaId = initData.media_id_string;
+  console.log(`   ✓ INIT complete, media_id: ${mediaId}`);
+
+  // Step 2: APPEND (send the actual data)
+  const base64Image = imageData.toString('base64');
+  
+  // For APPEND, media_data should NOT be in OAuth signature
+  const appendParams = {
+    command: 'APPEND',
+    media_id: mediaId,
+    segment_index: '0',
+  };
+  
+  const appendAuth = generateOAuthHeader('POST', uploadUrl, appendParams);
+  
+  const appendBody = new URLSearchParams({
+    ...appendParams,
+    media_data: base64Image,
+  });
+  
+  const appendResponse = await fetch(uploadUrl, {
+    method: 'POST',
+    headers: {
+      'Authorization': appendAuth,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: appendBody.toString(),
+  });
+
+  if (!appendResponse.ok) {
+    const error = await appendResponse.text();
+    console.error('   APPEND error:', error);
+    throw new Error(`Media APPEND failed: ${appendResponse.status} - ${error}`);
+  }
+  console.log(`   ✓ APPEND complete`);
+
+  // Step 3: FINALIZE
+  const finalizeParams = {
+    command: 'FINALIZE',
+    media_id: mediaId,
+  };
+  
+  const finalizeAuth = generateOAuthHeader('POST', uploadUrl, finalizeParams);
+  const finalizeBody = new URLSearchParams(finalizeParams);
+  
+  const finalizeResponse = await fetch(uploadUrl, {
+    method: 'POST',
+    headers: {
+      'Authorization': finalizeAuth,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: finalizeBody.toString(),
+  });
+
+  if (!finalizeResponse.ok) {
+    const error = await finalizeResponse.text();
+    console.error('   FINALIZE error:', error);
+    throw new Error(`Media FINALIZE failed: ${finalizeResponse.status} - ${error}`);
+  }
+  
+  console.log(`   ✓ FINALIZE complete`);
+  return mediaId;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -123,7 +189,7 @@ async function uploadMedia(imagePath) {
 async function postTweet(text, options = {}) {
   const { mediaIds = [], replyToId = null } = options;
   
-  if (DRY_RUN) {
+  if (isDryRun()) {
     console.log('\n📝 [DRY_RUN] Would post tweet:');
     console.log('─'.repeat(50));
     console.log(text);
@@ -178,7 +244,7 @@ async function postTweet(text, options = {}) {
  */
 export async function postAlertThread(hook, breakdown, chartPath) {
   console.log('\n🐦 POSTING ALERT THREAD...');
-  console.log(`   DRY_RUN: ${DRY_RUN}`);
+  console.log(`   DRY_RUN: ${isDryRun()}`);
   
   // Normalize breakdown to array
   const breakdownTweets = Array.isArray(breakdown) ? breakdown : [breakdown];
@@ -186,12 +252,18 @@ export async function postAlertThread(hook, breakdown, chartPath) {
   const results = { tweets: [], mediaId: null };
   
   try {
-    // Step 1: Upload chart image
+    // Step 1: Upload chart image (skip if fails - Free tier doesn't support media)
     if (chartPath && fs.existsSync(chartPath)) {
       console.log('   📤 Uploading chart...');
-      if (!DRY_RUN) {
-        results.mediaId = await uploadMedia(chartPath);
-        console.log(`   ✅ Media ID: ${results.mediaId}`);
+      if (!isDryRun()) {
+        try {
+          results.mediaId = await uploadMedia(chartPath);
+          console.log(`   ✅ Media ID: ${results.mediaId}`);
+        } catch (mediaErr) {
+          console.log(`   ⚠️  Media upload failed: ${mediaErr.message}`);
+          console.log(`   ⚠️  Posting without image (Free tier limitation)`);
+          results.mediaId = null;
+        }
       } else {
         console.log('   [DRY_RUN] Would upload:', chartPath);
         results.mediaId = 'dry-run-media-id';
@@ -212,6 +284,10 @@ export async function postAlertThread(hook, breakdown, chartPath) {
       const tweet = breakdownTweets[i];
       if (!tweet) continue;
       
+      // Delay between tweets to avoid rate limits (Twitter is strict - 3 sec)
+      console.log(`   ⏳ Waiting 3s to avoid rate limit...`);
+      await new Promise(r => setTimeout(r, 3000));
+      
       console.log(`   📝 Posting thread ${i + 2}/${breakdownTweets.length + 1}...`);
       const replyTweet = await postTweet(tweet, {
         replyToId: lastTweetId
@@ -219,11 +295,6 @@ export async function postAlertThread(hook, breakdown, chartPath) {
       results.tweets.push(replyTweet);
       lastTweetId = replyTweet.id;
       console.log(`   ✅ Tweet ${i + 2}: ${replyTweet.id}`);
-      
-      // Small delay between tweets to avoid rate limits
-      if (i < breakdownTweets.length - 1) {
-        await new Promise(r => setTimeout(r, 500));
-      }
     }
     
     console.log(`\n✅ THREAD POSTED SUCCESSFULLY (${results.tweets.length} tweets)`);
@@ -262,7 +333,7 @@ export function validateTwitterConfig() {
 const isMainModule = process.argv[1]?.includes('twitterPoster');
 if (isMainModule) {
   console.log('🐦 Twitter Poster Test\n');
-  console.log(`DRY_RUN: ${DRY_RUN}`);
+  console.log(`DRY_RUN: ${isDryRun()}`);
   
   if (!validateTwitterConfig()) {
     console.log('\n⚠️  Configure Twitter credentials to test posting.');

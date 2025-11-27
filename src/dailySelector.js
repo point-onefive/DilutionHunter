@@ -6,6 +6,10 @@
  *   2. WATCH_LIST (building anticipation)
  *   3. CASE_STUDY (educational, evergreen)
  * 
+ * Sorting within buckets:
+ *   - Fresher ATM filings first (prioritize recent filings)
+ *   - Then by peak gain (most dramatic price action)
+ * 
  * Rules:
  *   - Max 2 posts per day
  *   - Post 1: Highest priority bucket available
@@ -13,18 +17,61 @@
  *   - Skip if quality = POOR
  *   - Skip if already tweeted
  * 
+ * Caching:
+ *   - Caches enriched candidates for 1 hour to avoid repeated FMP calls
+ *   - Use --no-cache to force fresh data
+ * 
  * Usage:
- *   node src/dailySelector.js              # Show today's picks
- *   node src/dailySelector.js --dry-run    # Preview without generating
- *   node src/dailySelector.js --generate   # Generate content for picks
+ *   node src/dailySelector.js              # Show today's picks (uses cache)
+ *   node src/dailySelector.js --no-cache   # Force fresh data
  */
 
 import 'dotenv/config';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { classifyTicker, shouldTweet, loadHistory } from './contentManager.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const CACHE_FILE = path.join(__dirname, '..', 'data', 'candidates_cache.json');
+const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
 
 const FMP_KEY = process.env.FMP_API_KEY;
 const FMP_BASE = 'https://financialmodelingprep.com/stable';
 const SEC_USER_AGENT = 'DilutionHunter/1.0 (dilutionhunter@proton.me)';
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CACHE HELPERS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function loadCache() {
+  try {
+    if (!fs.existsSync(CACHE_FILE)) return null;
+    const data = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf-8'));
+    const age = Date.now() - new Date(data.timestamp).getTime();
+    if (age > CACHE_TTL_MS) {
+      console.log(`   Cache expired (${Math.round(age / 60000)} min old)`);
+      return null;
+    }
+    console.log(`   Using cached data (${Math.round(age / 60000)} min old, ${data.candidates.length} tickers)`);
+    return data.candidates;
+  } catch {
+    return null;
+  }
+}
+
+function saveCache(candidates) {
+  try {
+    const dir = path.dirname(CACHE_FILE);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(CACHE_FILE, JSON.stringify({
+      timestamp: new Date().toISOString(),
+      candidates
+    }, null, 2));
+  } catch (err) {
+    console.warn(`   Warning: Could not save cache: ${err.message}`);
+  }
+}
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SEC EDGAR - Fetch ATM filings
@@ -150,13 +197,29 @@ async function getDailyCandles(symbol, days = 7) {
 // DAILY SELECTION LOGIC
 // ═══════════════════════════════════════════════════════════════════════════════
 
-async function getAllCandidates(days = 30) {
+async function getAllCandidates(days = 30, options = {}) {
+  const { noCache = false } = options;
+  
+  // Check cache first (unless --no-cache)
+  if (!noCache) {
+    const cached = loadCache();
+    if (cached) {
+      // Re-run classification in case tweet history changed
+      return cached.map(c => ({
+        ...c,
+        classification: classifyTicker(c),
+        tweetDecision: shouldTweet(c, classifyTicker(c))
+      }));
+    }
+  }
+  
   console.log(`\n📡 Fetching ATM filings (last ${days} days)...`);
   const filings = await getRecentATMFilings(days);
   console.log(`   Found ${filings.length} unique tickers\n`);
   
-  console.log(`📊 Enriching with price data...`);
+  console.log(`📊 Enriching with price data (${filings.length} API calls)...`);
   const candidates = [];
+  let apiCalls = 0;
   
   for (const filing of filings) {
     try {
@@ -164,6 +227,7 @@ async function getAllCandidates(days = 30) {
         getQuote(filing.ticker),
         getDailyCandles(filing.ticker, 7)
       ]);
+      apiCalls += 2;
       
       if (!quote || !candles) continue;
       
@@ -191,6 +255,12 @@ async function getAllCandidates(days = 30) {
     }
   }
   
+  console.log(`   ✓ ${apiCalls} FMP API calls made`);
+  
+  // Save to cache
+  saveCache(candidates);
+  console.log(`   ✓ Cached ${candidates.length} candidates (valid for 1 hour)`);
+  
   return candidates;
 }
 
@@ -208,9 +278,20 @@ function selectDailyPosts(candidates, maxPosts = 2) {
     CASE_STUDY: tweetable.filter(c => c.classification.bucket === 'CASE_STUDY')
   };
   
-  // Sort each bucket by peak gain (most dramatic first)
+  // Sort each bucket by: 
+  // 1. Fresher filing dates first (daysSinceFiling ascending)
+  // 2. Then by peak gain (most dramatic)
   Object.values(byBucket).forEach(arr => 
-    arr.sort((a, b) => b.peakGain - a.peakGain)
+    arr.sort((a, b) => {
+      // Prioritize fresher filings (lower daysSinceFiling = better)
+      const freshnessDiff = a.daysSinceFiling - b.daysSinceFiling;
+      if (Math.abs(freshnessDiff) > 7) {
+        // If >7 days apart, prioritize the fresher one
+        return freshnessDiff;
+      }
+      // Within 7 days, sort by peak gain
+      return b.peakGain - a.peakGain;
+    })
   );
   
   const selected = [];

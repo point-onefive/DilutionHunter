@@ -148,9 +148,17 @@ Example:
   // Get ticker
   const ticker = args.find(a => !a.startsWith('--'))?.toUpperCase();
   const previewOnly = args.includes('--preview');
+  const liveMode = args.includes('--live');
+  
+  // Override DRY_RUN if --live flag is passed
+  if (liveMode) {
+    process.env.DRY_RUN = 'false';
+  }
   
   if (!ticker) {
-    console.log('Usage: node src/post.js <TICKER> [--preview]');
+    console.log('Usage: node src/post.js <TICKER> [--preview] [--live]');
+    console.log('  --preview  Show content without posting');
+    console.log('  --live     Actually post to Twitter (overrides DRY_RUN)');
     return;
   }
   

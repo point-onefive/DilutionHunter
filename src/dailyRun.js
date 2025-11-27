@@ -103,18 +103,20 @@ ${'═'.repeat(80)}
 // ═══════════════════════════════════════════════════════════════════════════════
 
 async function dailyRun(options = {}) {
-  const { live = false } = options;
+  const { live = false, noCache = false } = options;
   
   displayHeader();
   
-  console.log(`Mode: ${live ? '🔴 LIVE POSTING' : '🟢 DRY RUN (preview only)'}\n`);
+  console.log(`Mode: ${live ? '🔴 LIVE POSTING' : '🟢 DRY RUN (preview only)'}`);
+  if (noCache) console.log(`Cache: ❌ DISABLED (forcing fresh API calls)`);
+  console.log('');
   
   // Step 1: Get all candidates
   console.log('━'.repeat(60));
   console.log('STEP 1: Scanning for ATM filings...');
   console.log('━'.repeat(60));
   
-  const candidates = await getAllCandidates(30);
+  const candidates = await getAllCandidates(30, { noCache });
   console.log(`✓ Found ${candidates.length} enriched tickers\n`);
   
   // Step 2: Select best posts
@@ -169,7 +171,9 @@ ${'─'.repeat(40)}
     try {
       const content = await runPipeline(post.ticker, { 
         force: true,
-        classification: post.classification
+        classification: post.classification,
+        fileDate: post.fileDate,
+        daysSinceFiling: post.daysSinceFiling
       });
       
       if (content) {
@@ -244,6 +248,7 @@ ${'═'.repeat(80)}
 async function main() {
   const args = process.argv.slice(2);
   const live = args.includes('--live');
+  const noCache = args.includes('--no-cache');
   
   if (live) {
     console.log('\n⚠️  LIVE MODE - This will post to Twitter!');
@@ -252,7 +257,7 @@ async function main() {
   }
   
   try {
-    const result = await dailyRun({ live });
+    const result = await dailyRun({ live, noCache });
     process.exit(result.success ? 0 : 1);
   } catch (err) {
     console.error('\n❌ Fatal error:', err.message);
