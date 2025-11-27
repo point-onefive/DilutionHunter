@@ -1,0 +1,68 @@
+{
+  "ticker": "INHD",
+  "generatedAt": "2025-11-27T01:42:48.433Z",
+  "classification": {
+    "bucket": "CASE_STUDY",
+    "reason": "Peaked 399%, now -67% — crashed 467% from peak"
+  },
+  "tweets": {
+    "hook": "INHD ran +400% then crashed -467% in 7 days. Here's the dilution pattern 🧵",
+    "breakdown": "INHD's ATM filing on 11/13 triggered a wild run: +399.5% peak gain on Day 5. Now, it's down 67% from that peak. $INHD's tiny $1.7M market cap makes it volatile. Watch for more dilution!",
+    "hashtags": [
+      "#DilutionHunter",
+      "#SmallCapStocks",
+      "#INHD",
+      "#Volatility"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/INHD_1764207768417.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "entry",
+        "startDay": 1,
+        "endDay": 5,
+        "label": "Entry Zone"
+      },
+      {
+        "type": "danger",
+        "startDay": 5,
+        "endDay": 7,
+        "label": "Crash Zone"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 5,
+        "direction": "up",
+        "label": "+399.5% Peak"
+      },
+      {
+        "day": 7,
+        "direction": "down",
+        "label": "-467% Crash"
+      }
+    ],
+    "circles": [
+      {
+        "day": 5,
+        "target": "high",
+        "label": "Peak High"
+      },
+      {
+        "day": 7,
+        "target": "low",
+        "label": "Current Low"
+      }
+    ],
+    "volumeNote": "Volume spiked leading up to Day 5, then dwindled post-crash.",
+    "overallStyle": "bearish_confirmed"
+  },
+  "tickerData": {
+    "price": 0.2255,
+    "marketCap": 1747142,
+    "peakGain": 399.49326769943536,
+    "currentGain": -67.35196177790647,
+    "pullback": 466.84522947734183
+  }
+}

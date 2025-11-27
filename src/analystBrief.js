@@ -3,7 +3,11 @@
  * 
  * Produces hedge fund-style analyst briefs with deep risk context.
  * 
- * API Calls per ticker: ~8-10
+ * Data Sources:
+ *   - FMP API (paid): Price, financials, insider trades
+ *   - SEC EDGAR (free): ATM filings (424B5, S-3)
+ * 
+ * API Calls per ticker: ~8-10 FMP + 1 SEC
  */
 
 import dotenv from 'dotenv';
@@ -11,6 +15,7 @@ dotenv.config();
 
 const API_KEY = process.env.FMP_API_KEY;
 const BASE = 'https://financialmodelingprep.com';
+const SEC_USER_AGENT = 'DilutionHunter/1.0 (dilutionhunter@proton.me)';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // API HELPERS
@@ -28,6 +33,63 @@ async function fmpFetch(endpoint, params = {}) {
     return null; // Premium/unavailable
   }
   return JSON.parse(text);
+}
+
+/**
+ * Search SEC EDGAR for recent ATM-related filings (424B5, S-3)
+ * Returns { hasRecentATM, filings, error }
+ */
+async function searchSECForATM(symbol, days = 90) {
+  try {
+    const endDate = new Date().toISOString().split('T')[0];
+    const startDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    
+    // Search for ATM-related filings (broad search, then filter by ticker)
+    const query = encodeURIComponent('"at-the-market" OR "ATM offering" OR "equity distribution"');
+    const url = `https://efts.sec.gov/LATEST/search-index?q=${query}&dateRange=custom&startdt=${startDate}&enddt=${endDate}&forms=424B5,S-3,S-3ASR&size=500`;
+    
+    const res = await fetch(url, {
+      headers: { 'User-Agent': SEC_USER_AGENT },
+      signal: AbortSignal.timeout(15000) // 15 second timeout
+    });
+    
+    if (!res.ok) {
+      return { hasRecentATM: false, filings: [], error: `SEC API returned ${res.status}` };
+    }
+    
+    const data = await res.json();
+    const hits = data.hits?.hits || [];
+    
+    // Filter to only filings that match our symbol in display_names
+    const symbolUpper = symbol.toUpperCase();
+    const relevantFilings = hits.filter(h => {
+      const displayNames = h._source?.display_names || [];
+      // Match "(TICK)" or "(TICK," or ", TICK)" patterns
+      return displayNames.some(name => {
+        const upperName = name.toUpperCase();
+        return upperName.includes(`(${symbolUpper})`) || 
+               upperName.includes(`(${symbolUpper},`) ||
+               upperName.includes(`, ${symbolUpper})`) ||
+               upperName.includes(`, ${symbolUpper},`);
+      });
+    }).map(h => ({
+      date: h._source?.file_date,
+      form: h._source?.form,
+      company: h._source?.display_names?.[0]?.split('  (')[0],
+      filingId: h._source?.adsh
+    })).sort((a, b) => b.date.localeCompare(a.date)); // Most recent first
+
+    return {
+      hasRecentATM: relevantFilings.length > 0,
+      filings: relevantFilings,
+      mostRecent: relevantFilings[0] || null,
+      error: null
+    };
+  } catch (err) {
+    // Graceful degradation - don't fail the whole analysis
+    const errorMsg = err.name === 'TimeoutError' ? 'SEC request timed out' : err.message;
+    return { hasRecentATM: false, filings: [], error: errorMsg };
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -105,6 +167,14 @@ export async function analyzeSymbol(symbol, options = {}) {
       const details = await fmpFetch('/stable/fundraising', { cik: relevantOfferings[0].cik });
       data.offeringDetails = details || [];
     }
+  }
+  
+  // ─────────────────────────────────────────────────────────────────────────────
+  // 8. SEC EDGAR ATM FILINGS (free, primary source for active ATMs)
+  // ─────────────────────────────────────────────────────────────────────────────
+  data.secATM = await searchSECForATM(symbol, 90);
+  if (data.secATM.error && !silent) {
+    console.log(`   ⚠️  SEC EDGAR: ${data.secATM.error} (using FMP data only)`);
   }
   
   // ═══════════════════════════════════════════════════════════════════════════════
@@ -338,14 +408,24 @@ function computeMetrics(data) {
     m.offeringsLast3Years = sorted.filter(o => new Date(o.date) > threeYearsAgo).length;
     m.isSerialDiluter = m.offeringsLast3Years >= 3;
     
-    // Active ATM check (recent + remaining > 0)
+    // Active ATM check (recent + remaining > 0) from FMP
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-    m.hasActiveATM = sorted.some(o => 
+    m.hasActiveATM_FMP = sorted.some(o => 
       new Date(o.date) > sixMonthsAgo && 
       o.totalAmountRemaining > 0
     );
   }
+  
+  // ── SEC EDGAR ATM DATA (more reliable for recent filings) ─────────────────────
+  m.hasActiveATM_SEC = data.secATM?.hasRecentATM || false;
+  m.secATMFilings = data.secATM?.filings || [];
+  m.secATMError = data.secATM?.error || null;
+  m.mostRecentATMFiling = data.secATM?.mostRecent || null;
+  
+  // Combined ATM detection: SEC is authoritative, FMP is fallback
+  m.hasActiveATM = m.hasActiveATM_SEC || m.hasActiveATM_FMP;
+  m.atmSource = m.hasActiveATM_SEC ? 'SEC EDGAR' : (m.hasActiveATM_FMP ? 'FMP' : null);
   
   return m;
 }
@@ -558,11 +638,29 @@ function printReport(symbol, data, m, analysis) {
     console.log(`  Already Sold:   $${(m.latestOffering.amountSold/1e6).toFixed(1)}M`);
     console.log(`  REMAINING:      $${(m.latestOffering.amountRemaining/1e6).toFixed(1)}M ${m.offeringImpactRatio > 0.1 ? '🚨 SIGNIFICANT' : ''}`);
     console.log(`  Impact Ratio:   ${(m.offeringImpactRatio*100).toFixed(1)}% of market cap`);
-    console.log(`  Active ATM:     ${m.hasActiveATM ? '🔴 YES - LIVE DILUTION' : '⚪ No'}`);
     console.log(`  Serial Diluter: ${m.isSerialDiluter ? '🔴 YES (' + m.offeringsLast3Years + ' offerings in 3yr)' : '⚪ No'}`);
   } else {
-    console.log('  No recent offering data found');
+    console.log('  No recent offering data found (FMP)');
   }
+  
+  // ── SEC EDGAR ATM STATUS ──────────────────────────────────────────────────────
+  console.log('\n📄 SEC EDGAR ATM STATUS');
+  console.log('─'.repeat(65));
+  if (m.secATMError) {
+    console.log(`  ⚠️  ${m.secATMError}`);
+  }
+  if (m.hasActiveATM_SEC) {
+    console.log(`  🔴 ACTIVE ATM DETECTED (via SEC EDGAR)`);
+    if (m.mostRecentATMFiling) {
+      console.log(`  Latest 424B5:   ${m.mostRecentATMFiling.date} (${m.mostRecentATMFiling.form})`);
+    }
+    console.log(`  Total Filings:  ${m.secATMFilings.length} in last 90 days`);
+  } else if (m.hasActiveATM_FMP) {
+    console.log(`  🟠 ATM detected via FMP (SEC search found nothing)`);
+  } else {
+    console.log(`  ⚪ No recent ATM filings found`);
+  }
+  console.log(`  ATM Status:     ${m.hasActiveATM ? '🔴 ACTIVE (' + m.atmSource + ')' : '⚪ None detected'}`);
   
   // ── SCORE BREAKDOWN ───────────────────────────────────────────────────────────
   console.log('\n📊 RISK SCORE BREAKDOWN');
