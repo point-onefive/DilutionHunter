@@ -332,11 +332,16 @@ export async function generateChart(ticker, candles, annotations = {}, options =
   
   // ─────────────────────────────────────────────────────────────────────────────
   // ANNOTATION SIDEBAR (right side, outside chart area)
+  // Labels vary by bucket type:
+  //   CASE_STUDY: "PEAK" (confirmed top) + "NOW" (crash)
+  //   WATCH_LIST: "HIGH" (current high, may go higher) + "NOW"
+  //   ACTIONABLE: "PEAK" (likely top) + "NOW" (warning)
   // ─────────────────────────────────────────────────────────────────────────────
   
   const sidebarX = padding.left + chartWidth + 25;
+  const isWatchList = options.bucket === 'WATCH_LIST';
   
-  // Peak annotation
+  // High/Peak annotation
   if (options.peakGain) {
     const peakY = yPrice(peakHigh);
     
@@ -356,44 +361,52 @@ export async function generateChart(ticker, candles, annotations = {}, options =
     ctx.stroke();
     ctx.setLineDash([]);
     
-    // Label in sidebar
+    // Label in sidebar - "HIGH" for watch list, "PEAK" for others
     ctx.fillStyle = COLORS.bullish;
     ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
     ctx.textAlign = 'left';
-    ctx.fillText('PEAK', sidebarX, peakY - 8);
+    ctx.fillText(isWatchList ? 'HIGH' : 'PEAK', sidebarX, peakY - 8);
     ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
     ctx.fillText(`+${options.peakGain.toFixed(0)}%`, sidebarX, peakY + 16);
   }
   
-  // Current/crash annotation (for case study)
-  if (options.bucket === 'CASE_STUDY' && options.currentGain !== undefined) {
-    const crashIdx = chartCandles.length - 1;
-    const crashCandle = chartCandles[crashIdx];
-    const crashY = yPrice(crashCandle.close);
+  // Current annotation
+  if (options.currentGain !== undefined) {
+    const currentIdx = chartCandles.length - 1;
+    const currentCandle = chartCandles[currentIdx];
+    const currentY = yPrice(currentCandle.close);
     
-    // Small dot on the crash candle
-    ctx.fillStyle = COLORS.bearish;
-    ctx.beginPath();
-    ctx.arc(xScale(crashIdx), crashY, 4, 0, Math.PI * 2);
-    ctx.fill();
+    // Only show if different position from peak (avoid overlap)
+    const peakY = yPrice(peakHigh);
+    const showCurrentAnnotation = Math.abs(currentY - peakY) > 50;
     
-    // Line to sidebar
-    ctx.strokeStyle = COLORS.bearish;
-    ctx.lineWidth = 1;
-    ctx.setLineDash([4, 4]);
-    ctx.beginPath();
-    ctx.moveTo(xScale(crashIdx) + 5, crashY);
-    ctx.lineTo(sidebarX - 5, crashY);
-    ctx.stroke();
-    ctx.setLineDash([]);
-    
-    // Label in sidebar
-    ctx.fillStyle = COLORS.bearish;
-    ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
-    ctx.textAlign = 'left';
-    ctx.fillText('NOW', sidebarX, crashY - 8);
-    ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
-    ctx.fillText(`${options.currentGain.toFixed(0)}%`, sidebarX, crashY + 16);
+    if (showCurrentAnnotation) {
+      // Small dot on the current candle
+      const dotColor = options.currentGain >= 0 ? COLORS.bullish : COLORS.bearish;
+      ctx.fillStyle = dotColor;
+      ctx.beginPath();
+      ctx.arc(xScale(currentIdx), currentY, 4, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Line to sidebar
+      ctx.strokeStyle = dotColor;
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(xScale(currentIdx) + 5, currentY);
+      ctx.lineTo(sidebarX - 5, currentY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      
+      // Label in sidebar
+      ctx.fillStyle = dotColor;
+      ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+      ctx.textAlign = 'left';
+      ctx.fillText('NOW', sidebarX, currentY - 8);
+      ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+      const sign = options.currentGain >= 0 ? '+' : '';
+      ctx.fillText(`${sign}${options.currentGain.toFixed(0)}%`, sidebarX, currentY + 16);
+    }
   }
   
   // ─────────────────────────────────────────────────────────────────────────────

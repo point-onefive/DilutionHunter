@@ -1,0 +1,56 @@
+{
+  "ticker": "GPUS",
+  "generatedAt": "2025-11-27T05:23:02.412Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 73% — needs bigger run for ideal setup"
+  },
+  "tweets": {
+    "hook": "$GPUS up 66.5% since ATM filing. Watch for a bigger run or dilution dump. Is retail getting played? 🧐",
+    "breakdown": "Hyperscale Data filed an ATM 14 days ago. Price popped 72.5% at peak. Still holding strong, but watch for dilution pressure. #DilutionHunter",
+    "hashtags": [
+      "#SmallCap",
+      "#StockMarket",
+      "#Investing"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/GPUS_1764220982396.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "watch",
+        "startDay": 1,
+        "endDay": 14,
+        "label": "Current Watch Zone"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 7,
+        "direction": "up",
+        "label": "Peak Gain"
+      },
+      {
+        "day": 14,
+        "direction": "down",
+        "label": "Potential Pullback"
+      }
+    ],
+    "circles": [
+      {
+        "day": 7,
+        "target": "high",
+        "label": "72.5% Gain"
+      }
+    ],
+    "volumeNote": "Volume spiked on Day 7, indicating strong retail interest.",
+    "overallStyle": "neutral_watch"
+  },
+  "tickerData": {
+    "price": 0.333,
+    "marketCap": 36368806,
+    "peakGain": 72.55,
+    "currentGain": 66.5,
+    "pullback": 6.049999999999997
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "ticker": "GPUS",
+  "generatedAt": "2025-11-27T05:26:33.489Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 73% — needs bigger run for ideal setup"
+  },
+  "tweets": {
+    "hook": "$GPUS is up +66.5% in just 14 days post-ATM filing. Still on the WATCH_LIST, could hit a bigger breakout or fade. Here's what's brewing 🧵",
+    "breakdown": "$GPUS filed a 424B5 ATM on 11/13. Price spiked +72.5% before pulling back 6%. Market cap at $36.4M, current price $0.33. Watch for volume spikes and further gains.",
+    "hashtags": [
+      "#DilutionTracker",
+      "#SmallCapStocks",
+      "#GPUS",
+      "#MarketWatch"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/GPUS_1764221193474.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "watch",
+        "startDay": 1,
+        "endDay": 14,
+        "label": "Current Position"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 7,
+        "direction": "up",
+        "label": "+72.5% Peak"
+      },
+      {
+        "day": 14,
+        "direction": "down",
+        "label": "-6% Pullback"
+      }
+    ],
+    "circles": [
+      {
+        "day": 7,
+        "target": "high",
+        "label": "Vol Spike?"
+      }
+    ],
+    "volumeNote": "Steady increase with notable spike at peak",
+    "overallStyle": "neutral_watch"
+  },
+  "tickerData": {
+    "price": 0.333,
+    "marketCap": 36368806,
+    "peakGain": 72.55,
+    "currentGain": 66.5,
+    "pullback": 6.049999999999997
+  }
+}
