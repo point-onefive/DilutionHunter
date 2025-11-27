@@ -1,0 +1,64 @@
+{
+  "ticker": "ANVS",
+  "generatedAt": "2025-11-27T08:03:21.989Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 75% — needs bigger run for ideal setup"
+  },
+  "tweets": {
+    "hook": "$ANVS up +65% after a +75% peak — but an ATM filing 14 days ago makes this move *fragile.* This is how dilution traps form. 🧵",
+    "breakdown": [
+      "ATM = At-The-Market offering. Company can sell new shares anytime → more supply → weaker price. Like splitting a pizza into more slices — same pie, smaller pieces. 🍕",
+      "Why this caught my eye:\n• Market cap: $97M (tiny = vulnerable)\n• ATM filed: 2025-11-13 (14 days ago)\n• Price spiked +75% → now +65%\nHigh price + likely cash need = prime dilution setup",
+      "Additional context:\n• Volume fading — early signs of distribution\n• Small float (~estimate shares) → dilution hits harder\n• 10% off highs — first cracks visible\nLikely motive: company may need funding soon.",
+      "Bear thesis builds if:\n• Heavy red candle with elevated sell volume\n• Price fails to reclaim highs\n• ATM usage confirmed\n\nBull case: strong volume breakout → ATM may pause.\nTraders get trapped when dilution lands during pullbacks — not the run.",
+      "This isn't advice — just pattern recognition.\n\nBig spike + small cap + fresh ATM = elevated risk profile.\n\nWatch how it reacts to selling pressure — that's where dilution becomes visible. 🦅"
+    ],
+    "hashtags": [
+      "#StockWatch",
+      "#DilutionRisk",
+      "#TradingPatterns",
+      "#ANVS"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/ANVS_1764230601972.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "danger",
+        "startDay": 7,
+        "endDay": 14,
+        "label": "Potential Dilution Zone"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 7,
+        "direction": "down",
+        "label": "Peak and Pullback"
+      }
+    ],
+    "circles": [
+      {
+        "day": 7,
+        "target": "high",
+        "label": "+75% Peak"
+      },
+      {
+        "day": 14,
+        "target": "close",
+        "label": "Current +65%"
+      }
+    ],
+    "volumeNote": "Volume is fading, indicating early distribution signs.",
+    "overallStyle": "bullish_warning"
+  },
+  "tickerData": {
+    "price": 4.92,
+    "marketCap": 96794186,
+    "peakGain": 75.16778523489933,
+    "currentGain": 65.1006711409396,
+    "pullback": 10.06711409395973
+  },
+  "rationale": "Annovis Bio's recent price spike coupled with an ATM filing suggests a potential risk of share dilution, which could impact the stock's current gains."
+}

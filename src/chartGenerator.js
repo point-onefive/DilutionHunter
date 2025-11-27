@@ -94,7 +94,7 @@ function ensureOutputDir() {
  * @param {string} ticker - Stock symbol
  * @param {Array} candles - Array of { date, open, high, low, close, volume } - should be 7 days
  * @param {Object} annotations - { peakLabel, crashLabel, volumeNote } - simplified
- * @param {Object} options - { bucket, peakGain, currentGain, pullback }
+ * @param {Object} options - { bucket, peakGain, currentGain, pullback, filingDate }
  */
 export async function generateChart(ticker, candles, annotations = {}, options = {}) {
   ensureOutputDir();
@@ -268,6 +268,86 @@ export async function generateChart(ticker, candles, annotations = {}, options =
     ctx.font = 'bold 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
     ctx.textAlign = 'center';
     ctx.fillText('WATCHING', (x1 + x2) / 2, zoneLabelY);
+  }
+  
+  // ─────────────────────────────────────────────────────────────────────────────
+  // ATM FILING DATE VERTICAL LINE
+  // ─────────────────────────────────────────────────────────────────────────────
+  
+  if (options.filingDate) {
+    // Find which candle matches or is closest to filing date
+    const filingDateStr = options.filingDate.split('T')[0]; // Handle ISO format
+    let filingIdx = -1;
+    let isBeforeWindow = false;
+    
+    // Check if filing date falls within our chart window
+    for (let i = 0; i < chartCandles.length; i++) {
+      const candleDate = chartCandles[i].date.split('T')[0];
+      if (candleDate === filingDateStr) {
+        filingIdx = i;
+        break;
+      }
+      // Also check if filing is between candles
+      if (candleDate > filingDateStr && filingIdx === -1) {
+        filingIdx = i; // Filing was before this candle
+        break;
+      }
+    }
+    
+    // If filing date is before chart window, draw line at left edge with arrow
+    if (filingIdx === -1 && chartCandles.length > 0) {
+      const firstCandleDate = chartCandles[0].date.split('T')[0];
+      if (filingDateStr < firstCandleDate) {
+        filingIdx = -0.5; // Draw at left edge
+        isBeforeWindow = true;
+      }
+    }
+    
+    if (filingIdx !== -1) {
+      const lineX = filingIdx < 0 ? padding.left - 5 : xScale(filingIdx);
+      
+      // Vertical dashed line
+      ctx.strokeStyle = '#f0883e'; // Orange for ATM
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 4]);
+      ctx.beginPath();
+      ctx.moveTo(lineX, padding.top);
+      ctx.lineTo(lineX, padding.top + priceChartHeight + gapHeight + volumeChartHeight);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      
+      // If before window, draw arrow pointing left
+      if (isBeforeWindow) {
+        ctx.fillStyle = '#f0883e';
+        ctx.beginPath();
+        ctx.moveTo(lineX - 8, padding.top + priceChartHeight / 2);
+        ctx.lineTo(lineX, padding.top + priceChartHeight / 2 - 6);
+        ctx.lineTo(lineX, padding.top + priceChartHeight / 2 + 6);
+        ctx.closePath();
+        ctx.fill();
+      }
+      
+      // Label at top
+      ctx.fillStyle = '#f0883e';
+      ctx.font = 'bold 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+      ctx.textAlign = isBeforeWindow ? 'left' : 'center';
+      
+      // Format date nicely - add arrow if before window
+      const filingDate = new Date(options.filingDate);
+      const dateStr = `${filingDate.getMonth() + 1}/${filingDate.getDate()}`;
+      const filingLabel = isBeforeWindow ? `← ATM FILED ${dateStr}` : `ATM FILED ${dateStr}`;
+      
+      // Background pill for label
+      const labelWidth = ctx.measureText(filingLabel).width + 12;
+      const labelX = isBeforeWindow ? lineX : lineX - labelWidth / 2;
+      ctx.fillStyle = 'rgba(240, 136, 62, 0.2)';
+      roundRect(ctx, labelX - 6, padding.top - 22, labelWidth, 18, 4);
+      ctx.fill();
+      
+      // Label text
+      ctx.fillStyle = '#f0883e';
+      ctx.fillText(filingLabel, isBeforeWindow ? lineX + 2 : lineX, padding.top - 8);
+    }
   }
   
   // ─────────────────────────────────────────────────────────────────────────────

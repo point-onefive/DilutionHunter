@@ -169,9 +169,19 @@ async function postTweet(text, options = {}) {
 // POST THREAD WITH MEDIA
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export async function postAlertThread(thesis, statsBlock, chartPath) {
+/**
+ * Post an alert thread with hook + multiple breakdown replies
+ * @param {string} hook - The main hook tweet
+ * @param {string|string[]} breakdown - Single tweet or array of breakdown tweets  
+ * @param {string} chartPath - Path to chart image
+ * @returns {Object} Results with tweet IDs
+ */
+export async function postAlertThread(hook, breakdown, chartPath) {
   console.log('\n🐦 POSTING ALERT THREAD...');
   console.log(`   DRY_RUN: ${DRY_RUN}`);
+  
+  // Normalize breakdown to array
+  const breakdownTweets = Array.isArray(breakdown) ? breakdown : [breakdown];
   
   const results = { tweets: [], mediaId: null };
   
@@ -189,24 +199,34 @@ export async function postAlertThread(thesis, statsBlock, chartPath) {
     }
     
     // Step 2: Post main tweet with chart
-    console.log('   📝 Posting main tweet...');
-    const mainTweet = await postTweet(thesis, {
+    console.log('   📝 Posting hook tweet (1/${breakdownTweets.length + 1})...');
+    const mainTweet = await postTweet(hook, {
       mediaIds: results.mediaId ? [results.mediaId] : []
     });
     results.tweets.push(mainTweet);
-    console.log(`   ✅ Main tweet: ${mainTweet.id}`);
+    console.log(`   ✅ Tweet 1: ${mainTweet.id}`);
     
-    // Step 3: Post stats reply
-    if (statsBlock) {
-      console.log('   📝 Posting stats reply...');
-      const replyTweet = await postTweet(statsBlock, {
-        replyToId: mainTweet.id
+    // Step 3: Post breakdown tweets as thread
+    let lastTweetId = mainTweet.id;
+    for (let i = 0; i < breakdownTweets.length; i++) {
+      const tweet = breakdownTweets[i];
+      if (!tweet) continue;
+      
+      console.log(`   📝 Posting thread ${i + 2}/${breakdownTweets.length + 1}...`);
+      const replyTweet = await postTweet(tweet, {
+        replyToId: lastTweetId
       });
       results.tweets.push(replyTweet);
-      console.log(`   ✅ Reply tweet: ${replyTweet.id}`);
+      lastTweetId = replyTweet.id;
+      console.log(`   ✅ Tweet ${i + 2}: ${replyTweet.id}`);
+      
+      // Small delay between tweets to avoid rate limits
+      if (i < breakdownTweets.length - 1) {
+        await new Promise(r => setTimeout(r, 500));
+      }
     }
     
-    console.log('\n✅ THREAD POSTED SUCCESSFULLY');
+    console.log(`\n✅ THREAD POSTED SUCCESSFULLY (${results.tweets.length} tweets)`);
     return results;
     
   } catch (error) {

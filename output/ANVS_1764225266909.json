@@ -1,0 +1,64 @@
+{
+  "ticker": "ANVS",
+  "generatedAt": "2025-11-27T06:34:26.909Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 75% — needs bigger run for ideal setup"
+  },
+  "tweets": {
+    "hook": "$ANVS up +65% after a +75% peak — but an ATM filing 14 days ago makes this move fragile. This is how dilution traps form. 🧵",
+    "breakdown": [
+      "ATM = At-The-Market stock issuance. Company can sell new shares anytime → more supply → weaker price. If you're holding an ice-cream cone and more cones appear, yours melts faster. 🍦",
+      "Why this caught my eye:\n• Market cap: $97M (tiny, very vulnerable)\n• ATM filing: 14 days ago\n• Price spiked +75% (now at +65%)\nHigh price + low cash = perfect conditions to raise money",
+      "Additional context:\n• Volume pattern: fading, indicating distribution\n• Small float: dilution impacts more\n• Trend: pulled back -10% from peak\nThis is how step-one cracks look before big flushes.",
+      "Bear thesis builds if:\n• First heavy red candle with elevated sell volume\n• Price fails to reclaim highs\n• ATM usage confirmed\nBull scenario if price runs again on strong volume — ATM may not trigger yet",
+      "This isn't advice — just pattern recognition.\nBig spike + small cap + fresh ATM = risk\nTrack price action like a hawk. 🦅"
+    ],
+    "hashtags": [
+      "#StockWatch",
+      "#DilutionRisk",
+      "#ANVS",
+      "#MarketPatterns"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/ANVS_1764225266892.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "danger",
+        "startDay": 1,
+        "endDay": 14,
+        "label": "ATM Filing"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 7,
+        "direction": "up",
+        "label": "Peak Gain +75%"
+      },
+      {
+        "day": 14,
+        "direction": "down",
+        "label": "Pullback -10%"
+      }
+    ],
+    "circles": [
+      {
+        "day": 14,
+        "target": "close",
+        "label": "Current +65%"
+      }
+    ],
+    "volumeNote": "Volume fading, indicating distribution",
+    "overallStyle": "bullish_warning"
+  },
+  "tickerData": {
+    "price": 4.92,
+    "marketCap": 96794186,
+    "peakGain": 75.16778523489933,
+    "currentGain": 65.1006711409396,
+    "pullback": 10.06711409395973
+  },
+  "rationale": "A small company like Annovis Bio, Inc. with a recent ATM filing and significant price spike could see stock value decline if new shares are sold into the market."
+}

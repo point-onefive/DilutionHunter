@@ -34,31 +34,54 @@ const FMP_BASE = 'https://financialmodelingprep.com/stable';
 // OPENAI TWEET GENERATION
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const SYSTEM_PROMPT = `You are DilutionHunter, a sharp-eyed analyst who spots dilution patterns in small-cap stocks. Your style is:
-- Direct, no fluff
-- Data-driven but accessible
-- Slightly edgy, calls out predatory dilution
-- Uses trading terminology naturally
-- Engages retail traders who want to learn
+const SYSTEM_PROMPT = `You are DilutionHunter, a sharp-eyed analyst who spots dilution patterns in small-cap stocks. 
 
-You generate Twitter content about ATM (At-The-Market) dilution plays.`;
+Your style:
+- Professional analyst tone, but accessible to retail traders
+- Data-driven with MULTIPLE dimensions (not just price)
+- Balanced — show both bull and bear cases
+- Actionable — tell people what to WATCH for next
+- Educational — explain every term in plain English
+
+CRITICAL LANGUAGE RULES:
+1. NEVER use an acronym without explaining it in plain English
+2. ATM = "At-The-Market offering (company can sell new shares directly into the market anytime)"
+3. Use analogies: ice cream cones melting, pizza slices, watered-down coffee
+4. Assume reader has ZERO finance knowledge
+5. Sound like a professional analyst, not a hype account
+
+You don't give financial advice — you spot patterns and explain the mechanics.`;
 
 function buildPrompt(context) {
-  return `Generate Twitter content for this ${context.bucket} ticker.
+  // Calculate additional metrics for richer analysis
+  const marketCapSize = context.marketCap < 50000000 ? 'micro-cap (extremely vulnerable)' :
+                        context.marketCap < 100000000 ? 'tiny (very vulnerable)' :
+                        context.marketCap < 300000000 ? 'small (vulnerable)' :
+                        context.marketCap < 1000000000 ? 'mid-small (moderate risk)' : 'larger (lower risk)';
+  
+  const dilutionUrgency = context.daysSinceFiling <= 7 ? 'very fresh - high alert' :
+                          context.daysSinceFiling <= 14 ? 'recent - elevated risk' :
+                          context.daysSinceFiling <= 21 ? 'within window - watching' : 'aging - may have already acted';
+  
+  const spikeIntensity = context.peakGain > 200 ? 'massive spike - extreme dilution incentive' :
+                         context.peakGain > 100 ? 'major spike - strong dilution incentive' :
+                         context.peakGain > 50 ? 'significant spike - notable incentive' : 'moderate move';
+
+  return `Generate a PROFESSIONAL Twitter thread for this ${context.bucket} ticker.
 
 ## TICKER DATA
 - Symbol: ${context.ticker}
 - Company: ${context.companyName}
 - Current Price: $${context.price?.toFixed(2) || 'N/A'}
-- Market Cap: $${((context.marketCap || 0) / 1e6).toFixed(1)}M
+- Market Cap: $${((context.marketCap || 0) / 1e6).toFixed(1)}M — ${marketCapSize}
 
-## ATM FILING
-- Form: 424B5 (Prospectus Supplement = ATM sale)
+## THE FILING
+- Form: 424B5 (SEC permission slip to sell new shares into the market)
 - Filing Date: ${context.filingDate}
-- Days Since Filing: ${context.daysSinceFiling}
+- Days Since Filing: ${context.daysSinceFiling} — ${dilutionUrgency}
 
 ## PRICE ACTION (7-day window)
-- Peak Gain: +${context.peakGain?.toFixed(1)}% (highest point vs 7 days ago)
+- Peak Gain: +${context.peakGain?.toFixed(1)}% — ${spikeIntensity}
 - Current Gain: ${context.currentGain >= 0 ? '+' : ''}${context.currentGain?.toFixed(1)}%
 - Pullback from Peak: -${context.pullbackFromPeak?.toFixed(1)}%
 - Peak Day: Day ${context.peakDay} of 7
@@ -67,39 +90,78 @@ function buildPrompt(context) {
 - Bucket: ${context.bucket}
 - Reason: ${context.reason}
 
-## YOUR TASK
-Generate a JSON response with:
+## GENERATE A 6-TWEET PROFESSIONAL THREAD
 
-1. **tweetHook**: First tweet (max 280 chars). LEAD WITH THE PUNCHLINE!
-   - For CASE_STUDY: Lead with dramatic gain AND crash percentage
-   - For WATCH_LIST: Lead with current gain and what could happen
-   - For ACTIONABLE: Lead with the setup percentage and urgency
+Return JSON with:
+
+1. **tweetHook** (max 280 chars): Lead with the punchline + numbers. Make it punchy.
+   Example: "$ANVS up +65% after a +75% peak — but an ATM filing 14 days ago makes this move *fragile.* This is how dilution traps form. 🧵"
+
+2. **tweetBreakdown**: Array of 5 tweets (each max 280 chars). FOLLOW THIS EXACT STRUCTURE:
+
+   **Tweet 1 — What ATM means (plain English)**
+   - Define ATM in simple terms
+   - Use a memorable analogy (ice cream cones, pizza slices, etc.)
+   - Example: "ATM = At-The-Market offering. Company can sell new shares anytime → more supply → weaker price. Like splitting a pizza into more slices — same pie, smaller pieces. 🍕"
    
-   Good: "INHD ran +400% then crashed -467% in 7 days. Here's the dilution pattern 🧵"
-   Bad: "Let's talk about $INHD and what happened..."
+   **Tweet 2 — The Setup (bullet points with SPECIFIC numbers)**
+   Format exactly like this:
+   "Why this caught my eye:
+   • Market cap: $${((context.marketCap || 0) / 1e6).toFixed(0)}M (tiny = vulnerable)
+   • ATM filed: ${context.filingDate} (${context.daysSinceFiling} days ago)
+   • Price spiked +${context.peakGain?.toFixed(0)}% → now ${context.currentGain >= 0 ? '+' : ''}${context.currentGain?.toFixed(0)}%
+   High price + likely cash need = prime dilution setup"
+   
+   **Tweet 3 — Supporting Signals (extra dimensions with numbers)**
+   Format exactly like this:
+   "Additional context:
+   • Volume fading — early signs of distribution
+   • Small float (~estimate shares) → dilution hits harder
+   • ${context.pullbackFromPeak?.toFixed(0)}% off highs — first cracks visible
+   Likely motive: company may need funding soon."
+   
+   **Tweet 4 — What I'm Watching (bear vs bull + trader insight)**
+   Format exactly like this:
+   "Bear thesis builds if:
+   • Heavy red candle with elevated sell volume
+   • Price fails to reclaim highs
+   • ATM usage confirmed
+   
+   Bull case: strong volume breakout → ATM may pause.
+   Traders get trapped when dilution lands during pullbacks — not the run."
+   
+   **Tweet 5 — Takeaway (memorable closer with CTA)**
+   Format exactly like this:
+   "This isn't advice — just pattern recognition.
+   
+   Big spike + small cap + fresh ATM = elevated risk profile.
+   
+   Watch how it reacts to selling pressure — that's where dilution becomes visible. 🦅"
 
-2. **tweetBreakdown**: Reply tweet with details (max 280 chars). Numbers, filing info, insight.
-
-3. **chartAnnotations**: Instructions for the chart. Use this structure:
+3. **chartAnnotations**: Instructions for the chart:
    - highlightZones: Array of { type: 'entry'|'danger'|'watch', startDay: 1-14, endDay: 1-14, label: string }
    - arrows: Array of { day: 1-14, direction: 'up'|'down', label: string }
    - circles: Array of { day: 1-14, target: 'high'|'low'|'close', label: string }
-   - volumeNote: String describing volume pattern (or null)
+   - volumeNote: String describing volume pattern
    - overallStyle: 'bullish_warning'|'bearish_confirmed'|'neutral_watch'
-   
-   For CASE_STUDY: Highlight where entry would have been, mark the crash
-   For WATCH_LIST: Highlight current position, mark what to watch for
-   For ACTIONABLE: Highlight the setup, mark entry zone
 
-4. **hashtags**: Array of 3-5 relevant hashtags
+4. **hashtags**: Array of 3-4 accessible hashtags
 
 5. **sentiment**: 'bearish'|'cautious'|'neutral'
 
-6. **rationale**: A 1-2 sentence plain English explanation of WHY we track this pattern.
-   This helps educate readers who are new to trading. Example:
-   "We track ATM stocks because companies can sell new shares directly into price spikes. When retail buys the hype, the company dumps shares—creating predictable crashes."
-   
-   Keep it simple for someone who's never traded. Explain the cause and effect.
+6. **rationale**: One plain-English sentence for someone who knows nothing about stocks.
+
+## QUALITY CHECKLIST (follow these)
+✓ INCLUDE THE ACTUAL FILING DATE (e.g., "Filed 11/13")
+✓ Every acronym explained on first use
+✓ At least 4 specific numbers in the thread
+✓ One memorable analogy (pizza, ice cream, coffee)
+✓ Bull AND bear scenarios mentioned
+✓ "Traders get trapped when..." insight line
+✓ Clear "what to watch next" trigger
+✓ Professional but accessible tone
+✓ No financial advice — just pattern spotting
+✓ End with observational CTA (watch, monitor, track)
 
 Respond ONLY with valid JSON.`;
 }
@@ -112,7 +174,7 @@ async function generateContent(context) {
       { role: 'user', content: buildPrompt(context) }
     ],
     temperature: 0.7,
-    max_tokens: 1000
+    max_tokens: 1500
   });
   
   let content = response.choices[0].message.content;
@@ -184,7 +246,7 @@ async function getTickerData(symbol) {
 // MAIN PIPELINE
 // ═══════════════════════════════════════════════════════════════════════════════
 
-async function runPipeline(ticker, options = {}) {
+export async function runPipeline(ticker, options = {}) {
   console.log(`
 ╔═══════════════════════════════════════════════════════════════════════════════╗
 ║  DILUTIONHUNTER CONTENT PIPELINE                                              ║
@@ -241,7 +303,8 @@ async function runPipeline(ticker, options = {}) {
       bucket: classification.bucket,
       peakGain: tickerData.peakGain,
       currentGain: tickerData.currentGain,
-      pullback: tickerData.pullback
+      pullback: tickerData.pullback,
+      filingDate: tickerData.fileDate
     }
   );
   
@@ -261,7 +324,7 @@ async function runPipeline(ticker, options = {}) {
     },
     tweets: {
       hook: generated.tweetHook,
-      breakdown: generated.tweetBreakdown,
+      breakdown: generated.tweetBreakdown, // Now an array of tweets
       hashtags: generated.hashtags
     },
     chartPath,
@@ -272,12 +335,26 @@ async function runPipeline(ticker, options = {}) {
       peakGain: tickerData.peakGain,
       currentGain: tickerData.currentGain,
       pullback: tickerData.pullback
-    }
+    },
+    rationale: generated.rationale
   };
   
   const outputPath = path.join(OUTPUT_DIR, `${ticker}_${Date.now()}.json`);
   fs.writeFileSync(outputPath, JSON.stringify(outputData, null, 2));
   console.log(`   ✓ Saved: ${outputPath}`);
+  
+  // Format breakdown tweets for display
+  const breakdownTweets = Array.isArray(generated.tweetBreakdown) 
+    ? generated.tweetBreakdown 
+    : [generated.tweetBreakdown];
+  
+  const breakdownDisplay = breakdownTweets.map((tweet, i) => {
+    return `📱 TWEET ${i + 2} (Reply ${i + 1}):
+────────────────────────────────────────────────────────────────────────────────
+${tweet}
+────────────────────────────────────────────────────────────────────────────────
+[${tweet.length}/280 chars]`;
+  }).join('\n\n');
   
   // Summary
   console.log(`
@@ -292,13 +369,10 @@ ${generated.tweetHook}
 [${generated.tweetHook.length}/280 chars]
 📎 Attach image: ${chartPath}
 
-📱 TWEET 2 (Reply to above):
-────────────────────────────────────────────────────────────────────────────────
-${generated.tweetBreakdown}
-────────────────────────────────────────────────────────────────────────────────
-[${generated.tweetBreakdown.length}/280 chars]
+${breakdownDisplay}
 
 🏷️  Hashtags: ${generated.hashtags?.join(' ') || 'None'}
+💡 Rationale: ${generated.rationale || 'N/A'}
 
 📊 Chart saved: ${chartPath}
 📄 Full data: ${outputPath}
@@ -318,13 +392,18 @@ ${'═'.repeat(80)}
 // CLI
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const args = process.argv.slice(2);
-const ticker = args.find(a => !a.startsWith('--'))?.toUpperCase();
-const force = args.includes('--force');
-const record = args.includes('--record');
+// Only run CLI if this file is executed directly (not imported)
+const isMainModule = import.meta.url === `file://${process.argv[1]}` || 
+                     process.argv[1]?.endsWith('contentPipeline.js');
 
-if (!ticker) {
-  console.log(`
+if (isMainModule && !process.argv[1]?.includes('dailyRun') && !process.argv[1]?.includes('dailySelector')) {
+  const args = process.argv.slice(2);
+  const ticker = args.find(a => !a.startsWith('--'))?.toUpperCase();
+  const force = args.includes('--force');
+  const record = args.includes('--record');
+
+  if (!ticker) {
+    console.log(`
 Usage: node src/contentPipeline.js <TICKER> [options]
 
 Options:
@@ -335,13 +414,14 @@ Examples:
   node src/contentPipeline.js INHD
   node src/contentPipeline.js INHD --force --record
 `);
-  process.exit(1);
-}
+    process.exit(1);
+  }
 
-try {
-  await runPipeline(ticker, { force, record });
-} catch (err) {
-  console.error(`\n❌ Pipeline error: ${err.message}\n`);
-  if (process.env.DEBUG) console.error(err.stack);
-  process.exit(1);
+  try {
+    await runPipeline(ticker, { force, record });
+  } catch (err) {
+    console.error(`\n❌ Pipeline error: ${err.message}\n`);
+    if (process.env.DEBUG) console.error(err.stack);
+    process.exit(1);
+  }
 }

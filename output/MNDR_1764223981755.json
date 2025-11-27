@@ -1,0 +1,68 @@
+{
+  "ticker": "MNDR",
+  "generatedAt": "2025-11-27T06:13:01.755Z",
+  "classification": {
+    "bucket": "CASE_STUDY",
+    "reason": "Peaked 215%, now 54% — crashed 161% from peak"
+  },
+  "tweets": {
+    "hook": "$MNDR ran +215% then crashed -161% in just 7 days! Classic ATM dilution play unfolding 🧵",
+    "breakdown": "14 days post-ATM filing (424B5), $MNDR peaked at +215% on Day 4, now only +54%. With a $2.3M market cap, dilution risk remains high. Stay sharp!",
+    "hashtags": [
+      "#DilutionPlay",
+      "#PennyStocks",
+      "#TradingStrategy",
+      "#StockMarket"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/MNDR_1764223981737.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "entry",
+        "startDay": 1,
+        "endDay": 4,
+        "label": "Entry Opportunity"
+      },
+      {
+        "type": "danger",
+        "startDay": 5,
+        "endDay": 7,
+        "label": "Crash Zone"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 4,
+        "direction": "up",
+        "label": "Peak Gain"
+      },
+      {
+        "day": 7,
+        "direction": "down",
+        "label": "Massive Pullback"
+      }
+    ],
+    "circles": [
+      {
+        "day": 4,
+        "target": "high",
+        "label": "Peak"
+      },
+      {
+        "day": 7,
+        "target": "close",
+        "label": "Current"
+      }
+    ],
+    "volumeNote": "Increased volume leading up to peak, sharp decline as price crashes.",
+    "overallStyle": "bearish_confirmed"
+  },
+  "tickerData": {
+    "price": 2.65,
+    "marketCap": 2347253,
+    "peakGain": 215.11627906976747,
+    "currentGain": 54.06976744186046,
+    "pullback": 161.04651162790702
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "ticker": "ANVS",
+  "generatedAt": "2025-11-27T06:29:29.235Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 75% — needs bigger run for ideal setup"
+  },
+  "tweets": {
+    "hook": "$ANVS up +65% with signs of dilution. ATM (At-The-Market offering - company selling new shares directly into the market) alert! 🚨 Here's why it matters 🧵",
+    "breakdown": [
+      "ATM = At-The-Market offering. Translation: the company can print NEW shares and sell them directly into the market. More shares = your slice of the pie gets smaller. Imagine having to share your pizza with more people. 🍕",
+      "Why this matters: $97M market cap is tiny, making $ANVS vulnerable. A +75% price spike is like waving cash in front of a cash-strapped company. With an ATM filing just 14 days ago, it's primed for dilution.",
+      "Numbers game: Peaked at +75%, now at +65%. That's a 10% drop from the peak. This drop likely happened because new shares are being sold, watering down your investment like adding water to coffee. ☕",
+      "Lesson: Watch for ATMs after big spikes in small caps. Spot the signs: small market cap, recent filing, price jump. Stay alert and don't get caught holding the bag when the price crashes."
+    ],
+    "hashtags": [
+      "#DilutionAlert",
+      "#StockMarket101",
+      "#InvestingTips",
+      "#SmallCapStocks"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/ANVS_1764224969218.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "watch",
+        "startDay": 1,
+        "endDay": 14,
+        "label": "Potential Dilution Zone"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 7,
+        "direction": "down",
+        "label": "Price Peak and Pullback"
+      }
+    ],
+    "circles": [
+      {
+        "day": 7,
+        "target": "high",
+        "label": "75% Gain Peak"
+      }
+    ],
+    "volumeNote": "Volume increased significantly during price spike",
+    "overallStyle": "bullish_warning"
+  },
+  "tickerData": {
+    "price": 4.92,
+    "marketCap": 96794186,
+    "peakGain": 75.16778523489933,
+    "currentGain": 65.1006711409396,
+    "pullback": 10.06711409395973
+  },
+  "rationale": "If a company prints more shares, your shares become less valuable. Knowing when this might happen helps you avoid losing money."
+}

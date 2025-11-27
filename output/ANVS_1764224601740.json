@@ -1,0 +1,67 @@
+{
+  "ticker": "ANVS",
+  "generatedAt": "2025-11-27T06:23:21.740Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 75% — needs bigger run for ideal setup"
+  },
+  "tweets": {
+    "hook": "$ANVS gained +65.1% in 14 days post-ATM filing. Watch for potential dilution selling pressure. Here's what to know 🧵",
+    "breakdown": [
+      "Here's the mechanism: Annovis Bio ($ANVS) filed an ATM (424B5) to sell new shares at market prices. When the stock price spiked, the company likely started selling into buying pressure, increasing share supply.",
+      "The numbers: Filed on 11/13. Stock peaked at +75.2% on day 7, currently +65.1%. The -10.1% pullback signals potential dilution. This isn't just volatility; it's dilution in action.",
+      "The lesson: If a stock surges post-ATM filing, it might be the company dumping new shares. Scrutinize the timing of these runs. Companies often cash in when prices soar, leaving late buyers holding the bag."
+    ],
+    "hashtags": [
+      "#ATMdilution",
+      "#StockMarket",
+      "#TradingEducation"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/ANVS_1764224601723.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "watch",
+        "startDay": 1,
+        "endDay": 7,
+        "label": "Price Surge"
+      },
+      {
+        "type": "danger",
+        "startDay": 8,
+        "endDay": 14,
+        "label": "Potential Dilution"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 7,
+        "direction": "up",
+        "label": "Peak Gain"
+      },
+      {
+        "day": 8,
+        "direction": "down",
+        "label": "Pullback Starts"
+      }
+    ],
+    "circles": [
+      {
+        "day": 7,
+        "target": "high",
+        "label": "75.2% Peak"
+      }
+    ],
+    "volumeNote": "Watch for increasing volume during pullback as a sign of dilution.",
+    "overallStyle": "neutral_watch"
+  },
+  "tickerData": {
+    "price": 4.92,
+    "marketCap": 96794186,
+    "peakGain": 75.16778523489933,
+    "currentGain": 65.1006711409396,
+    "pullback": 10.06711409395973
+  },
+  "rationale": "Understanding ATM dilution helps traders avoid becoming bagholders during strategic company share sales."
+}

@@ -413,6 +413,7 @@ async function main() {
 }
 
 // Run if called directly
-if (process.argv[1].includes('contentManager')) {
+const __filename2 = fileURLToPath(import.meta.url);
+if (process.argv[1] === __filename2) {
   main().catch(console.error);
 }

@@ -1,0 +1,68 @@
+{
+  "ticker": "MNDR",
+  "generatedAt": "2025-11-27T06:23:27.990Z",
+  "classification": {
+    "bucket": "CASE_STUDY",
+    "reason": "Peaked 215%, now 54% — crashed 161% from peak"
+  },
+  "tweets": {
+    "hook": "$MNDR ran +215% then crashed -161% in 7 days. Classic ATM dilution trap! 🧵",
+    "breakdown": [
+      "Here's what happened: $MNDR filed an ATM shelf (424B5) letting them sell new shares anytime. Stock ran +215% on hype. Company saw the spike and started dumping shares into YOUR buy orders.",
+      "The math: Filed 11/13. Peaked +215% by day 4. Now? Only +54%. That -161% drop? That's dilution in action. Company got cash, latecomers got bags.",
+      "The lesson: When you see a small cap spike right after an ATM filing, ask yourself - who's selling into this rally? Often it's the company itself. The pattern repeats.",
+      "The play: Watch for ATM filings. If a stock spikes hard, consider that dilution might be loading up to crash the party. Trade with caution."
+    ],
+    "hashtags": [
+      "#DilutionAlert",
+      "#SmallCapStocks",
+      "#TradingEducation"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/MNDR_1764224607971.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "entry",
+        "startDay": 1,
+        "endDay": 4,
+        "label": "Initial Hype"
+      },
+      {
+        "type": "danger",
+        "startDay": 5,
+        "endDay": 7,
+        "label": "Dilution Impact"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 4,
+        "direction": "down",
+        "label": "Peak & Reverse"
+      }
+    ],
+    "circles": [
+      {
+        "day": 4,
+        "target": "high",
+        "label": "Peak"
+      },
+      {
+        "day": 7,
+        "target": "close",
+        "label": "Post-Dilution"
+      }
+    ],
+    "volumeNote": "High volume on peak day, tapering off as price drops.",
+    "overallStyle": "bearish_confirmed"
+  },
+  "tickerData": {
+    "price": 2.65,
+    "marketCap": 2347253,
+    "peakGain": 215.11627906976747,
+    "currentGain": 54.06976744186046,
+    "pullback": 161.04651162790702
+  },
+  "rationale": "Understanding ATM dilution helps traders avoid buying into a pump only to hold the bags as the price collapses."
+}

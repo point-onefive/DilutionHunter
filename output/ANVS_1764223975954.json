@@ -1,0 +1,51 @@
+{
+  "ticker": "ANVS",
+  "generatedAt": "2025-11-27T06:12:55.954Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 75% — needs bigger run for ideal setup"
+  },
+  "tweets": {
+    "hook": "$ANVS is up +65.1% in just 7 days. With an ATM filing lurking, could we see a bigger run or a trap? 👀 #WatchList",
+    "breakdown": "Annovis Bio ($ANVS) filed an ATM on 11/13. Current price: $4.92, Market Cap: $96.8M. Stock peaked at +75.2%, now pulling back -10.1%. Keep an eye on dilution plays here.",
+    "hashtags": [
+      "#DilutionAlert",
+      "#StocksToWatch",
+      "#SmallCap"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/ANVS_1764223975936.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "watch",
+        "startDay": 5,
+        "endDay": 7,
+        "label": "Peak Alert"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 7,
+        "direction": "down",
+        "label": "10.1% Pullback"
+      }
+    ],
+    "circles": [
+      {
+        "day": 7,
+        "target": "high",
+        "label": "Peak Gain +75.2%"
+      }
+    ],
+    "volumeNote": "Volume spiked into peak, watch decreasing volume on pullback",
+    "overallStyle": "neutral_watch"
+  },
+  "tickerData": {
+    "price": 4.92,
+    "marketCap": 96794186,
+    "peakGain": 75.16778523489933,
+    "currentGain": 65.1006711409396,
+    "pullback": 10.06711409395973
+  }
+}
