@@ -3,9 +3,16 @@
  * POST.JS - Manual Twitter posting for approved tickers
  * 
  * Usage:
- *   node src/post.js ANVS           # Post pre-generated content for ANVS
- *   node src/post.js ANVS --preview # Preview only, don't post
- *   node src/post.js --list         # List available pending posts
+ *   node src/post.js ANVS                           # Post pre-generated content for ANVS
+ *   node src/post.js ANVS --preview                 # Preview only, don't post
+ *   node src/post.js ANVS --live                    # Actually post (overrides DRY_RUN)
+ *   node src/post.js ANVS --live -g "Good morning!" # Add greeting to first tweet
+ *   node src/post.js --list                         # List available pending posts
+ * 
+ * Greeting Examples:
+ *   -g "Good morning! ☀️"
+ *   -g "Happy Thanksgiving! 🦃"
+ *   -g "Late night hunter checking in 🌙"
  * 
  * Flow:
  *   1. Run dailyRun.js first (generates content to /output/)
@@ -69,8 +76,13 @@ function listPendingPosts() {
   return Array.from(tickerMap.entries());
 }
 
-function displayPreview(data) {
+function displayPreview(data, greeting = null) {
   const { ticker, classification, tweets, chartPath, tickerData } = data;
+  
+  // Build first tweet with optional greeting
+  const hookWithGreeting = greeting 
+    ? `${greeting}\n\n${tweets.hook}`
+    : tweets.hook;
   
   console.log(`
 ${'═'.repeat(80)}
@@ -79,11 +91,12 @@ ${'═'.repeat(80)}
 
 🏷️  Bucket: ${classification.bucket}
 📊 Peak: +${tickerData?.peakGain?.toFixed(0) || 'N/A'}% → Current: ${tickerData?.currentGain >= 0 ? '+' : ''}${tickerData?.currentGain?.toFixed(0) || 'N/A'}%
+${greeting ? `👋 Greeting: "${greeting}"` : ''}
 
 🐦 TWEET 1 (HOOK + IMAGE):
 ${'─'.repeat(40)}
-${tweets.hook}
-[${tweets.hook.length}/280 chars]
+${hookWithGreeting}
+[${hookWithGreeting.length}/280 chars]${hookWithGreeting.length > 280 ? ' ⚠️ TOO LONG!' : ''}
 `);
 
   const breakdownTweets = Array.isArray(tweets.breakdown) ? tweets.breakdown : [tweets.breakdown];
@@ -146,9 +159,16 @@ Example:
   }
   
   // Get ticker
-  const ticker = args.find(a => !a.startsWith('--'))?.toUpperCase();
+  const ticker = args.find(a => !a.startsWith('--') && !a.startsWith('-g'))?.toUpperCase();
   const previewOnly = args.includes('--preview');
   const liveMode = args.includes('--live');
+  
+  // Parse greeting (-g "text" or --greeting "text")
+  let greeting = null;
+  const greetingIdx = args.findIndex(a => a === '-g' || a === '--greeting');
+  if (greetingIdx !== -1 && args[greetingIdx + 1]) {
+    greeting = args[greetingIdx + 1];
+  }
   
   // Override DRY_RUN if --live flag is passed
   if (liveMode) {
@@ -156,9 +176,15 @@ Example:
   }
   
   if (!ticker) {
-    console.log('Usage: node src/post.js <TICKER> [--preview] [--live]');
-    console.log('  --preview  Show content without posting');
-    console.log('  --live     Actually post to Twitter (overrides DRY_RUN)');
+    console.log('Usage: node src/post.js <TICKER> [--preview] [--live] [-g "greeting"]');
+    console.log('  --preview          Show content without posting');
+    console.log('  --live             Actually post to Twitter (overrides DRY_RUN)');
+    console.log('  -g "text"          Prepend greeting to first tweet');
+    console.log('');
+    console.log('Examples:');
+    console.log('  node src/post.js MNDR --live');
+    console.log('  node src/post.js MNDR --live -g "Good morning! ☀️"');
+    console.log('  node src/post.js MNDR --live -g "Happy Thanksgiving! 🦃"');
     return;
   }
   
@@ -172,7 +198,19 @@ Example:
   }
   
   // Preview
-  displayPreview(data);
+  displayPreview(data, greeting);
+  
+  // Build the actual hook with greeting prepended
+  const hookWithGreeting = greeting 
+    ? `${greeting}\n\n${data.tweets.hook}`
+    : data.tweets.hook;
+  
+  // Check character limit
+  if (hookWithGreeting.length > 280) {
+    console.log(`❌ First tweet is ${hookWithGreeting.length} chars (max 280).`);
+    console.log('   Shorten greeting or edit the hook.\n');
+    return;
+  }
   
   if (previewOnly) {
     console.log('Preview mode - not posting.\n');
@@ -187,6 +225,7 @@ Example:
   
   // Confirm
   console.log('⚠️  Ready to post to Twitter.');
+  if (greeting) console.log(`   Greeting: "${greeting}"`);
   console.log('   Press Ctrl+C within 3 seconds to cancel...\n');
   await new Promise(r => setTimeout(r, 3000));
   
@@ -199,7 +238,7 @@ Example:
       : [data.tweets.breakdown];
     
     const result = await postAlertThread(
-      data.tweets.hook,
+      hookWithGreeting,  // Use hook with greeting prepended
       breakdownTweets,
       data.chartPath
     );
@@ -212,7 +251,7 @@ Example:
       ticker,
       peakGain: data.tickerData?.peakGain,
       currentGain: data.tickerData?.currentGain
-    }, data.classification?.bucket, 'Posted via post.js');
+    }, data.classification?.bucket, greeting ? `Posted with greeting: ${greeting}` : 'Posted via post.js');
     
     console.log(`   Recorded in tweet history.\n`);
     
