@@ -1,0 +1,67 @@
+{
+  "ticker": "INHD",
+  "generatedAt": "2025-11-27T02:55:57.995Z",
+  "classification": {
+    "bucket": "CASE_STUDY",
+    "reason": "Peaked 399%, now -67% — crashed 467% from peak"
+  },
+  "tweets": {
+    "hook": "INHD ran +400% then crashed -467% in 7 days. Here's the dilution pattern 🧵",
+    "breakdown": "INHD spiked to a 399.5% gain post-ATM filing on 11/13, but it's now down 67.4%. Form 424B5 signals potential dilution. At $0.23 with a $1.7M market cap, retail got burned chasing the hype.",
+    "hashtags": [
+      "#DilutionWatch",
+      "#PennyStocks",
+      "#TradingLessons"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/INHD_1764212157981.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "entry",
+        "startDay": 1,
+        "endDay": 5,
+        "label": "Early Entry"
+      },
+      {
+        "type": "danger",
+        "startDay": 6,
+        "endDay": 7,
+        "label": "Crash Zone"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 5,
+        "direction": "up",
+        "label": "+399.5% Peak"
+      },
+      {
+        "day": 7,
+        "direction": "down",
+        "label": "-467% Crash"
+      }
+    ],
+    "circles": [
+      {
+        "day": 5,
+        "target": "high",
+        "label": "Peak"
+      },
+      {
+        "day": 7,
+        "target": "low",
+        "label": "Low"
+      }
+    ],
+    "volumeNote": "Volume surged on spike, then faded post-peak.",
+    "overallStyle": "bearish_confirmed"
+  },
+  "tickerData": {
+    "price": 0.2255,
+    "marketCap": 1747142,
+    "peakGain": 399.49326769943536,
+    "currentGain": -67.35196177790647,
+    "pullback": 466.84522947734183
+  }
+}

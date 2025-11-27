@@ -31,10 +31,21 @@ const HISTORY_FILE = path.join(__dirname, '..', 'data', 'tweet_history.json');
 /**
  * Classify a ticker into one of three content buckets
  * @param {Object} ticker - Enriched ticker data from atmScanner
- * @returns {Object} - { bucket, reason, tweetable }
+ * @returns {Object} - { bucket, reason, tweetable, quality }
  */
 export function classifyTicker(ticker) {
-  const { peakGain, currentGain, pullback, peakDay } = ticker;
+  const { peakGain, currentGain, pullback, peakDay, isSameDaySpikeCrash, rampDays } = ticker;
+  
+  // Quality assessment for educational value
+  // Ideal: multi-day ramp, visible peak day, then decline
+  // Bad: same-day spike+crash (happens too fast to be educational)
+  const hasVisibleRamp = rampDays >= 2 || !isSameDaySpikeCrash;
+  const qualityScore = hasVisibleRamp ? 'GOOD' : 'POOR';
+  const qualityNote = isSameDaySpikeCrash 
+    ? '⚠️ Same-day spike+crash (spike and dump on one candle)' 
+    : rampDays >= 2 
+      ? `✓ ${rampDays}-day ramp visible` 
+      : '✓ Normal pattern';
   
   // CASE STUDY: Already crashed (pullback > 50% from peak)
   // The opportunity passed, but great educational content
@@ -45,7 +56,9 @@ export function classifyTicker(ticker) {
       reason: `Peaked ${peakGain.toFixed(0)}%, now ${currentGain.toFixed(0)}% — crashed ${pullback.toFixed(0)}% from peak`,
       headline: `Case Study: ${ticker.ticker} crashed after ATM dilution`,
       angle: 'post_mortem',
-      tweetable: true
+      tweetable: hasVisibleRamp, // Skip if same-day spike (not educational)
+      quality: qualityScore,
+      qualityNote
     };
   }
   
@@ -66,7 +79,9 @@ export function classifyTicker(ticker) {
       reason: `Peak ${peakGain.toFixed(0)}% on day ${peakDay}, pullback ${pullback.toFixed(0)}%, still at ${currentGain.toFixed(0)}%`,
       headline: `Alert: ${ticker.ticker} showing dilution signals after ${peakGain.toFixed(0)}% run`,
       angle: 'live_alert',
-      tweetable: true
+      tweetable: true,
+      quality: qualityScore,
+      qualityNote
     };
   }
   
@@ -99,7 +114,9 @@ export function classifyTicker(ticker) {
       reason,
       headline: `Watching: ${ticker.ticker} with ATM filing — ${peakGain.toFixed(0)}% peak`,
       angle,
-      tweetable: true
+      tweetable: true,
+      quality: qualityScore,
+      qualityNote
     };
   }
   
@@ -110,7 +127,9 @@ export function classifyTicker(ticker) {
     reason: `Only ${peakGain.toFixed(0)}% peak — not significant enough`,
     headline: null,
     angle: null,
-    tweetable: false
+    tweetable: false,
+    quality: 'N/A',
+    qualityNote: 'Insufficient price movement'
   };
 }
 
@@ -168,6 +187,17 @@ export function recordTweet(ticker, bucket, notes = '') {
 export function shouldTweet(ticker, classification) {
   const history = loadHistory();
   const previousTweets = history.tweets.filter(t => t.ticker === ticker.ticker);
+  
+  // First check if classification says it's tweetable
+  if (!classification.tweetable) {
+    return { 
+      shouldTweet: false, 
+      reason: classification.quality === 'POOR' 
+        ? `Poor quality pattern: ${classification.qualityNote}` 
+        : 'Does not meet tweetable criteria',
+      previousTweets 
+    };
+  }
   
   if (previousTweets.length === 0) {
     return { shouldTweet: true, reason: 'Never tweeted about this ticker', previousTweets };

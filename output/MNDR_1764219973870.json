@@ -1,0 +1,68 @@
+{
+  "ticker": "MNDR",
+  "generatedAt": "2025-11-27T05:06:13.870Z",
+  "classification": {
+    "bucket": "CASE_STUDY",
+    "reason": "Peaked 215%, now 54% — crashed 161% from peak"
+  },
+  "tweets": {
+    "hook": "$MNDR spiked +215% only to crash -161% from its peak. Classic dilution play unfolding. 🧵",
+    "breakdown": "ATM filing on 11/13 triggered $MNDR's wild ride: +215.1% peak gain to +54.1% current. Market cap at $2.3M means every share sold matters. Watch for more dilution.",
+    "hashtags": [
+      "#Dilution",
+      "#StockMarket",
+      "#Trading",
+      "#SmallCap"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/MNDR_1764219973854.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "entry",
+        "startDay": 1,
+        "endDay": 4,
+        "label": "Entry Spike"
+      },
+      {
+        "type": "danger",
+        "startDay": 5,
+        "endDay": 7,
+        "label": "Crash Zone"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 4,
+        "direction": "up",
+        "label": "+215% Peak"
+      },
+      {
+        "day": 7,
+        "direction": "down",
+        "label": "-161% Crash"
+      }
+    ],
+    "circles": [
+      {
+        "day": 4,
+        "target": "high",
+        "label": "Peak"
+      },
+      {
+        "day": 7,
+        "target": "low",
+        "label": "Pullback Low"
+      }
+    ],
+    "volumeNote": "Sharp increase in volume as price spiked and crashed.",
+    "overallStyle": "bearish_confirmed"
+  },
+  "tickerData": {
+    "price": 2.65,
+    "marketCap": 2347253,
+    "peakGain": 215.11627906976747,
+    "currentGain": 54.06976744186046,
+    "pullback": 161.04651162790702
+  }
+}

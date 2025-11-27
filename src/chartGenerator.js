@@ -3,16 +3,18 @@
  * 
  * Takes:
  *   - Ticker symbol (fetches real candle data from FMP)
- *   - Chart annotations from OpenAI (zones, arrows, circles, labels)
+ *   - Chart annotations from OpenAI (simplified: just key labels)
  * 
  * Outputs:
  *   - PNG image saved to ./output/charts/
  * 
- * Style: Dark mode, clean, professional
+ * Style: Dark mode, clean, professional, minimal clutter
  * 
- * Usage:
- *   import { generateChart } from './chartGenerator.js';
- *   await generateChart(ticker, candles, annotations, options);
+ * Key design decisions:
+ *   - Only show 7 days (matches analysis window)
+ *   - Auto-detect peak and current candles from data
+ *   - Highlight key candles with glow effect (no circles)
+ *   - Minimal text annotations
  */
 
 import 'dotenv/config';
@@ -35,47 +37,34 @@ const COLORS = {
   // Background
   bg: '#0d1117',
   bgCard: '#161b22',
-  bgSubtle: '#21262d',
   
   // Text
-  textPrimary: '#e6edf3',
+  textPrimary: '#ffffff',
   textSecondary: '#8b949e',
-  textMuted: '#484f58',
+  textMuted: '#6e7681',
   
   // Candles
-  bullish: '#3fb950',      // Green
-  bearish: '#f85149',      // Red
-  wick: '#8b949e',
+  bullish: '#3fb950',
+  bearish: '#f85149',
   
-  // Annotations
-  entryZone: 'rgba(63, 185, 80, 0.15)',      // Green tint
-  dangerZone: 'rgba(248, 81, 73, 0.15)',     // Red tint
-  watchZone: 'rgba(136, 146, 157, 0.15)',    // Gray tint
-  
-  arrowUp: '#3fb950',
-  arrowDown: '#f85149',
-  
-  circleEntry: '#3fb950',
-  circleDanger: '#f85149',
-  circleNeutral: '#58a6ff',
+  // Zone backgrounds (vertical strips behind candles)
+  zoneEntry: 'rgba(63, 185, 80, 0.12)',      // Green - buy zone
+  zoneHold: 'rgba(210, 153, 34, 0.12)',      // Yellow/amber - hold/watch
+  zoneDanger: 'rgba(248, 81, 73, 0.12)',     // Red - danger/crash zone
   
   // Volume
-  volumeBullish: 'rgba(63, 185, 80, 0.4)',
-  volumeBearish: 'rgba(248, 81, 73, 0.4)',
+  volumeBullish: 'rgba(63, 185, 80, 0.6)',
+  volumeBearish: 'rgba(248, 81, 73, 0.6)',
   
   // Grid
   grid: '#21262d',
-  
-  // Accent
-  accent: '#58a6ff',
-  warning: '#d29922',
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // FETCH CANDLE DATA
 // ═══════════════════════════════════════════════════════════════════════════════
 
-async function fetchCandles(symbol, days = 14) {
+async function fetchCandles(symbol, days = 7) {
   const url = `${FMP_BASE}/historical-price-eod/full?symbol=${symbol}&apikey=${FMP_KEY}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Failed to fetch candles for ${symbol}`);
@@ -100,44 +89,61 @@ function ensureOutputDir() {
 }
 
 /**
- * Generate an annotated candlestick chart
+ * Generate a clean, annotated candlestick chart
  * 
  * @param {string} ticker - Stock symbol
- * @param {Array} candles - Array of { date, open, high, low, close, volume }
- * @param {Object} annotations - From OpenAI: { highlightZones, arrows, circles, volumeNote, overallStyle }
- * @param {Object} options - { title, subtitle, bucket }
+ * @param {Array} candles - Array of { date, open, high, low, close, volume } - should be 7 days
+ * @param {Object} annotations - { peakLabel, crashLabel, volumeNote } - simplified
+ * @param {Object} options - { bucket, peakGain, currentGain, pullback }
  */
 export async function generateChart(ticker, candles, annotations = {}, options = {}) {
   ensureOutputDir();
   
+  // Use last 7 candles only
+  const chartCandles = candles.slice(-7);
+  
   const width = 1200;
-  const height = 675; // 16:9 aspect ratio, good for Twitter
-  const padding = { top: 80, right: 60, bottom: 100, left: 80 };
+  const height = 675;
+  // Increased right padding for annotation panel
+  const padding = { top: 90, right: 180, bottom: 80, left: 100 };
   
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext('2d');
   
-  // Chart area dimensions
   const chartWidth = width - padding.left - padding.right;
-  const priceChartHeight = (height - padding.top - padding.bottom) * 0.7;
-  const volumeChartHeight = (height - padding.top - padding.bottom) * 0.25;
-  const gapHeight = (height - padding.top - padding.bottom) * 0.05;
+  const priceChartHeight = (height - padding.top - padding.bottom) * 0.72;
+  const volumeChartHeight = (height - padding.top - padding.bottom) * 0.22;
+  const gapHeight = (height - padding.top - padding.bottom) * 0.06;
   
-  // Calculate price range
-  const prices = candles.flatMap(c => [c.high, c.low]);
-  const minPrice = Math.min(...prices) * 0.98;
-  const maxPrice = Math.max(...prices) * 1.02;
+  // Auto-detect peak and low from data
+  let peakIdx = 0;
+  let peakHigh = 0;
+  let lowIdx = 0;
+  let lowPrice = Infinity;
+  
+  chartCandles.forEach((c, i) => {
+    if (c.high > peakHigh) { peakHigh = c.high; peakIdx = i; }
+    if (c.low < lowPrice) { lowPrice = c.low; lowIdx = i; }
+  });
+  
+  // Calculate price range with padding
+  const prices = chartCandles.flatMap(c => [c.high, c.low]);
+  const dataMin = Math.min(...prices);
+  const dataMax = Math.max(...prices);
+  const priceBuffer = (dataMax - dataMin) * 0.15;
+  const minPrice = dataMin - priceBuffer;
+  const maxPrice = dataMax + priceBuffer;
   const priceRange = maxPrice - minPrice;
   
-  // Calculate volume range
-  const volumes = candles.map(c => c.volume);
+  // Volume range
+  const volumes = chartCandles.map(c => c.volume);
   const maxVolume = Math.max(...volumes) * 1.1;
   
-  // Helper functions
-  const xScale = (i) => padding.left + (i + 0.5) * (chartWidth / candles.length);
-  const yPriceScale = (price) => padding.top + priceChartHeight - ((price - minPrice) / priceRange) * priceChartHeight;
-  const yVolumeScale = (vol) => padding.top + priceChartHeight + gapHeight + volumeChartHeight - (vol / maxVolume) * volumeChartHeight;
-  const candleWidth = Math.max(4, (chartWidth / candles.length) * 0.6);
+  // Scale helpers
+  const xScale = (i) => padding.left + (i + 0.5) * (chartWidth / chartCandles.length);
+  const yPrice = (price) => padding.top + priceChartHeight - ((price - minPrice) / priceRange) * priceChartHeight;
+  const yVolume = (vol) => padding.top + priceChartHeight + gapHeight + volumeChartHeight - (vol / maxVolume) * volumeChartHeight;
+  const candleWidth = Math.min(60, (chartWidth / chartCandles.length) * 0.65);
   
   // ─────────────────────────────────────────────────────────────────────────────
   // BACKGROUND
@@ -146,77 +152,144 @@ export async function generateChart(ticker, candles, annotations = {}, options =
   ctx.fillStyle = COLORS.bg;
   ctx.fillRect(0, 0, width, height);
   
-  // Card background for chart area
+  // Subtle card background
   ctx.fillStyle = COLORS.bgCard;
-  roundRect(ctx, padding.left - 10, padding.top - 10, chartWidth + 20, priceChartHeight + gapHeight + volumeChartHeight + 20, 8);
+  roundRect(ctx, padding.left - 15, padding.top - 15, chartWidth + 30, priceChartHeight + gapHeight + volumeChartHeight + 30, 12);
   ctx.fill();
   
   // ─────────────────────────────────────────────────────────────────────────────
-  // HIGHLIGHT ZONES (before candles so they're behind)
+  // GRID LINES with nice round Y-axis values
   // ─────────────────────────────────────────────────────────────────────────────
   
-  if (annotations.highlightZones) {
-    for (const zone of annotations.highlightZones) {
-      const startIdx = Math.max(0, zone.startDay - 1);
-      const endIdx = Math.min(candles.length - 1, zone.endDay - 1);
-      
-      const x1 = xScale(startIdx) - candleWidth;
-      const x2 = xScale(endIdx) + candleWidth;
-      
-      let color;
-      if (zone.type === 'entry') color = COLORS.entryZone;
-      else if (zone.type === 'danger') color = COLORS.dangerZone;
-      else color = COLORS.watchZone;
-      
-      ctx.fillStyle = color;
-      ctx.fillRect(x1, padding.top, x2 - x1, priceChartHeight);
-      
-      // Zone label at top
-      ctx.fillStyle = COLORS.textSecondary;
-      ctx.font = '11px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(zone.label, (x1 + x2) / 2, padding.top + 15);
+  // Calculate nice round tick values
+  function getNiceTickValues(min, max, targetTicks = 4) {
+    const range = max - min;
+    const roughStep = range / (targetTicks - 1);
+    
+    // Find a nice step size (0.25, 0.50, 1.00, 2.00, 5.00, etc.)
+    const magnitude = Math.pow(10, Math.floor(Math.log10(roughStep)));
+    const residual = roughStep / magnitude;
+    let niceStep;
+    if (residual <= 1.5) niceStep = magnitude;
+    else if (residual <= 3) niceStep = 2 * magnitude;
+    else if (residual <= 7) niceStep = 5 * magnitude;
+    else niceStep = 10 * magnitude;
+    
+    // Round min down and max up to nice values
+    const niceMin = Math.floor(min / niceStep) * niceStep;
+    const niceMax = Math.ceil(max / niceStep) * niceStep;
+    
+    const ticks = [];
+    for (let v = niceMin; v <= niceMax + niceStep * 0.01; v += niceStep) {
+      if (v >= min - niceStep * 0.5 && v <= max + niceStep * 0.5) {
+        ticks.push(v);
+      }
     }
+    return ticks;
   }
   
-  // ─────────────────────────────────────────────────────────────────────────────
-  // GRID LINES
-  // ─────────────────────────────────────────────────────────────────────────────
+  const priceTicks = getNiceTickValues(dataMin, dataMax, 4);
   
   ctx.strokeStyle = COLORS.grid;
   ctx.lineWidth = 1;
-  ctx.setLineDash([2, 4]);
+  ctx.setLineDash([]);
   
-  // Horizontal price grid
-  const priceStep = priceRange / 4;
-  for (let i = 0; i <= 4; i++) {
-    const price = minPrice + priceStep * i;
-    const y = yPriceScale(price);
+  for (const price of priceTicks) {
+    const y = yPrice(price);
     ctx.beginPath();
     ctx.moveTo(padding.left, y);
     ctx.lineTo(padding.left + chartWidth, y);
     ctx.stroke();
     
-    // Price label
-    ctx.fillStyle = COLORS.textMuted;
-    ctx.font = '11px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
+    // Price label - larger font
+    ctx.fillStyle = COLORS.textSecondary;
+    ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
     ctx.textAlign = 'right';
-    ctx.fillText(`$${price.toFixed(2)}`, padding.left - 10, y + 4);
+    // Format nicely: $1.00 or $0.50
+    const formatted = price < 10 ? `$${price.toFixed(2)}` : `$${price.toFixed(1)}`;
+    ctx.fillText(formatted, padding.left - 15, y + 5);
   }
   
-  ctx.setLineDash([]);
+  // ─────────────────────────────────────────────────────────────────────────────
+  // ZONE BACKGROUNDS (green → yellow → red)
+  // Labels go at BOTTOM of zones to avoid overlap with PEAK label
+  // ─────────────────────────────────────────────────────────────────────────────
+  
+  // Zone label Y position - near bottom of price chart area
+  const zoneLabelY = padding.top + priceChartHeight - 15;
+  
+  if (options.bucket === 'CASE_STUDY' || options.bucket === 'ACTIONABLE') {
+    // Ramp zone: from start to before peak (when price was rising)
+    if (peakIdx > 0) {
+      const x1 = xScale(0) - candleWidth;
+      const x2 = xScale(peakIdx - 1) + candleWidth;
+      ctx.fillStyle = COLORS.zoneEntry;
+      ctx.fillRect(x1, padding.top, x2 - x1, priceChartHeight);
+      
+      // Zone label at bottom
+      ctx.fillStyle = COLORS.bullish;
+      ctx.font = 'bold 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText('RAMP', (x1 + x2) / 2, zoneLabelY);
+    }
+    
+    // Peak zone: the peak candle itself
+    {
+      const x1 = xScale(peakIdx) - candleWidth;
+      const x2 = xScale(peakIdx) + candleWidth;
+      ctx.fillStyle = COLORS.zoneHold;
+      ctx.fillRect(x1, padding.top, x2 - x1, priceChartHeight);
+      
+      // No label here - PEAK annotation goes in sidebar
+    }
+    
+    // Dilution zone: after peak to end
+    if (peakIdx < chartCandles.length - 1) {
+      const x1 = xScale(peakIdx + 1) - candleWidth;
+      const x2 = xScale(chartCandles.length - 1) + candleWidth;
+      ctx.fillStyle = COLORS.zoneDanger;
+      ctx.fillRect(x1, padding.top, x2 - x1, priceChartHeight);
+      
+      // Zone label at bottom
+      ctx.fillStyle = COLORS.bearish;
+      ctx.font = 'bold 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText('DILUTION', (x1 + x2) / 2, zoneLabelY);
+    }
+  } else if (options.bucket === 'WATCH_LIST') {
+    // Watch list: all yellow/amber
+    const x1 = xScale(0) - candleWidth;
+    const x2 = xScale(chartCandles.length - 1) + candleWidth;
+    ctx.fillStyle = COLORS.zoneHold;
+    ctx.fillRect(x1, padding.top, x2 - x1, priceChartHeight);
+    
+    // Zone label at bottom
+    ctx.fillStyle = '#d29922';
+    ctx.font = 'bold 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('WATCHING', (x1 + x2) / 2, zoneLabelY);
+  }
   
   // ─────────────────────────────────────────────────────────────────────────────
-  // VOLUME BARS
+  // VOLUME SECTION with label
   // ─────────────────────────────────────────────────────────────────────────────
   
-  for (let i = 0; i < candles.length; i++) {
-    const candle = candles[i];
+  // Volume label on the left
+  const volumeTop = padding.top + priceChartHeight + gapHeight;
+  ctx.fillStyle = COLORS.textSecondary;
+  ctx.font = 'bold 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+  ctx.textAlign = 'right';
+  ctx.fillText('VOL', padding.left - 15, volumeTop + volumeChartHeight / 2 + 4);
+  
+  // Volume bars
+  for (let i = 0; i < chartCandles.length; i++) {
+    const candle = chartCandles[i];
     const x = xScale(i);
     const isBullish = candle.close >= candle.open;
     
     ctx.fillStyle = isBullish ? COLORS.volumeBullish : COLORS.volumeBearish;
-    const barHeight = (candle.volume / maxVolume) * volumeChartHeight;
+    // Minimum bar height of 10px so all bars are visible
+    const barHeight = Math.max(10, (candle.volume / maxVolume) * volumeChartHeight);
     ctx.fillRect(
       x - candleWidth / 2,
       padding.top + priceChartHeight + gapHeight + volumeChartHeight - barHeight,
@@ -225,175 +298,158 @@ export async function generateChart(ticker, candles, annotations = {}, options =
     );
   }
   
-  // Volume label
-  ctx.fillStyle = COLORS.textMuted;
-  ctx.font = '10px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
-  ctx.textAlign = 'left';
-  ctx.fillText('VOLUME', padding.left, padding.top + priceChartHeight + gapHeight + 12);
-  
   // ─────────────────────────────────────────────────────────────────────────────
   // CANDLESTICKS
   // ─────────────────────────────────────────────────────────────────────────────
   
-  for (let i = 0; i < candles.length; i++) {
-    const candle = candles[i];
+  for (let i = 0; i < chartCandles.length; i++) {
+    const candle = chartCandles[i];
     const x = xScale(i);
     const isBullish = candle.close >= candle.open;
-    
     const color = isBullish ? COLORS.bullish : COLORS.bearish;
     
     // Wick
     ctx.strokeStyle = color;
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(x, yPriceScale(candle.high));
-    ctx.lineTo(x, yPriceScale(candle.low));
+    ctx.moveTo(x, yPrice(candle.high));
+    ctx.lineTo(x, yPrice(candle.low));
     ctx.stroke();
     
     // Body
-    const bodyTop = yPriceScale(Math.max(candle.open, candle.close));
-    const bodyBottom = yPriceScale(Math.min(candle.open, candle.close));
-    const bodyHeight = Math.max(1, bodyBottom - bodyTop);
+    const bodyTop = yPrice(Math.max(candle.open, candle.close));
+    const bodyBottom = yPrice(Math.min(candle.open, candle.close));
+    const bodyHeight = Math.max(2, bodyBottom - bodyTop);
     
     ctx.fillStyle = color;
     ctx.fillRect(x - candleWidth / 2, bodyTop, candleWidth, bodyHeight);
+    
+    // Border for body
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x - candleWidth / 2, bodyTop, candleWidth, bodyHeight);
   }
   
   // ─────────────────────────────────────────────────────────────────────────────
-  // DATE LABELS
+  // ANNOTATION SIDEBAR (right side, outside chart area)
   // ─────────────────────────────────────────────────────────────────────────────
   
-  ctx.fillStyle = COLORS.textMuted;
-  ctx.font = '10px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
-  ctx.textAlign = 'center';
+  const sidebarX = padding.left + chartWidth + 25;
   
-  // Show every Nth label to avoid crowding
-  const labelInterval = Math.ceil(candles.length / 7);
-  for (let i = 0; i < candles.length; i += labelInterval) {
-    const date = new Date(candles[i].date);
-    const label = `${date.getMonth() + 1}/${date.getDate()}`;
-    ctx.fillText(label, xScale(i), height - padding.bottom + 45);
+  // Peak annotation
+  if (options.peakGain) {
+    const peakY = yPrice(peakHigh);
+    
+    // Small dot on the peak candle
+    ctx.fillStyle = COLORS.bullish;
+    ctx.beginPath();
+    ctx.arc(xScale(peakIdx), yPrice(peakHigh), 4, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Line to sidebar
+    ctx.strokeStyle = COLORS.bullish;
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(xScale(peakIdx) + 5, peakY);
+    ctx.lineTo(sidebarX - 5, peakY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    
+    // Label in sidebar
+    ctx.fillStyle = COLORS.bullish;
+    ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText('PEAK', sidebarX, peakY - 8);
+    ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+    ctx.fillText(`+${options.peakGain.toFixed(0)}%`, sidebarX, peakY + 16);
+  }
+  
+  // Current/crash annotation (for case study)
+  if (options.bucket === 'CASE_STUDY' && options.currentGain !== undefined) {
+    const crashIdx = chartCandles.length - 1;
+    const crashCandle = chartCandles[crashIdx];
+    const crashY = yPrice(crashCandle.close);
+    
+    // Small dot on the crash candle
+    ctx.fillStyle = COLORS.bearish;
+    ctx.beginPath();
+    ctx.arc(xScale(crashIdx), crashY, 4, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Line to sidebar
+    ctx.strokeStyle = COLORS.bearish;
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(xScale(crashIdx) + 5, crashY);
+    ctx.lineTo(sidebarX - 5, crashY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    
+    // Label in sidebar
+    ctx.fillStyle = COLORS.bearish;
+    ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText('NOW', sidebarX, crashY - 8);
+    ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+    ctx.fillText(`${options.currentGain.toFixed(0)}%`, sidebarX, crashY + 16);
   }
   
   // ─────────────────────────────────────────────────────────────────────────────
-  // ARROWS
+  // DATE LABELS - larger and clearer
   // ─────────────────────────────────────────────────────────────────────────────
-  
-  if (annotations.arrows) {
-    for (const arrow of annotations.arrows) {
-      const idx = Math.min(candles.length - 1, Math.max(0, arrow.day - 1));
-      const candle = candles[idx];
-      const x = xScale(idx);
-      
-      if (arrow.direction === 'up') {
-        const y = yPriceScale(candle.high) - 25;
-        drawArrow(ctx, x, y + 20, x, y, COLORS.arrowUp);
-        
-        ctx.fillStyle = COLORS.arrowUp;
-        ctx.font = 'bold 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(arrow.label, x, y - 5);
-      } else {
-        const y = yPriceScale(candle.low) + 25;
-        drawArrow(ctx, x, y - 20, x, y, COLORS.arrowDown);
-        
-        ctx.fillStyle = COLORS.arrowDown;
-        ctx.font = 'bold 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(arrow.label, x, y + 18);
-      }
-    }
-  }
-  
-  // ─────────────────────────────────────────────────────────────────────────────
-  // CIRCLES
-  // ─────────────────────────────────────────────────────────────────────────────
-  
-  if (annotations.circles) {
-    for (const circle of annotations.circles) {
-      const idx = Math.min(candles.length - 1, Math.max(0, circle.day - 1));
-      const candle = candles[idx];
-      const x = xScale(idx);
-      
-      let price;
-      if (circle.target === 'high') price = candle.high;
-      else if (circle.target === 'low') price = candle.low;
-      else price = candle.close;
-      
-      const y = yPriceScale(price);
-      
-      // Determine color based on context
-      let color = COLORS.circleNeutral;
-      if (circle.label.toLowerCase().includes('peak') || circle.label.toLowerCase().includes('entry')) {
-        color = COLORS.circleEntry;
-      } else if (circle.label.toLowerCase().includes('crash') || circle.label.toLowerCase().includes('low') || circle.label.toLowerCase().includes('danger')) {
-        color = COLORS.circleDanger;
-      }
-      
-      // Draw circle
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(x, y, 15, 0, Math.PI * 2);
-      ctx.stroke();
-      
-      // Label
-      ctx.fillStyle = color;
-      ctx.font = '10px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
-      ctx.textAlign = 'center';
-      const labelY = circle.target === 'low' ? y + 28 : y - 22;
-      ctx.fillText(circle.label, x, labelY);
-    }
-  }
-  
-  // ─────────────────────────────────────────────────────────────────────────────
-  // HEADER
-  // ─────────────────────────────────────────────────────────────────────────────
-  
-  // Ticker
-  ctx.fillStyle = COLORS.textPrimary;
-  ctx.font = 'bold 28px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
-  ctx.textAlign = 'left';
-  ctx.fillText(`$${ticker}`, padding.left, 45);
-  
-  // Subtitle / classification
-  const bucketEmoji = options.bucket === 'CASE_STUDY' ? '📚' : options.bucket === 'WATCH_LIST' ? '👀' : '🎯';
-  const bucketLabel = options.bucket === 'CASE_STUDY' ? 'Case Study' : options.bucket === 'WATCH_LIST' ? 'Watch List' : 'Actionable';
   
   ctx.fillStyle = COLORS.textSecondary;
-  ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
-  ctx.fillText(`${bucketEmoji} ${bucketLabel}`, padding.left + 120, 45);
+  ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+  ctx.textAlign = 'center';
   
-  // Price info on right
-  const lastCandle = candles[candles.length - 1];
-  const firstCandle = candles[0];
-  const totalChange = ((lastCandle.close - firstCandle.open) / firstCandle.open) * 100;
-  
-  ctx.textAlign = 'right';
-  ctx.fillStyle = COLORS.textPrimary;
-  ctx.font = 'bold 20px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
-  ctx.fillText(`$${lastCandle.close.toFixed(2)}`, width - padding.right, 38);
-  
-  ctx.fillStyle = totalChange >= 0 ? COLORS.bullish : COLORS.bearish;
-  ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
-  ctx.fillText(`${totalChange >= 0 ? '+' : ''}${totalChange.toFixed(1)}%`, width - padding.right, 55);
-  
-  // ─────────────────────────────────────────────────────────────────────────────
-  // FOOTER - Volume note and branding
-  // ─────────────────────────────────────────────────────────────────────────────
-  
-  if (annotations.volumeNote) {
-    ctx.fillStyle = COLORS.textSecondary;
-    ctx.font = 'italic 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillText(`📊 ${annotations.volumeNote}`, padding.left, height - 20);
+  for (let i = 0; i < chartCandles.length; i++) {
+    const date = new Date(chartCandles[i].date);
+    const label = `${date.getMonth() + 1}/${date.getDate()}`;
+    ctx.fillText(label, xScale(i), height - padding.bottom + 28);
   }
   
-  // Branding
-  ctx.fillStyle = COLORS.textMuted;
-  ctx.font = '11px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
+  // ─────────────────────────────────────────────────────────────────────────────
+  // HEADER - Consolidated on left side
+  // ─────────────────────────────────────────────────────────────────────────────
+  
+  const lastCandle = chartCandles[chartCandles.length - 1];
+  const firstCandle = chartCandles[0];
+  const periodChange = ((lastCandle.close - firstCandle.open) / firstCandle.open) * 100;
+  
+  // Row 1: Ticker + Current Price
+  ctx.fillStyle = COLORS.textPrimary;
+  ctx.font = 'bold 42px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+  ctx.textAlign = 'left';
+  ctx.fillText(`$${ticker}`, padding.left, 50);
+  
+  // Price next to ticker
+  ctx.font = 'bold 28px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+  const tickerWidth = ctx.measureText(`$${ticker}`).width;
+  ctx.fillStyle = COLORS.textSecondary;
+  ctx.fillText(`$${lastCandle.close.toFixed(2)}`, padding.left + tickerWidth + 20, 50);
+  
+  // 7d change next to price
+  ctx.fillStyle = periodChange >= 0 ? COLORS.bullish : COLORS.bearish;
+  ctx.font = 'bold 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+  const priceWidth = ctx.measureText(`$${lastCandle.close.toFixed(2)}`).width;
+  ctx.fillText(`${periodChange >= 0 ? '+' : ''}${periodChange.toFixed(1)}%`, padding.left + tickerWidth + priceWidth + 35, 50);
+  
+  // Row 2: Bucket label
+  const bucketLabel = options.bucket === 'CASE_STUDY' ? 'CASE STUDY' : options.bucket === 'WATCH_LIST' ? 'WATCH LIST' : 'ACTIONABLE';
+  ctx.fillStyle = COLORS.textSecondary;
+  ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
+  ctx.fillText(bucketLabel, padding.left, 72);
+  
+  // ─────────────────────────────────────────────────────────────────────────────
+  // FOOTER - Branding
+  // ─────────────────────────────────────────────────────────────────────────────
+  
+  ctx.fillStyle = COLORS.textSecondary;
+  ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial';
   ctx.textAlign = 'right';
-  ctx.fillText('DilutionHunter', width - padding.right, height - 20);
+  ctx.fillText('@DilutionHunter', width - padding.right, height - 12);
   
   // ─────────────────────────────────────────────────────────────────────────────
   // SAVE
@@ -428,35 +484,6 @@ function roundRect(ctx, x, y, width, height, radius) {
   ctx.closePath();
 }
 
-function drawArrow(ctx, fromX, fromY, toX, toY, color) {
-  const headLength = 8;
-  const angle = Math.atan2(toY - fromY, toX - fromX);
-  
-  ctx.strokeStyle = color;
-  ctx.fillStyle = color;
-  ctx.lineWidth = 2;
-  
-  // Line
-  ctx.beginPath();
-  ctx.moveTo(fromX, fromY);
-  ctx.lineTo(toX, toY);
-  ctx.stroke();
-  
-  // Arrowhead
-  ctx.beginPath();
-  ctx.moveTo(toX, toY);
-  ctx.lineTo(
-    toX - headLength * Math.cos(angle - Math.PI / 6),
-    toY - headLength * Math.sin(angle - Math.PI / 6)
-  );
-  ctx.lineTo(
-    toX - headLength * Math.cos(angle + Math.PI / 6),
-    toY - headLength * Math.sin(angle + Math.PI / 6)
-  );
-  ctx.closePath();
-  ctx.fill();
-}
-
 // ═══════════════════════════════════════════════════════════════════════════════
 // CLI - Test standalone
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -466,30 +493,21 @@ async function main() {
   
   console.log(`\n📈 Generating chart for ${ticker}...\n`);
   
-  // Fetch candles
-  const candles = await fetchCandles(ticker, 14);
+  // Fetch candles (7 days)
+  const candles = await fetchCandles(ticker, 7);
   console.log(`   Fetched ${candles.length} candles`);
   
-  // Sample annotations (normally from OpenAI)
-  const annotations = {
-    highlightZones: [
-      { type: 'entry', startDay: 1, endDay: 5, label: 'Pump Zone' },
-      { type: 'danger', startDay: 6, endDay: 7, label: 'Dilution Crash' }
-    ],
-    arrows: [
-      { day: 5, direction: 'up', label: 'Peak' },
-      { day: 7, direction: 'down', label: 'Crash' }
-    ],
-    circles: [
-      { day: 5, target: 'high', label: 'Peak Gain' },
-      { day: 7, target: 'low', label: 'Post-Dilution Low' }
-    ],
-    volumeNote: 'Notice the volume spike as shares are sold into the market.',
-    overallStyle: 'bearish_confirmed'
-  };
+  // Calculate peak gain for display
+  const startPrice = candles[0].open;
+  const peakHigh = Math.max(...candles.map(c => c.high));
+  const currentPrice = candles[candles.length - 1].close;
+  const peakGain = ((peakHigh - startPrice) / startPrice) * 100;
+  const currentGain = ((currentPrice - startPrice) / startPrice) * 100;
   
-  const filepath = await generateChart(ticker, candles, annotations, {
-    bucket: 'CASE_STUDY'
+  const filepath = await generateChart(ticker, candles, {}, {
+    bucket: 'CASE_STUDY',
+    peakGain,
+    currentGain
   });
   
   console.log(`\n✅ Done! Open: ${filepath}\n`);

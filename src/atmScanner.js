@@ -133,7 +133,24 @@ async function getDailyCandles(symbol, days = 7) {
   const pullback = peakGain - currentGain;
   
   // Find which day had the peak
-  const peakDay = window.findIndex(c => c.high === peakHigh) + 1;
+  const peakDayIdx = window.findIndex(c => c.high === peakHigh);
+  const peakDay = peakDayIdx + 1;
+  
+  // Detect SAME-DAY spike+crash scenario
+  // If peak candle has both the high AND a big red body (close much lower than open)
+  const peakCandle = window[peakDayIdx];
+  const peakIntraday = ((peakCandle.high - peakCandle.open) / peakCandle.open) * 100;
+  const peakCandleBody = ((peakCandle.close - peakCandle.open) / peakCandle.open) * 100;
+  
+  // Same-day if: spike happened intraday (+50%+ from open to high) AND closed red (or near open)
+  const isSameDaySpikeCrash = peakIntraday > 50 && peakCandleBody < peakIntraday * 0.3;
+  
+  // Count "ramp up" days before peak (days with positive closes leading to peak)
+  let rampDays = 0;
+  for (let i = peakDayIdx - 1; i >= 0; i--) {
+    if (window[i].close > window[i].open) rampDays++;
+    else break;
+  }
   
   return {
     startPrice,
@@ -144,6 +161,8 @@ async function getDailyCandles(symbol, days = 7) {
     pullback,        // How far it's fallen from peak
     peakDay,         // Which day (1-7) had the peak
     isRollingOver: pullback > 5 && peakDay < window.length, // Peaked earlier, now falling
+    isSameDaySpikeCrash, // Peak and crash on same candle
+    rampDays,        // Number of green candles before peak
     candles: window
   };
 }
@@ -213,6 +232,8 @@ async function scanATMFilings(days = 30, runFullAnalysis = false) {
         pullback: candles.pullback,       // How much it's dropped from peak
         peakDay: candles.peakDay,         // Which day peaked
         isRollingOver: candles.isRollingOver, // Peaked and now falling
+        isSameDaySpikeCrash: candles.isSameDaySpikeCrash, // ⚠️ Spike+crash same day
+        rampDays: candles.rampDays,       // Days of ramp-up before peak
         daysSinceFiling: Math.floor((Date.now() - new Date(filing.fileDate).getTime()) / (24 * 60 * 60 * 1000))
       });
 

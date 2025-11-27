@@ -106,6 +106,11 @@ Generate a JSON response with:
 
 5. **sentiment**: 'bearish'|'cautious'|'neutral' - overall tone for visual styling
 
+6. **rationale**: A 1-2 sentence explanation in plain English of WHY we track this pattern. Example:
+   "We track ATM stocks because companies can sell shares directly into pumps. When retail buys the hype, insiders dump—creating predictable crashes."
+   
+   Keep it simple enough for someone who's never traded to understand. Explain cause and effect.
+
 Respond ONLY with valid JSON, no markdown code blocks.`;
 }
 

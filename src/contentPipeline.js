@@ -95,6 +95,12 @@ Generate a JSON response with:
 
 5. **sentiment**: 'bearish'|'cautious'|'neutral'
 
+6. **rationale**: A 1-2 sentence plain English explanation of WHY we track this pattern.
+   This helps educate readers who are new to trading. Example:
+   "We track ATM stocks because companies can sell new shares directly into price spikes. When retail buys the hype, the company dumps shares—creating predictable crashes."
+   
+   Keep it simple for someone who's never traded. Explain the cause and effect.
+
 Respond ONLY with valid JSON.`;
 }
 
@@ -139,7 +145,21 @@ async function getTickerData(symbol) {
   const peakGain = ((peakHigh - startPrice) / startPrice) * 100;
   const currentGain = ((currentPrice - startPrice) / startPrice) * 100;
   const pullback = peakGain - currentGain;
-  const peakDay = window.findIndex(c => c.high === peakHigh) + 1;
+  const peakDayIdx = window.findIndex(c => c.high === peakHigh);
+  const peakDay = peakDayIdx + 1;
+  
+  // Detect SAME-DAY spike+crash scenario
+  const peakCandle = window[peakDayIdx];
+  const peakIntraday = ((peakCandle.high - peakCandle.open) / peakCandle.open) * 100;
+  const peakCandleBody = ((peakCandle.close - peakCandle.open) / peakCandle.open) * 100;
+  const isSameDaySpikeCrash = peakIntraday > 50 && peakCandleBody < peakIntraday * 0.3;
+  
+  // Count ramp-up days before peak
+  let rampDays = 0;
+  for (let i = peakDayIdx - 1; i >= 0; i--) {
+    if (window[i].close > window[i].open) rampDays++;
+    else break;
+  }
   
   return {
     ticker: symbol,
@@ -150,6 +170,8 @@ async function getTickerData(symbol) {
     currentGain,
     pullback,
     peakDay,
+    isSameDaySpikeCrash,
+    rampDays,
     // These would come from SEC lookup, hardcoded for now
     fileDate: '2025-11-13',
     form: '424B5',
@@ -184,7 +206,16 @@ async function runPipeline(ticker, options = {}) {
   const tweetDecision = shouldTweet(tickerData, classification);
   console.log(`   ✓ Bucket: ${classification.emoji} ${classification.bucket}`);
   console.log(`   ✓ Reason: ${classification.reason}`);
+  console.log(`   ✓ Quality: ${classification.quality || 'N/A'} - ${classification.qualityNote || ''}`);
   console.log(`   ✓ Should tweet: ${tweetDecision.shouldTweet ? 'YES' : 'NO'} (${tweetDecision.reason})`);
+  
+  // Check quality for educational value
+  if (classification.quality === 'POOR' && !options.force) {
+    console.log(`\n⚠️  QUALITY WARNING: ${classification.qualityNote}`);
+    console.log(`   This pattern may not be ideal for educational content.`);
+    console.log(`   Use --force to generate anyway.\n`);
+    return null;
+  }
   
   if (!tweetDecision.shouldTweet && !options.force) {
     console.log(`\n⚠️  Skipping — already tweeted or doesn't meet criteria.`);
@@ -206,7 +237,12 @@ async function runPipeline(ticker, options = {}) {
     ticker,
     tickerData.candles,
     generated.chartAnnotations,
-    { bucket: classification.bucket }
+    { 
+      bucket: classification.bucket,
+      peakGain: tickerData.peakGain,
+      currentGain: tickerData.currentGain,
+      pullback: tickerData.pullback
+    }
   );
   
   // Step 5: Save output
