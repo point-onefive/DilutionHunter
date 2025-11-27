@@ -84,25 +84,31 @@ function displayPreview(data, greeting = null) {
     ? `${greeting}\n\n${tweets.hook}`
     : tweets.hook;
   
+  const riskLabel = classification.riskCategory || classification.bucket;
+  const riskEmoji = classification.riskScore >= 65 ? '🚨' : '🟡';
+  
   console.log(`
 ${'═'.repeat(80)}
-📱 PREVIEW: $${ticker}
+${riskEmoji} PREVIEW: $${ticker} — ${riskLabel}
 ${'═'.repeat(80)}
 
 🏷️  Bucket: ${classification.bucket}
-📊 Peak: +${tickerData?.peakGain?.toFixed(0) || 'N/A'}% → Current: ${tickerData?.currentGain >= 0 ? '+' : ''}${tickerData?.currentGain?.toFixed(0) || 'N/A'}%
+📊 Risk Score: ${classification.riskScore || 'N/A'}%
+📈 Peak: +${tickerData?.peakGain?.toFixed(0) || 'N/A'}% → Current: ${tickerData?.currentGain >= 0 ? '+' : ''}${tickerData?.currentGain?.toFixed(0) || 'N/A'}%
 ${greeting ? `👋 Greeting: "${greeting}"` : ''}
 
-🐦 TWEET 1 (HOOK + IMAGE):
+🚨 ALERT TWEET (Hook + Image):
 ${'─'.repeat(40)}
 ${hookWithGreeting}
+${'─'.repeat(40)}
 [${hookWithGreeting.length}/280 chars]${hookWithGreeting.length > 280 ? ' ⚠️ TOO LONG!' : ''}
 `);
 
   const breakdownTweets = Array.isArray(tweets.breakdown) ? tweets.breakdown : [tweets.breakdown];
+  console.log(`📝 BREAKDOWN THREAD (${breakdownTweets.length} tweets):`);
   breakdownTweets.forEach((tweet, i) => {
     console.log(`
-💬 TWEET ${i + 2} (THREAD ${i + 1}/${breakdownTweets.length}):
+💬 THREAD ${i + 1}/${breakdownTweets.length}:
 ${'─'.repeat(40)}
 ${tweet}
 [${tweet.length}/280 chars]`);

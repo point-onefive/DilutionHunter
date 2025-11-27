@@ -34,40 +34,44 @@ const FMP_BASE = 'https://financialmodelingprep.com/stable';
 // OPENAI TWEET GENERATION
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const SYSTEM_PROMPT = `You are DilutionHunter, a sharp-eyed analyst who spots dilution patterns in small-cap stocks. 
+const SYSTEM_PROMPT = `You are DilutionHunter, a sharp-eyed analyst who spots dilution patterns in small-cap stocks.
 
-Your style:
-- Professional analyst tone, but accessible to retail traders
-- Data-driven with MULTIPLE dimensions (not just price)
-- Balanced — show both bull and bear cases
-- Actionable — tell people what to WATCH for next
-- Educational — explain every term in plain English
+Your communication style:
+- Short-form, direct, punchy, zero jargon where avoidable
+- Feels like a trader whispering what's about to break
+- Sounds like a signal, not a research paper
+- Risk awareness framing, never trade suggestions
 
-CRITICAL LANGUAGE RULES:
-1. NEVER use an acronym without explaining it in plain English
-2. ATM = "At-The-Market offering (company can sell new shares directly into the market anytime)"
-3. Use analogies: ice cream cones melting, pizza slices, watered-down coffee
-4. Assume reader has ZERO finance knowledge
-5. Sound like a professional analyst, not a hype account
+Two-layer communication:
+1. Fast alert tweet — short, clear, unmistakably bearish
+2. Full breakdown thread — narrative + metrics + thesis
 
-You don't give financial advice — you spot patterns and explain the mechanics.`;
+Language rules:
+- Every acronym explained in plain English
+- ATM = "At-The-Market offering" (company sells new shares directly into market)
+- Use analogies: pizza slices, watered-down coffee
+- Assume reader has ZERO finance knowledge
+- Include framing: "not advice — pattern recognition", "elevated risk profile"
+
+You don't give financial advice — you spot patterns and explain mechanics.`;
 
 function buildPrompt(context) {
-  // Calculate additional metrics for richer analysis
+  // Calculate risk score for categorization
+  const riskScore = calculateRiskScore(context);
+  const alertTone = riskScore >= 65 ? 'HIGH RISK ALERT' : 'WATCH';
+  const alertEmoji = riskScore >= 65 ? '🚨' : '🟡';
+  
+  // Calculate additional metrics
   const marketCapSize = context.marketCap < 50000000 ? 'micro-cap (extremely vulnerable)' :
                         context.marketCap < 100000000 ? 'tiny (very vulnerable)' :
                         context.marketCap < 300000000 ? 'small (vulnerable)' :
                         context.marketCap < 1000000000 ? 'mid-small (moderate risk)' : 'larger (lower risk)';
   
-  const dilutionUrgency = context.daysSinceFiling <= 7 ? 'very fresh - high alert' :
-                          context.daysSinceFiling <= 14 ? 'recent - elevated risk' :
-                          context.daysSinceFiling <= 21 ? 'within window - watching' : 'aging - may have already acted';
-  
-  const spikeIntensity = context.peakGain > 200 ? 'massive spike - extreme dilution incentive' :
-                         context.peakGain > 100 ? 'major spike - strong dilution incentive' :
-                         context.peakGain > 50 ? 'significant spike - notable incentive' : 'moderate move';
+  const filingAge = context.daysSinceFiling <= 3 ? 'just filed' :
+                    context.daysSinceFiling <= 7 ? 'very fresh' :
+                    context.daysSinceFiling <= 14 ? 'recent' : 'within window';
 
-  return `Generate a PROFESSIONAL Twitter thread for this ${context.bucket} ticker.
+  return `Generate a TWO-LAYER Twitter alert for this dilution setup.
 
 ## TICKER DATA
 - Symbol: ${context.ticker}
@@ -76,94 +80,122 @@ function buildPrompt(context) {
 - Market Cap: $${((context.marketCap || 0) / 1e6).toFixed(1)}M — ${marketCapSize}
 
 ## THE FILING
-- Form: 424B5 (SEC permission slip to sell new shares into the market)
+- Form: 424B5 ATM Filing
 - Filing Date: ${context.filingDate}
-- Days Since Filing: ${context.daysSinceFiling} — ${dilutionUrgency}
+- Days Since Filing: ${context.daysSinceFiling} (${filingAge})
 
-## PRICE ACTION (7-day window)
-- Peak Gain: +${context.peakGain?.toFixed(1)}% — ${spikeIntensity}
-- Current Gain: ${context.currentGain >= 0 ? '+' : ''}${context.currentGain?.toFixed(1)}%
-- Pullback from Peak: -${context.pullbackFromPeak?.toFixed(1)}%
-- Peak Day: Day ${context.peakDay} of 7
+## PRICE ACTION
+- Peak Gain: +${context.peakGain?.toFixed(0)}%
+- Current Gain: ${context.currentGain >= 0 ? '+' : ''}${context.currentGain?.toFixed(0)}%
+- Pullback from Peak: -${context.pullbackFromPeak?.toFixed(0)}%
 
-## CLASSIFICATION
+## RISK ASSESSMENT
+- Score: ${riskScore}%
+- Category: ${alertTone}
 - Bucket: ${context.bucket}
-- Reason: ${context.reason}
 
-## GENERATE A 6-TWEET PROFESSIONAL THREAD
+## OUTPUT STRUCTURE — GENERATE EXACTLY THIS:
 
-Return JSON with:
+Return JSON with these fields:
 
-1. **tweetHook** (max 280 chars): Lead with the punchline + numbers. Make it punchy.
-   Example: "$ANVS up +65% after a +75% peak — but an ATM filing 14 days ago makes this move *fragile.* This is how dilution traps form. 🧵"
+### 1. tweetAlert (max 280 chars) — THE FAST ALERT
+This is the HOOK. Must be readable in 3 seconds. 5-7 lines max.
+Format EXACTLY like this template:
 
-2. **tweetBreakdown**: Array of 5 tweets (each max 280 chars). FOLLOW THIS EXACT STRUCTURE:
+"${alertEmoji} Dilution Risk Setup — $${context.ticker}
 
-   **Tweet 1 — What ATM means (plain English)**
-   - Define ATM in simple terms
-   - Use a memorable analogy (ice cream cones, pizza slices, etc.)
-   - Example: "ATM = At-The-Market offering. Company can sell new shares anytime → more supply → weaker price. Like splitting a pizza into more slices — same pie, smaller pieces. 🍕"
-   
-   **Tweet 2 — The Setup (bullet points with SPECIFIC numbers)**
-   Format exactly like this:
-   "Why this caught my eye:
-   • Market cap: $${((context.marketCap || 0) / 1e6).toFixed(0)}M (tiny = vulnerable)
-   • ATM filed: ${context.filingDate} (${context.daysSinceFiling} days ago)
-   • Price spiked +${context.peakGain?.toFixed(0)}% → now ${context.currentGain >= 0 ? '+' : ''}${context.currentGain?.toFixed(0)}%
-   High price + likely cash need = prime dilution setup"
-   
-   **Tweet 3 — Supporting Signals (extra dimensions with numbers)**
-   Format exactly like this:
-   "Additional context:
-   • Volume fading — early signs of distribution
-   • Small float → dilution hits harder per share
-   • ${context.pullbackFromPeak?.toFixed(0)}% off highs — first cracks visible
-   Likely motive: company may need funding soon."
-   
-   **Tweet 4 — What I'm Watching (bear vs bull + trader insight)**
-   Format exactly like this:
-   "Bear thesis builds if:
-   • Heavy red candle with elevated sell volume
-   • Price fails to reclaim highs
-   • ATM usage confirmed
-   
-   Bull case: strong volume breakout → ATM may pause.
-   Traders get trapped when dilution lands during pullbacks — not the run."
-   
-   **Tweet 5 — Takeaway (memorable closer with CTA)**
-   Format exactly like this:
-   "This isn't advice — just pattern recognition.
-   
-   Big spike + small cap + fresh ATM = elevated risk profile.
-   
-   Watch how it reacts to selling pressure — that's where dilution becomes visible. 🦅"
++${context.peakGain?.toFixed(0)}% spike → now ${context.currentGain >= 0 ? '+' : ''}${context.currentGain?.toFixed(0)}%
+ATM filed ${context.filingDate} (${filingAge})
+$${((context.marketCap || 0) / 1e6).toFixed(0)}M cap = vulnerable
+Volume fading from peak
 
-3. **chartAnnotations**: Instructions for the chart:
-   - highlightZones: Array of { type: 'entry'|'danger'|'watch', startDay: 1-14, endDay: 1-14, label: string }
-   - arrows: Array of { day: 1-14, direction: 'up'|'down', label: string }
-   - circles: Array of { day: 1-14, target: 'high'|'low'|'close', label: string }
-   - volumeNote: String describing volume pattern
-   - overallStyle: 'bullish_warning'|'bearish_confirmed'|'neutral_watch'
+Pump → ATM → slow bleed pattern forming
 
-4. **hashtags**: Array of 3-4 accessible hashtags
+Full breakdown below ↓"
 
-5. **sentiment**: 'bearish'|'cautious'|'neutral'
+### 2. tweetBreakdown — Array of 5 tweets (each max 280 chars)
 
-6. **rationale**: One plain-English sentence for someone who knows nothing about stocks.
+**Thread Tweet 1 — ATM Explainer (analogy required)**
+Explain what ATM means in plain English. Use pizza or pie analogy.
+Example: "ATM = At-The-Market offering. Company can sell new shares anytime → more supply → weaker price. Like splitting a pizza into more slices — same pie, smaller pieces. 🍕"
 
-## QUALITY CHECKLIST (follow these)
-✓ INCLUDE THE ACTUAL FILING DATE (e.g., "Filed 11/13")
-✓ Every acronym explained on first use
-✓ At least 4 specific numbers in the thread
-✓ One memorable analogy (pizza, ice cream, coffee)
-✓ Bull AND bear scenarios mentioned
-✓ "Traders get trapped when..." insight line
-✓ Clear "what to watch next" trigger
-✓ Professional but accessible tone
-✓ No financial advice — just pattern spotting
-✓ End with observational CTA (watch, monitor, track)
+**Thread Tweet 2 — The Setup (bullet points with numbers)**
+Why this caught my eye:
+• Market cap: $${((context.marketCap || 0) / 1e6).toFixed(0)}M (tiny = vulnerable)
+• ATM filed: ${context.filingDate} (${context.daysSinceFiling} days ago)
+• Spiked +${context.peakGain?.toFixed(0)}% → now ${context.currentGain >= 0 ? '+' : ''}${context.currentGain?.toFixed(0)}%
+High price + cash need = prime dilution setup
+
+**Thread Tweet 3 — Confirming Signals**
+What to watch for:
+• Heavy red candle with volume
+• Selling pressure expanding
+• Support break without recovery
+• ${context.pullbackFromPeak?.toFixed(0)}% off highs — cracks forming
+Motive: company likely needs funding
+
+**Thread Tweet 4 — Bear vs Bull Scenarios**
+Bear thesis builds if:
+• Red candle + sell volume spike
+• Price fails to reclaim highs
+• ATM usage confirmed
+
+Bull invalidation: strong volume breakout
+
+Traders get trapped when dilution lands during pullbacks — not the run.
+
+**Thread Tweet 5 — Final Takeaway**
+Pattern recognition frame. Risk awareness. Single sentence summary.
+Example: "Not advice — just pattern recognition. Big spike + small cap + fresh ATM = elevated risk profile. Watch how it reacts to selling pressure. 🦅"
+
+### 3. chartAnnotations
+- highlightZones: Array of { type: 'entry'|'danger'|'watch', startDay, endDay, label }
+- arrows: Array of { day, direction: 'up'|'down', label }
+- overallStyle: 'bearish_confirmed'|'cautious_watch'|'neutral_watch'
+
+### 4. hashtags — Array of 3-4 tags like #Stocks #Trading #Dilution
+
+### 5. sentiment — 'bearish'|'cautious'|'neutral'
+
+### 6. riskCategory — '${alertTone}'
+
+## CRITICAL REQUIREMENTS
+✓ Alert tweet must be 5-7 lines, readable in 3 seconds
+✓ Must end alert with "Full breakdown below ↓"
+✓ Include: peak %, current %, ATM age, market cap, volume trend
+✓ Use ${alertEmoji} emoji for ${alertTone} tone
+✓ Every acronym explained
+✓ At least one analogy (pizza, pie, coffee)
+✓ Both bear AND bull scenarios in thread
+✓ "Traders get trapped when..." insight
+✓ No financial advice — pattern spotting only
+✓ Risk framing: "elevated risk profile", "not advice"
 
 Respond ONLY with valid JSON.`;
+}
+
+function calculateRiskScore(context) {
+  let score = 50; // Base score
+  
+  // Filing recency (fresher = higher risk)
+  if (context.daysSinceFiling <= 3) score += 20;
+  else if (context.daysSinceFiling <= 7) score += 15;
+  else if (context.daysSinceFiling <= 14) score += 10;
+  
+  // Peak gain (higher spike = more dilution incentive)
+  if (context.peakGain > 200) score += 15;
+  else if (context.peakGain > 100) score += 10;
+  else if (context.peakGain > 50) score += 5;
+  
+  // Pullback (bigger pullback = dilution may already be happening)
+  if (context.pullbackFromPeak > 50) score += 10;
+  else if (context.pullbackFromPeak > 30) score += 5;
+  
+  // Market cap (smaller = more vulnerable)
+  if (context.marketCap < 50000000) score += 10;
+  else if (context.marketCap < 100000000) score += 5;
+  
+  return Math.min(score, 100);
 }
 
 async function generateContent(context) {
@@ -174,14 +206,28 @@ async function generateContent(context) {
       { role: 'user', content: buildPrompt(context) }
     ],
     temperature: 0.7,
-    max_tokens: 1500
+    max_tokens: 2000
   });
   
   let content = response.choices[0].message.content;
   if (content.includes('```')) {
     content = content.replace(/```json?\n?/g, '').replace(/```/g, '').trim();
   }
-  return JSON.parse(content);
+  
+  const parsed = JSON.parse(content);
+  
+  // Map new field names to expected structure
+  // tweetAlert -> hook (the fast alert)
+  // tweetBreakdown -> breakdown (the thread)
+  return {
+    hook: parsed.tweetAlert || parsed.tweetHook,
+    breakdown: parsed.tweetBreakdown,
+    chartAnnotations: parsed.chartAnnotations,
+    hashtags: parsed.hashtags,
+    sentiment: parsed.sentiment,
+    riskCategory: parsed.riskCategory || (calculateRiskScore(context) >= 65 ? 'HIGH RISK ALERT' : 'WATCH'),
+    rationale: parsed.rationale
+  };
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -297,9 +343,11 @@ export async function runPipeline(ticker, options = {}) {
   console.log(`\n🤖 Step 3: Generating content via OpenAI...`);
   const context = generateGPTContext(tickerData, classification, tweetDecision);
   const generated = await generateContent(context);
-  console.log(`   ✓ Hook: "${generated.tweetHook.slice(0, 50)}..."`);
-  console.log(`   ✓ Breakdown: "${generated.tweetBreakdown.slice(0, 50)}..."`);
-  console.log(`   ✓ Chart annotations: ${generated.chartAnnotations?.arrows?.length || 0} arrows, ${generated.chartAnnotations?.circles?.length || 0} circles`);
+  const riskScore = calculateRiskScore(context);
+  console.log(`   ✓ Risk Score: ${riskScore}% (${generated.riskCategory})`);
+  console.log(`   ✓ Alert: "${generated.hook.slice(0, 50)}..."`);
+  console.log(`   ✓ Thread: ${generated.breakdown?.length || 0} tweets`);
+  console.log(`   ✓ Chart annotations: ${generated.chartAnnotations?.arrows?.length || 0} arrows`);
   
   // Step 4: Generate chart
   console.log(`\n📈 Step 4: Generating chart...`);
@@ -328,11 +376,13 @@ export async function runPipeline(ticker, options = {}) {
     generatedAt: new Date().toISOString(),
     classification: {
       bucket: classification.bucket,
-      reason: classification.reason
+      reason: classification.reason,
+      riskScore: calculateRiskScore(context),
+      riskCategory: generated.riskCategory
     },
     tweets: {
-      hook: generated.tweetHook,
-      breakdown: generated.tweetBreakdown, // Now an array of tweets
+      hook: generated.hook,  // The fast alert tweet
+      breakdown: generated.breakdown, // Array of thread tweets
       hashtags: generated.hashtags
     },
     chartPath,
@@ -352,12 +402,12 @@ export async function runPipeline(ticker, options = {}) {
   console.log(`   ✓ Saved: ${outputPath}`);
   
   // Format breakdown tweets for display
-  const breakdownTweets = Array.isArray(generated.tweetBreakdown) 
-    ? generated.tweetBreakdown 
-    : [generated.tweetBreakdown];
+  const breakdownTweets = Array.isArray(generated.breakdown) 
+    ? generated.breakdown 
+    : [generated.breakdown];
   
   const breakdownDisplay = breakdownTweets.map((tweet, i) => {
-    return `📱 TWEET ${i + 2} (Reply ${i + 1}):
+    return `📱 THREAD ${i + 1}/${breakdownTweets.length}:
 ────────────────────────────────────────────────────────────────────────────────
 ${tweet}
 ────────────────────────────────────────────────────────────────────────────────
@@ -367,16 +417,17 @@ ${tweet}
   // Summary
   console.log(`
 ${'═'.repeat(80)}
-✅ PIPELINE COMPLETE
+✅ PIPELINE COMPLETE — ${generated.riskCategory}
 ${'═'.repeat(80)}
 
-📱 TWEET 1 (Hook + Image):
+🚨 ALERT TWEET (Hook + Image):
 ────────────────────────────────────────────────────────────────────────────────
-${generated.tweetHook}
+${generated.hook}
 ────────────────────────────────────────────────────────────────────────────────
-[${generated.tweetHook.length}/280 chars]
+[${generated.hook.length}/280 chars]
 📎 Attach image: ${chartPath}
 
+📝 BREAKDOWN THREAD:
 ${breakdownDisplay}
 
 🏷️  Hashtags: ${generated.hashtags?.join(' ') || 'None'}
