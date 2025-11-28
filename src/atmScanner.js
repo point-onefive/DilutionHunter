@@ -51,7 +51,7 @@ function extractTicker(displayName) {
   return match ? match[1] : null;
 }
 
-async function getRecentATMFilings(days = 30) {
+export async function getRecentATMFilings(days = 30) {
   const endDate = new Date().toISOString().split('T')[0];
   const startDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
 
@@ -381,17 +381,22 @@ async function scanATMFilings(days = 30, runFullAnalysis = false) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// CLI
+// CLI - Only run when executed directly, not when imported
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const args = process.argv.slice(2);
-const daysArg = args.find(a => a.startsWith('--days='));
-const days = daysArg ? parseInt(daysArg.split('=')[1]) : 30;
-const runAnalysis = args.includes('--analyze');
+// Check if this file is being run directly (not imported)
+const isMainModule = import.meta.url === `file://${process.argv[1]}`;
 
-try {
-  await scanATMFilings(days, runAnalysis);
-} catch (err) {
-  console.error('❌ Scanner error:', err.message);
-  process.exit(1);
+if (isMainModule) {
+  const args = process.argv.slice(2);
+  const daysArg = args.find(a => a.startsWith('--days='));
+  const days = daysArg ? parseInt(daysArg.split('=')[1]) : 30;
+  const runAnalysis = args.includes('--analyze');
+
+  try {
+    await scanATMFilings(days, runAnalysis);
+  } catch (err) {
+    console.error('❌ Scanner error:', err.message);
+    process.exit(1);
+  }
 }
