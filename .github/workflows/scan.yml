@@ -36,6 +36,8 @@ env:
 jobs:
   scan:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Allow pushing commits
     
     steps:
       - name: Checkout repository
@@ -79,6 +81,8 @@ jobs:
   # Separate job for performance updates (runs once per day after market close)
   performance_update:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Allow pushing commits
     # Only run at end of day
     if: github.event.schedule == '0 22 * * 1-5' || github.event_name == 'workflow_dispatch'
     needs: scan

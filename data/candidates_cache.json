@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-11-27T08:24:21.766Z",
+  "timestamp": "2025-11-27T18:03:10.925Z",
   "candidates": [
     {
       "ticker": "MSTR",
@@ -91,14 +91,14 @@
         {
           "symbol": "MSTR",
           "date": "2025-11-26",
-          "open": 173.6,
-          "high": 180.61,
+          "open": 173.69,
+          "high": 180.63,
           "low": 169.7,
           "close": 175.64,
-          "volume": 19846688,
-          "change": 2.04,
-          "changePercent": 1.17512,
-          "vwap": 175.32
+          "volume": 20016529,
+          "change": 1.95,
+          "changePercent": 1.12,
+          "vwap": 174.915
         }
       ],
       "daysSinceFiling": 23,
@@ -212,10 +212,10 @@
           "high": 4.52,
           "low": 4.27,
           "close": 4.49,
-          "volume": 626197,
+          "volume": 698173,
           "change": 0.2,
-          "changePercent": 4.662,
-          "vwap": 4.43
+          "changePercent": 4.66,
+          "vwap": 4.3925
         }
       ],
       "daysSinceFiling": 14,
@@ -325,14 +325,14 @@
         {
           "symbol": "ALT",
           "date": "2025-11-26",
-          "open": 5.15,
+          "open": 5.11,
           "high": 5.31,
           "low": 5.1,
           "close": 5.17,
-          "volume": 2551391,
-          "change": 0.02,
-          "changePercent": 0.38834951,
-          "vwap": 5.19
+          "volume": 2561290,
+          "change": 0.06,
+          "changePercent": 1.17,
+          "vwap": 5.1725
         }
       ],
       "daysSinceFiling": 21,
@@ -442,14 +442,14 @@
         {
           "symbol": "WEC",
           "date": "2025-11-26",
-          "open": 111.79,
-          "high": 112.4,
+          "open": 111.62,
+          "high": 112.41,
           "low": 111.49,
           "close": 112.24,
-          "volume": 1324851,
-          "change": 0.45,
-          "changePercent": 0.40254048,
-          "vwap": 112.04
+          "volume": 1324900,
+          "change": 0.62,
+          "changePercent": 0.55546,
+          "vwap": 111.94
         }
       ],
       "daysSinceFiling": 27,
@@ -593,7 +593,7 @@
       "form": "424B5",
       "cik": "0001595248",
       "price": 2.9,
-      "marketCap": 1941275,
+      "marketCap": 4732339,
       "peakGain": 0,
       "currentGain": -32.084309133489455,
       "pullback": 32.084309133489455,
@@ -677,10 +677,10 @@
           "symbol": "GNPX",
           "date": "2025-11-26",
           "open": 2.9,
-          "high": 3.0094,
-          "low": 2.8301,
+          "high": 3.01,
+          "low": 2.83,
           "close": 2.9,
-          "volume": 183663,
+          "volume": 192215,
           "change": 0,
           "changePercent": 0,
           "vwap": 2.91
@@ -793,14 +793,14 @@
         {
           "symbol": "GCMG",
           "date": "2025-11-26",
-          "open": 10.74,
-          "high": 10.925,
+          "open": 10.67,
+          "high": 10.93,
           "low": 10.67,
           "close": 10.9,
-          "volume": 1195082,
-          "change": 0.16,
-          "changePercent": 1.48976,
-          "vwap": 10.83
+          "volume": 1512600,
+          "change": 0.23,
+          "changePercent": 2.16,
+          "vwap": 10.7925
         }
       ],
       "daysSinceFiling": 9,
@@ -1027,14 +1027,14 @@
         {
           "symbol": "NI",
           "date": "2025-11-26",
-          "open": 43.335,
+          "open": 43.28,
           "high": 43.81,
           "low": 43.19,
           "close": 43.76,
-          "volume": 2101191,
-          "change": 0.425,
-          "changePercent": 0.98073151,
-          "vwap": 43.59
+          "volume": 2770726,
+          "change": 0.48,
+          "changePercent": 1.11,
+          "vwap": 43.51
         }
       ],
       "daysSinceFiling": 27,
@@ -1262,13 +1262,13 @@
           "symbol": "TMQ",
           "date": "2025-11-26",
           "open": 3.99,
-          "high": 4.0398,
-          "low": 3.905,
+          "high": 4.04,
+          "low": 3.9,
           "close": 3.97,
-          "volume": 2711578,
+          "volume": 2880438,
           "change": -0.02,
-          "changePercent": -0.50125313,
-          "vwap": 3.97
+          "changePercent": -0.50125,
+          "vwap": 3.975
         }
       ],
       "daysSinceFiling": 20,
@@ -1382,10 +1382,10 @@
           "high": 24.26,
           "low": 23.96,
           "close": 24.01,
-          "volume": 431673,
+          "volume": 877417,
           "change": 0.05,
-          "changePercent": 0.20868114,
-          "vwap": 24.08
+          "changePercent": 0.20868,
+          "vwap": 24.0475
         }
       ],
       "daysSinceFiling": 28,
@@ -1495,14 +1495,14 @@
         {
           "symbol": "WELL",
           "date": "2025-11-26",
-          "open": 204.29,
+          "open": 204.5,
           "high": 207.01,
-          "low": 202.83,
+          "low": 202.72,
           "close": 206.25,
-          "volume": 1724486,
-          "change": 1.96,
-          "changePercent": 0.95942043,
-          "vwap": 205.36
+          "volume": 2292053,
+          "change": 1.75,
+          "changePercent": 0.85575,
+          "vwap": 205.12
         }
       ],
       "daysSinceFiling": 30,
@@ -1616,10 +1616,10 @@
           "high": 0.9447,
           "low": 0.888,
           "close": 0.92,
-          "volume": 21764961,
+          "volume": 22274176,
           "change": 0.0015,
-          "changePercent": 0.16330974,
-          "vwap": 0.91757
+          "changePercent": 0.16331,
+          "vwap": 0.9178
         }
       ],
       "daysSinceFiling": 23,
@@ -1730,13 +1730,13 @@
           "symbol": "RDW",
           "date": "2025-11-26",
           "open": 5.44,
-          "high": 5.495,
-          "low": 5.3338,
+          "high": 5.5,
+          "low": 5.33,
           "close": 5.37,
-          "volume": 3275317,
+          "volume": 3712640,
           "change": -0.07,
-          "changePercent": -1.28676,
-          "vwap": 5.4
+          "changePercent": -1.29,
+          "vwap": 5.41
         }
       ],
       "daysSinceFiling": 17,
@@ -1963,14 +1963,14 @@
         {
           "symbol": "AAOI",
           "date": "2025-11-26",
-          "open": 23.24,
+          "open": 23.45,
           "high": 26.68,
           "low": 23.12,
           "close": 25.57,
-          "volume": 7271286,
-          "change": 2.33,
-          "changePercent": 10.02582,
-          "vwap": 25.12
+          "volume": 7543924,
+          "change": 2.12,
+          "changePercent": 9.04,
+          "vwap": 24.705
         }
       ],
       "daysSinceFiling": 20,
@@ -1998,9 +1998,9 @@
       "cik": "0001477845",
       "price": 4.92,
       "marketCap": 96794186,
-      "peakGain": 75.16778523489933,
+      "peakGain": 76.1744966442953,
       "currentGain": 65.1006711409396,
-      "pullback": 10.06711409395973,
+      "pullback": 11.073825503355707,
       "peakDay": 7,
       "isSameDaySpikeCrash": false,
       "rampDays": 2,
@@ -2080,22 +2080,22 @@
         {
           "symbol": "ANVS",
           "date": "2025-11-26",
-          "open": 4.94,
-          "high": 5.22,
+          "open": 5.02,
+          "high": 5.25,
           "low": 4.57,
           "close": 4.92,
-          "volume": 2900644,
-          "change": -0.02,
-          "changePercent": -0.4048583,
-          "vwap": 4.9
+          "volume": 2925555,
+          "change": -0.1,
+          "changePercent": -1.99,
+          "vwap": 4.94
         }
       ],
       "daysSinceFiling": 30,
       "classification": {
         "bucket": "WATCH_LIST",
         "emoji": "👀",
-        "reason": "Peak 75% — needs bigger run for ideal setup",
-        "headline": "Watching: ANVS with ATM filing — 75% peak",
+        "reason": "Peak 76% — needs bigger run for ideal setup",
+        "headline": "Watching: ANVS with ATM filing — 76% peak",
         "angle": "needs_more_momentum",
         "tweetable": true,
         "quality": "GOOD",
@@ -2197,14 +2197,14 @@
         {
           "symbol": "SRFM",
           "date": "2025-11-26",
-          "open": 2.085,
+          "open": 2.08,
           "high": 2.33,
-          "low": 2.072,
+          "low": 2.07,
           "close": 2.14,
-          "volume": 4538213,
-          "change": 0.055,
-          "changePercent": 2.63789,
-          "vwap": 2.18
+          "volume": 4646722,
+          "change": 0.06,
+          "changePercent": 2.88,
+          "vwap": 2.155
         }
       ],
       "daysSinceFiling": 15,
@@ -2318,10 +2318,10 @@
           "high": 2.14,
           "low": 1.83,
           "close": 2,
-          "volume": 174535,
+          "volume": 180607,
           "change": 0.13,
-          "changePercent": 6.95187,
-          "vwap": 1.99
+          "changePercent": 6.95,
+          "vwap": 1.96
         }
       ],
       "daysSinceFiling": 6,
@@ -2329,123 +2329,6 @@
         "bucket": "SKIP",
         "emoji": "⏭️",
         "reason": "Only 27% peak — not significant enough",
-        "headline": null,
-        "angle": null,
-        "tweetable": false,
-        "quality": "N/A",
-        "qualityNote": "Insufficient price movement"
-      },
-      "tweetDecision": {
-        "shouldTweet": false,
-        "reason": "Does not meet tweetable criteria",
-        "previousTweets": []
-      }
-    },
-    {
-      "ticker": "BLNE",
-      "companyName": "Beeline Holdings, Inc.",
-      "fileDate": "2025-11-12",
-      "form": "424B5",
-      "cik": "0001534708",
-      "price": 1.82,
-      "marketCap": 16466153,
-      "peakGain": 13.473053892215574,
-      "currentGain": 8.982035928143722,
-      "pullback": 4.491017964071853,
-      "peakDay": 7,
-      "isSameDaySpikeCrash": false,
-      "rampDays": 3,
-      "candles": [
-        {
-          "symbol": "BLNE",
-          "date": "2025-11-18",
-          "open": 1.67,
-          "high": 1.73,
-          "low": 1.54,
-          "close": 1.58,
-          "volume": 1880600,
-          "change": -0.09,
-          "changePercent": -5.39,
-          "vwap": 1.63
-        },
-        {
-          "symbol": "BLNE",
-          "date": "2025-11-19",
-          "open": 1.62,
-          "high": 1.71,
-          "low": 1.46,
-          "close": 1.51,
-          "volume": 1064800,
-          "change": -0.11,
-          "changePercent": -6.79,
-          "vwap": 1.575
-        },
-        {
-          "symbol": "BLNE",
-          "date": "2025-11-20",
-          "open": 1.68,
-          "high": 1.78,
-          "low": 1.49,
-          "close": 1.49,
-          "volume": 1840348,
-          "change": -0.19,
-          "changePercent": -11.31,
-          "vwap": 1.61
-        },
-        {
-          "symbol": "BLNE",
-          "date": "2025-11-21",
-          "open": 1.51,
-          "high": 1.56,
-          "low": 1.43,
-          "close": 1.52,
-          "volume": 578800,
-          "change": 0.01,
-          "changePercent": 0.66225,
-          "vwap": 1.505
-        },
-        {
-          "symbol": "BLNE",
-          "date": "2025-11-24",
-          "open": 1.62,
-          "high": 1.74,
-          "low": 1.56,
-          "close": 1.73,
-          "volume": 1466800,
-          "change": 0.11,
-          "changePercent": 6.79,
-          "vwap": 1.6625
-        },
-        {
-          "symbol": "BLNE",
-          "date": "2025-11-25",
-          "open": 1.75,
-          "high": 1.8,
-          "low": 1.67,
-          "close": 1.77,
-          "volume": 1312900,
-          "change": 0.02,
-          "changePercent": 1.14,
-          "vwap": 1.7475
-        },
-        {
-          "symbol": "BLNE",
-          "date": "2025-11-26",
-          "open": 1.88,
-          "high": 1.895,
-          "low": 1.77,
-          "close": 1.82,
-          "volume": 940434,
-          "change": -0.06,
-          "changePercent": -3.19149,
-          "vwap": 1.83
-        }
-      ],
-      "daysSinceFiling": 15,
-      "classification": {
-        "bucket": "SKIP",
-        "emoji": "⏭️",
-        "reason": "Only 13% peak — not significant enough",
         "headline": null,
         "angle": null,
         "tweetable": false,
@@ -2563,6 +2446,123 @@
         "bucket": "SKIP",
         "emoji": "⏭️",
         "reason": "Only 8% peak — not significant enough",
+        "headline": null,
+        "angle": null,
+        "tweetable": false,
+        "quality": "N/A",
+        "qualityNote": "Insufficient price movement"
+      },
+      "tweetDecision": {
+        "shouldTweet": false,
+        "reason": "Does not meet tweetable criteria",
+        "previousTweets": []
+      }
+    },
+    {
+      "ticker": "BLNE",
+      "companyName": "Beeline Holdings, Inc.",
+      "fileDate": "2025-11-12",
+      "form": "424B5",
+      "cik": "0001534708",
+      "price": 1.82,
+      "marketCap": 16466153,
+      "peakGain": 16.167664670658684,
+      "currentGain": 8.982035928143722,
+      "pullback": 7.185628742514963,
+      "peakDay": 7,
+      "isSameDaySpikeCrash": false,
+      "rampDays": 3,
+      "candles": [
+        {
+          "symbol": "BLNE",
+          "date": "2025-11-18",
+          "open": 1.67,
+          "high": 1.73,
+          "low": 1.54,
+          "close": 1.58,
+          "volume": 1880600,
+          "change": -0.09,
+          "changePercent": -5.39,
+          "vwap": 1.63
+        },
+        {
+          "symbol": "BLNE",
+          "date": "2025-11-19",
+          "open": 1.62,
+          "high": 1.71,
+          "low": 1.46,
+          "close": 1.51,
+          "volume": 1064800,
+          "change": -0.11,
+          "changePercent": -6.79,
+          "vwap": 1.575
+        },
+        {
+          "symbol": "BLNE",
+          "date": "2025-11-20",
+          "open": 1.68,
+          "high": 1.78,
+          "low": 1.49,
+          "close": 1.49,
+          "volume": 1840348,
+          "change": -0.19,
+          "changePercent": -11.31,
+          "vwap": 1.61
+        },
+        {
+          "symbol": "BLNE",
+          "date": "2025-11-21",
+          "open": 1.51,
+          "high": 1.56,
+          "low": 1.43,
+          "close": 1.52,
+          "volume": 578800,
+          "change": 0.01,
+          "changePercent": 0.66225,
+          "vwap": 1.505
+        },
+        {
+          "symbol": "BLNE",
+          "date": "2025-11-24",
+          "open": 1.62,
+          "high": 1.74,
+          "low": 1.56,
+          "close": 1.73,
+          "volume": 1466800,
+          "change": 0.11,
+          "changePercent": 6.79,
+          "vwap": 1.6625
+        },
+        {
+          "symbol": "BLNE",
+          "date": "2025-11-25",
+          "open": 1.75,
+          "high": 1.8,
+          "low": 1.67,
+          "close": 1.77,
+          "volume": 1312900,
+          "change": 0.02,
+          "changePercent": 1.14,
+          "vwap": 1.7475
+        },
+        {
+          "symbol": "BLNE",
+          "date": "2025-11-26",
+          "open": 1.88,
+          "high": 1.94,
+          "low": 1.77,
+          "close": 1.82,
+          "volume": 971573,
+          "change": -0.06,
+          "changePercent": -3.19,
+          "vwap": 1.8525
+        }
+      ],
+      "daysSinceFiling": 15,
+      "classification": {
+        "bucket": "SKIP",
+        "emoji": "⏭️",
+        "reason": "Only 16% peak — not significant enough",
         "headline": null,
         "angle": null,
         "tweetable": false,
@@ -2786,10 +2786,10 @@
           "high": 45.75,
           "low": 44.59,
           "close": 45.65,
-          "volume": 344631,
+          "volume": 427100,
           "change": 1.06,
-          "changePercent": 2.37721,
-          "vwap": 45.33
+          "changePercent": 2.38,
+          "vwap": 45.145
         }
       ],
       "daysSinceFiling": 7,
@@ -2899,14 +2899,14 @@
         {
           "symbol": "HIVE",
           "date": "2025-11-26",
-          "open": 3.2,
+          "open": 3.17,
           "high": 3.27,
           "low": 3.02,
           "close": 3.2,
-          "volume": 19089814,
-          "change": 0,
-          "changePercent": 0,
-          "vwap": 3.16
+          "volume": 19350688,
+          "change": 0.03,
+          "changePercent": 0.94637,
+          "vwap": 3.165
         }
       ],
       "daysSinceFiling": 2,
@@ -3018,12 +3018,12 @@
           "date": "2025-11-26",
           "open": 1,
           "high": 1.13,
-          "low": 1,
+          "low": 0.9889,
           "close": 1.12,
-          "volume": 122205,
+          "volume": 123714,
           "change": 0.12,
           "changePercent": 12,
-          "vwap": 1.08
+          "vwap": 1.05973
         }
       ],
       "daysSinceFiling": 1,
@@ -3135,12 +3135,12 @@
           "date": "2025-11-26",
           "open": 10.73,
           "high": 11,
-          "low": 10.445,
+          "low": 10.41,
           "close": 10.99,
-          "volume": 645916,
+          "volume": 650500,
           "change": 0.26,
-          "changePercent": 2.42311,
-          "vwap": 10.81
+          "changePercent": 2.42,
+          "vwap": 10.7825
         }
       ],
       "daysSinceFiling": 21,
@@ -3250,14 +3250,14 @@
         {
           "symbol": "NBIS",
           "date": "2025-11-26",
-          "open": 93.81,
-          "high": 95.634,
+          "open": 93.85,
+          "high": 95.63,
           "low": 90.76,
           "close": 94.69,
-          "volume": 13451721,
-          "change": 0.88,
-          "changePercent": 0.9380663,
-          "vwap": 93.69
+          "volume": 13544965,
+          "change": 0.84,
+          "changePercent": 0.89505,
+          "vwap": 93.7325
         }
       ],
       "daysSinceFiling": 15,
@@ -3367,14 +3367,14 @@
         {
           "symbol": "SFL",
           "date": "2025-11-26",
-          "open": 8.22,
+          "open": 8.18,
           "high": 8.27,
           "low": 8.16,
           "close": 8.16,
-          "volume": 896329,
-          "change": -0.06,
-          "changePercent": -0.72992701,
-          "vwap": 8.2
+          "volume": 1004471,
+          "change": -0.02,
+          "changePercent": -0.2445,
+          "vwap": 8.1925
         }
       ],
       "daysSinceFiling": 6,
@@ -3519,9 +3519,9 @@
       "cik": "0001711786",
       "price": 1.2,
       "marketCap": 15910832,
-      "peakGain": 6.465517241379326,
+      "peakGain": 6.896551724137938,
       "currentGain": 3.448275862068969,
-      "pullback": 3.0172413793103567,
+      "pullback": 3.448275862068969,
       "peakDay": 7,
       "isSameDaySpikeCrash": false,
       "rampDays": 3,
@@ -3602,20 +3602,20 @@
           "symbol": "HOTH",
           "date": "2025-11-26",
           "open": 1.18,
-          "high": 1.235,
-          "low": 1.1601,
+          "high": 1.24,
+          "low": 1.16,
           "close": 1.2,
-          "volume": 88943,
+          "volume": 89851,
           "change": 0.02,
-          "changePercent": 1.69492,
-          "vwap": 1.2
+          "changePercent": 1.69,
+          "vwap": 1.195
         }
       ],
       "daysSinceFiling": 14,
       "classification": {
         "bucket": "SKIP",
         "emoji": "⏭️",
-        "reason": "Only 6% peak — not significant enough",
+        "reason": "Only 7% peak — not significant enough",
         "headline": null,
         "angle": null,
         "tweetable": false,
@@ -3718,14 +3718,14 @@
         {
           "symbol": "CODX",
           "date": "2025-11-26",
-          "open": 0.332,
+          "open": 0.33,
           "high": 0.416,
-          "low": 0.328,
+          "low": 0.32801,
           "close": 0.3733,
-          "volume": 5021373,
-          "change": 0.0413,
-          "changePercent": 12.43976,
-          "vwap": 0.37243
+          "volume": 5112429,
+          "change": 0.0433,
+          "changePercent": 13.12,
+          "vwap": 0.36183
         }
       ],
       "daysSinceFiling": 30,
@@ -3836,13 +3836,13 @@
           "symbol": "NEUP",
           "date": "2025-11-26",
           "open": 4.34,
-          "high": 4.465,
-          "low": 4.195,
+          "high": 4.46,
+          "low": 4.13,
           "close": 4.36,
-          "volume": 101486,
+          "volume": 102600,
           "change": 0.02,
-          "changePercent": 0.46082949,
-          "vwap": 4.34
+          "changePercent": 0.46083,
+          "vwap": 4.3225
         }
       ],
       "daysSinceFiling": 13,
@@ -4073,10 +4073,10 @@
           "high": 2.92,
           "low": 2.42,
           "close": 2.65,
-          "volume": 21290691,
+          "volume": 21673917,
           "change": 0.08,
-          "changePercent": 3.11284,
-          "vwap": 2.66
+          "changePercent": 3.11,
+          "vwap": 2.64
         }
       ],
       "daysSinceFiling": 3,
@@ -4091,9 +4091,46 @@
         "qualityNote": "✓ 2-day ramp visible"
       },
       "tweetDecision": {
-        "shouldTweet": true,
-        "reason": "Never tweeted about this ticker",
-        "previousTweets": []
+        "shouldTweet": false,
+        "reason": "Already posted case study for this ticker",
+        "previousTweets": [
+          {
+            "ticker": "MNDR",
+            "bucket": "CASE_STUDY",
+            "date": "2025-11-27",
+            "timestamp": "2025-11-27T08:25:35.808Z",
+            "peakGain": 215.11627906976747,
+            "currentGain": 54.06976744186046,
+            "notes": "Posted via post.js"
+          },
+          {
+            "ticker": "MNDR",
+            "bucket": "CASE_STUDY",
+            "date": "2025-11-27",
+            "timestamp": "2025-11-27T08:26:53.937Z",
+            "peakGain": 215.11627906976747,
+            "currentGain": 54.06976744186046,
+            "notes": "Posted via post.js"
+          },
+          {
+            "ticker": "MNDR",
+            "bucket": "CASE_STUDY",
+            "date": "2025-11-27",
+            "timestamp": "2025-11-27T08:27:48.128Z",
+            "peakGain": 215.11627906976747,
+            "currentGain": 54.06976744186046,
+            "notes": "Posted via post.js"
+          },
+          {
+            "ticker": "MNDR",
+            "bucket": "CASE_STUDY",
+            "date": "2025-11-27",
+            "timestamp": "2025-11-27T14:03:36.130Z",
+            "peakGain": 215.11627906976747,
+            "currentGain": 54.06976744186046,
+            "notes": "Posted with greeting: GM! Happy Thanksgiving 🦃 - testing out a new scanner i've been working on for traditional markets"
+          }
+        ]
       }
     },
     {
@@ -4186,14 +4223,14 @@
         {
           "symbol": "TPB",
           "date": "2025-11-26",
-          "open": 99.62,
+          "open": 99.55,
           "high": 101.4,
           "low": 98.54,
           "close": 99.56,
-          "volume": 136015,
-          "change": -0.06,
-          "changePercent": -0.06022887,
-          "vwap": 99.83
+          "volume": 166099,
+          "change": 0.01,
+          "changePercent": 0.0100452,
+          "vwap": 99.7625
         }
       ],
       "daysSinceFiling": 22,
@@ -4304,13 +4341,13 @@
           "symbol": "PRE",
           "date": "2025-11-26",
           "open": 14.87,
-          "high": 15.24,
-          "low": 14.0768,
+          "high": 15.3,
+          "low": 14.08,
           "close": 14.28,
-          "volume": 164851,
+          "volume": 165120,
           "change": -0.59,
-          "changePercent": -3.96772,
-          "vwap": 14.53
+          "changePercent": -3.97,
+          "vwap": 14.6325
         }
       ],
       "daysSinceFiling": 30,
@@ -4572,9 +4609,9 @@
       "cik": "0001962481",
       "price": 3.09,
       "marketCap": 38016690,
-      "peakGain": 4.510135135135141,
+      "peakGain": 4.729729729729734,
       "currentGain": 4.3918918918918886,
-      "pullback": 0.11824324324325275,
+      "pullback": 0.3378378378378457,
       "peakDay": 7,
       "isSameDaySpikeCrash": false,
       "rampDays": 2,
@@ -4654,14 +4691,14 @@
         {
           "symbol": "BOF",
           "date": "2025-11-26",
-          "open": 2.94,
-          "high": 3.0935,
-          "low": 2.93,
+          "open": 2.95,
+          "high": 3.1,
+          "low": 2.9,
           "close": 3.09,
-          "volume": 101526,
-          "change": 0.15,
-          "changePercent": 5.10204,
-          "vwap": 3.04
+          "volume": 119033,
+          "change": 0.14,
+          "changePercent": 4.75,
+          "vwap": 3.01
         }
       ],
       "daysSinceFiling": 13,
@@ -4890,12 +4927,12 @@
           "date": "2025-11-26",
           "open": 0.2955,
           "high": 0.3451,
-          "low": 0.2831,
+          "low": 0.28311,
           "close": 0.333,
-          "volume": 50519436,
+          "volume": 52477330,
           "change": 0.0375,
-          "changePercent": 12.69036,
-          "vwap": 0.3204
+          "changePercent": 12.69,
+          "vwap": 0.31418
         }
       ],
       "daysSinceFiling": 23,
@@ -5040,9 +5077,9 @@
       "cik": "0001549084",
       "price": 4.47,
       "marketCap": 11721905,
-      "peakGain": 10.45673076923076,
+      "peakGain": 10.576923076923064,
       "currentGain": 7.451923076923067,
-      "pullback": 3.0048076923076925,
+      "pullback": 3.1249999999999973,
       "peakDay": 7,
       "isSameDaySpikeCrash": false,
       "rampDays": 3,
@@ -5122,21 +5159,21 @@
         {
           "symbol": "EKSO",
           "date": "2025-11-26",
-          "open": 4.365,
-          "high": 4.595,
-          "low": 4.365,
+          "open": 4.27,
+          "high": 4.6,
+          "low": 4.27,
           "close": 4.47,
-          "volume": 9909,
-          "change": 0.105,
-          "changePercent": 2.4055,
-          "vwap": 4.48
+          "volume": 10045,
+          "change": 0.2,
+          "changePercent": 4.68,
+          "vwap": 4.4025
         }
       ],
       "daysSinceFiling": 30,
       "classification": {
         "bucket": "SKIP",
         "emoji": "⏭️",
-        "reason": "Only 10% peak — not significant enough",
+        "reason": "Only 11% peak — not significant enough",
         "headline": null,
         "angle": null,
         "tweetable": false,
@@ -5240,13 +5277,13 @@
           "symbol": "HOVR",
           "date": "2025-11-26",
           "open": 1.6,
-          "high": 1.675,
+          "high": 1.68,
           "low": 1.52,
           "close": 1.62,
-          "volume": 594368,
+          "volume": 600736,
           "change": 0.02,
           "changePercent": 1.25,
-          "vwap": 1.61
+          "vwap": 1.605
         }
       ],
       "daysSinceFiling": 27,
@@ -5356,14 +5393,14 @@
         {
           "symbol": "CALC",
           "date": "2025-11-26",
-          "open": 3.6472,
-          "high": 4.1512,
-          "low": 3.6472,
+          "open": 3.65,
+          "high": 4.15,
+          "low": 3.65,
           "close": 4.1,
-          "volume": 38378,
+          "volume": 38500,
           "change": 0.4528,
-          "changePercent": 12.415,
-          "vwap": 3.97
+          "changePercent": 12.33,
+          "vwap": 3.8875
         }
       ],
       "daysSinceFiling": 21,
@@ -5380,123 +5417,6 @@
       "tweetDecision": {
         "shouldTweet": false,
         "reason": "Does not meet tweetable criteria",
-        "previousTweets": []
-      }
-    },
-    {
-      "ticker": "INHD",
-      "companyName": "INNO HOLDINGS INC.",
-      "fileDate": "2025-11-13",
-      "form": "424B5",
-      "cik": "0001961847",
-      "price": 0.2255,
-      "marketCap": 1747142,
-      "peakGain": 399.49326769943536,
-      "currentGain": -67.35196177790647,
-      "pullback": 466.84522947734183,
-      "peakDay": 5,
-      "isSameDaySpikeCrash": true,
-      "rampDays": 1,
-      "candles": [
-        {
-          "symbol": "INHD",
-          "date": "2025-11-18",
-          "open": 0.6907,
-          "high": 0.7562,
-          "low": 0.6804,
-          "close": 0.7548,
-          "volume": 229900,
-          "change": 0.0641,
-          "changePercent": 9.28,
-          "vwap": 0.72053
-        },
-        {
-          "symbol": "INHD",
-          "date": "2025-11-19",
-          "open": 0.75,
-          "high": 0.7998,
-          "low": 0.7149,
-          "close": 0.7397,
-          "volume": 129000,
-          "change": -0.0103,
-          "changePercent": -1.37,
-          "vwap": 0.7511
-        },
-        {
-          "symbol": "INHD",
-          "date": "2025-11-20",
-          "open": 0.7397,
-          "high": 0.765,
-          "low": 0.685,
-          "close": 0.714,
-          "volume": 298605,
-          "change": -0.0257,
-          "changePercent": -3.47,
-          "vwap": 0.72593
-        },
-        {
-          "symbol": "INHD",
-          "date": "2025-11-21",
-          "open": 0.705,
-          "high": 0.7332,
-          "low": 0.6891,
-          "close": 0.725,
-          "volume": 133462,
-          "change": 0.02,
-          "changePercent": 2.84,
-          "vwap": 0.71308
-        },
-        {
-          "symbol": "INHD",
-          "date": "2025-11-24",
-          "open": 0.93855,
-          "high": 3.45,
-          "low": 0.4533,
-          "close": 0.4811,
-          "volume": 339364900,
-          "change": -0.45745,
-          "changePercent": -48.74,
-          "vwap": 1.33074
-        },
-        {
-          "symbol": "INHD",
-          "date": "2025-11-25",
-          "open": 0.621,
-          "high": 0.63,
-          "low": 0.25,
-          "close": 0.2695,
-          "volume": 129075500,
-          "change": -0.3515,
-          "changePercent": -56.6,
-          "vwap": 0.44263
-        },
-        {
-          "symbol": "INHD",
-          "date": "2025-11-26",
-          "open": 0.3501,
-          "high": 0.3501,
-          "low": 0.2169,
-          "close": 0.2255,
-          "volume": 134537814,
-          "change": -0.1246,
-          "changePercent": -35.58983,
-          "vwap": 0.26417
-        }
-      ],
-      "daysSinceFiling": 14,
-      "classification": {
-        "bucket": "CASE_STUDY",
-        "emoji": "📚",
-        "reason": "Peaked 399%, now -67% — crashed 467% from peak",
-        "headline": "Case Study: INHD crashed after ATM dilution",
-        "angle": "post_mortem",
-        "tweetable": false,
-        "quality": "POOR",
-        "qualityNote": "⚠️ Same-day spike+crash (spike and dump on one candle)"
-      },
-      "tweetDecision": {
-        "shouldTweet": false,
-        "reason": "Poor quality pattern: ⚠️ Same-day spike+crash (spike and dump on one candle)",
         "previousTweets": []
       }
     },
@@ -5614,6 +5534,123 @@
       "tweetDecision": {
         "shouldTweet": false,
         "reason": "Does not meet tweetable criteria",
+        "previousTweets": []
+      }
+    },
+    {
+      "ticker": "INHD",
+      "companyName": "INNO HOLDINGS INC.",
+      "fileDate": "2025-11-13",
+      "form": "424B5",
+      "cik": "0001961847",
+      "price": 0.2255,
+      "marketCap": 1747142,
+      "peakGain": 399.49326769943536,
+      "currentGain": -67.35196177790647,
+      "pullback": 466.84522947734183,
+      "peakDay": 5,
+      "isSameDaySpikeCrash": true,
+      "rampDays": 1,
+      "candles": [
+        {
+          "symbol": "INHD",
+          "date": "2025-11-18",
+          "open": 0.6907,
+          "high": 0.7562,
+          "low": 0.6804,
+          "close": 0.7548,
+          "volume": 229900,
+          "change": 0.0641,
+          "changePercent": 9.28,
+          "vwap": 0.72053
+        },
+        {
+          "symbol": "INHD",
+          "date": "2025-11-19",
+          "open": 0.75,
+          "high": 0.7998,
+          "low": 0.7149,
+          "close": 0.7397,
+          "volume": 129000,
+          "change": -0.0103,
+          "changePercent": -1.37,
+          "vwap": 0.7511
+        },
+        {
+          "symbol": "INHD",
+          "date": "2025-11-20",
+          "open": 0.7397,
+          "high": 0.765,
+          "low": 0.685,
+          "close": 0.714,
+          "volume": 298605,
+          "change": -0.0257,
+          "changePercent": -3.47,
+          "vwap": 0.72593
+        },
+        {
+          "symbol": "INHD",
+          "date": "2025-11-21",
+          "open": 0.705,
+          "high": 0.7332,
+          "low": 0.6891,
+          "close": 0.725,
+          "volume": 133462,
+          "change": 0.02,
+          "changePercent": 2.84,
+          "vwap": 0.71308
+        },
+        {
+          "symbol": "INHD",
+          "date": "2025-11-24",
+          "open": 0.93855,
+          "high": 3.45,
+          "low": 0.4533,
+          "close": 0.4811,
+          "volume": 339364900,
+          "change": -0.45745,
+          "changePercent": -48.74,
+          "vwap": 1.33074
+        },
+        {
+          "symbol": "INHD",
+          "date": "2025-11-25",
+          "open": 0.621,
+          "high": 0.63,
+          "low": 0.25,
+          "close": 0.2695,
+          "volume": 129075500,
+          "change": -0.3515,
+          "changePercent": -56.6,
+          "vwap": 0.44263
+        },
+        {
+          "symbol": "INHD",
+          "date": "2025-11-26",
+          "open": 0.3501,
+          "high": 0.3501,
+          "low": 0.2036,
+          "close": 0.2255,
+          "volume": 143767342,
+          "change": -0.1246,
+          "changePercent": -35.59,
+          "vwap": 0.28233
+        }
+      ],
+      "daysSinceFiling": 14,
+      "classification": {
+        "bucket": "CASE_STUDY",
+        "emoji": "📚",
+        "reason": "Peaked 399%, now -67% — crashed 467% from peak",
+        "headline": "Case Study: INHD crashed after ATM dilution",
+        "angle": "post_mortem",
+        "tweetable": false,
+        "quality": "POOR",
+        "qualityNote": "⚠️ Same-day spike+crash (spike and dump on one candle)"
+      },
+      "tweetDecision": {
+        "shouldTweet": false,
+        "reason": "Poor quality pattern: ⚠️ Same-day spike+crash (spike and dump on one candle)",
         "previousTweets": []
       }
     },
@@ -5828,10 +5865,10 @@
           "high": 1.28,
           "low": 1.17,
           "close": 1.26,
-          "volume": 210798,
+          "volume": 211166,
           "change": 0.09,
-          "changePercent": 7.69231,
-          "vwap": 1.24
+          "changePercent": 7.69,
+          "vwap": 1.22
         }
       ],
       "daysSinceFiling": 15,
@@ -5859,9 +5896,9 @@
       "cik": "0001611842",
       "price": 3.8,
       "marketCap": 38725420,
-      "peakGain": 3.542234332425066,
+      "peakGain": 4.632152588555857,
       "currentGain": 3.542234332425066,
-      "pullback": 0,
+      "pullback": 1.0899182561307912,
       "peakDay": 7,
       "isSameDaySpikeCrash": false,
       "rampDays": 2,
@@ -5941,21 +5978,21 @@
         {
           "symbol": "PYPD",
           "date": "2025-11-26",
-          "open": 3.7258,
-          "high": 3.8,
-          "low": 3.695,
+          "open": 3.73,
+          "high": 3.84,
+          "low": 3.65,
           "close": 3.8,
-          "volume": 52036,
+          "volume": 64500,
           "change": 0.0742,
-          "changePercent": 1.99152,
-          "vwap": 3.76
+          "changePercent": 1.88,
+          "vwap": 3.755
         }
       ],
       "daysSinceFiling": 1,
       "classification": {
         "bucket": "SKIP",
         "emoji": "⏭️",
-        "reason": "Only 4% peak — not significant enough",
+        "reason": "Only 5% peak — not significant enough",
         "headline": null,
         "angle": null,
         "tweetable": false,
@@ -6062,9 +6099,9 @@
           "high": 2.05,
           "low": 1.85,
           "close": 1.86,
-          "volume": 369489,
+          "volume": 375460,
           "change": -0.06,
-          "changePercent": -3.125,
+          "changePercent": -3.12,
           "vwap": 1.92
         }
       ],
@@ -6177,12 +6214,12 @@
           "date": "2025-11-26",
           "open": 2.91,
           "high": 3.13,
-          "low": 2.851,
+          "low": 2.85,
           "close": 3.03,
-          "volume": 49480,
+          "volume": 50375,
           "change": 0.12,
-          "changePercent": 4.12371,
-          "vwap": 3
+          "changePercent": 4.12,
+          "vwap": 2.98
         }
       ],
       "daysSinceFiling": 20,
@@ -6413,10 +6450,10 @@
           "high": 12.78,
           "low": 11.73,
           "close": 12.67,
-          "volume": 9055089,
+          "volume": 9193633,
           "change": 0.73,
-          "changePercent": 6.1139,
-          "vwap": 12.39
+          "changePercent": 6.11,
+          "vwap": 12.28
         }
       ],
       "daysSinceFiling": 15,
@@ -6526,14 +6563,14 @@
         {
           "symbol": "NXXT",
           "date": "2025-11-26",
-          "open": 1.115,
+          "open": 1.12,
           "high": 1.16,
-          "low": 1.085,
+          "low": 1.09,
           "close": 1.1,
-          "volume": 981595,
-          "change": -0.015,
-          "changePercent": -1.34529,
-          "vwap": 1.12
+          "volume": 989398,
+          "change": -0.02,
+          "changePercent": -1.79,
+          "vwap": 1.1175
         }
       ],
       "daysSinceFiling": 13,
@@ -6647,10 +6684,10 @@
           "high": 0.5075,
           "low": 0.396,
           "close": 0.396,
-          "volume": 118378394,
+          "volume": 119593045,
           "change": -0.0639,
-          "changePercent": -13.89432,
-          "vwap": 0.43317
+          "changePercent": -13.89,
+          "vwap": 0.43985
         }
       ],
       "daysSinceFiling": 6,
@@ -6677,7 +6714,7 @@
       "form": "424B5",
       "cik": "0002039060",
       "price": 0.8059,
-      "marketCap": 4831154,
+      "marketCap": 11305754,
       "peakGain": 6.691210846189811,
       "currentGain": -5.8087891538102,
       "pullback": 12.50000000000001,
@@ -6764,10 +6801,10 @@
           "high": 0.81,
           "low": 0.784,
           "close": 0.8059,
-          "volume": 121643,
+          "volume": 124586,
           "change": 0.0115,
-          "changePercent": 1.44763,
-          "vwap": 0.79997
+          "changePercent": 1.45,
+          "vwap": 0.79857
         }
       ],
       "daysSinceFiling": 14,
@@ -6912,9 +6949,9 @@
       "cik": "0001941131",
       "price": 3.91,
       "marketCap": 74656965,
-      "peakGain": 5.660377358490566,
+      "peakGain": 5.39083557951483,
       "currentGain": 5.39083557951483,
-      "pullback": 0.2695417789757357,
+      "pullback": 0,
       "peakDay": 7,
       "isSameDaySpikeCrash": false,
       "rampDays": 2,
@@ -6994,21 +7031,21 @@
         {
           "symbol": "TORO",
           "date": "2025-11-26",
-          "open": 3.825,
-          "high": 3.92,
+          "open": 3.81,
+          "high": 3.91,
           "low": 3.64,
           "close": 3.91,
-          "volume": 17676,
-          "change": 0.085,
-          "changePercent": 2.22222,
-          "vwap": 3.82
+          "volume": 21000,
+          "change": 0.1,
+          "changePercent": 2.62,
+          "vwap": 3.8175
         }
       ],
       "daysSinceFiling": 14,
       "classification": {
         "bucket": "SKIP",
         "emoji": "⏭️",
-        "reason": "Only 6% peak — not significant enough",
+        "reason": "Only 5% peak — not significant enough",
         "headline": null,
         "angle": null,
         "tweetable": false,
@@ -7147,8 +7184,8 @@
       "price": 1.71,
       "marketCap": 70781507,
       "peakGain": 62.280701754385994,
-      "currentGain": -24.999999999999993,
-      "pullback": 87.28070175438599,
+      "currentGain": -25.877192982456137,
+      "pullback": 88.15789473684214,
       "peakDay": 3,
       "isSameDaySpikeCrash": false,
       "rampDays": 0,
@@ -7231,18 +7268,18 @@
           "open": 1.64,
           "high": 1.8,
           "low": 1.46,
-          "close": 1.71,
-          "volume": 12373059,
-          "change": 0.07,
-          "changePercent": 4.26829,
-          "vwap": 1.66
+          "close": 1.69,
+          "volume": 13438961,
+          "change": 0.05,
+          "changePercent": 3.05,
+          "vwap": 1.6475
         }
       ],
       "daysSinceFiling": 15,
       "classification": {
         "bucket": "CASE_STUDY",
         "emoji": "📚",
-        "reason": "Peaked 62%, now -25% — crashed 87% from peak",
+        "reason": "Peaked 62%, now -26% — crashed 88% from peak",
         "headline": "Case Study: LPTX crashed after ATM dilution",
         "angle": "post_mortem",
         "tweetable": true,
@@ -7345,14 +7382,14 @@
         {
           "symbol": "ATON",
           "date": "2025-11-26",
-          "open": 2.5199,
+          "open": 2.52,
           "high": 2.53,
           "low": 1.75,
           "close": 1.88,
-          "volume": 8552778,
+          "volume": 8686473,
           "change": -0.6399,
-          "changePercent": -25.39386,
-          "vwap": 2.05
+          "changePercent": -25.4,
+          "vwap": 2.17
         }
       ],
       "daysSinceFiling": 1,
@@ -7466,10 +7503,10 @@
           "high": 11.76,
           "low": 8.7,
           "close": 11.41,
-          "volume": 1209580,
+          "volume": 1256225,
           "change": 2.71,
-          "changePercent": 31.14943,
-          "vwap": 10.62
+          "changePercent": 31.15,
+          "vwap": 10.1425
         }
       ],
       "daysSinceFiling": 27,
@@ -7579,14 +7616,14 @@
         {
           "symbol": "ASST",
           "date": "2025-11-26",
-          "open": 1.095,
+          "open": 1.1,
           "high": 1.14,
           "low": 1.05,
           "close": 1.13,
-          "volume": 73995033,
+          "volume": 75570563,
           "change": 0.035,
-          "changePercent": 3.19635,
-          "vwap": 1.11
+          "changePercent": 2.73,
+          "vwap": 1.105
         }
       ],
       "daysSinceFiling": 20,
@@ -7698,12 +7735,12 @@
           "date": "2025-11-26",
           "open": 14.5,
           "high": 14.96,
-          "low": 14.2601,
+          "low": 14.26,
           "close": 14.79,
-          "volume": 848679,
+          "volume": 850337,
           "change": 0.29,
           "changePercent": 2,
-          "vwap": 14.67
+          "vwap": 14.6275
         }
       ],
       "daysSinceFiling": 21,
@@ -7814,13 +7851,13 @@
           "symbol": "OMER",
           "date": "2025-11-26",
           "open": 9.7,
-          "high": 9.8399,
+          "high": 9.84,
           "low": 9.5,
           "close": 9.63,
-          "volume": 1026711,
+          "volume": 1027986,
           "change": -0.07,
-          "changePercent": -0.72164948,
-          "vwap": 9.66
+          "changePercent": -0.72165,
+          "vwap": 9.6675
         }
       ],
       "daysSinceFiling": 13,
@@ -8047,14 +8084,14 @@
         {
           "symbol": "AEP",
           "date": "2025-11-26",
-          "open": 121.88,
-          "high": 122.7957,
+          "open": 121.8,
+          "high": 122.8,
           "low": 121.8,
           "close": 122.72,
-          "volume": 2557574,
-          "change": 0.84,
-          "changePercent": 0.68920249,
-          "vwap": 122.44
+          "volume": 2681133,
+          "change": 0.92,
+          "changePercent": 0.75534,
+          "vwap": 122.28
         }
       ],
       "daysSinceFiling": 2,
@@ -8082,9 +8119,9 @@
       "cik": "0001574094",
       "price": 0.8862,
       "marketCap": 32479141,
-      "peakGain": 4.682080924855489,
+      "peakGain": 5.951445086705199,
       "currentGain": 2.450867052023121,
-      "pullback": 2.231213872832368,
+      "pullback": 3.500578034682078,
       "peakDay": 7,
       "isSameDaySpikeCrash": false,
       "rampDays": 1,
@@ -8165,20 +8202,20 @@
           "symbol": "RNXT",
           "date": "2025-11-26",
           "open": 0.895,
-          "high": 0.9055,
-          "low": 0.8761,
+          "high": 0.91648,
+          "low": 0.8726,
           "close": 0.8862,
-          "volume": 247671,
+          "volume": 247896,
           "change": -0.0088,
-          "changePercent": -0.98324022,
-          "vwap": 0.88927
+          "changePercent": -0.98324,
+          "vwap": 0.89257
         }
       ],
       "daysSinceFiling": 13,
       "classification": {
         "bucket": "SKIP",
         "emoji": "⏭️",
-        "reason": "Only 5% peak — not significant enough",
+        "reason": "Only 6% peak — not significant enough",
         "headline": null,
         "angle": null,
         "tweetable": false,
@@ -8281,14 +8318,14 @@
         {
           "symbol": "MOB",
           "date": "2025-11-26",
-          "open": 6,
+          "open": 6.03,
           "high": 7.56,
           "low": 6,
           "close": 6.64,
-          "volume": 681806,
-          "change": 0.64,
-          "changePercent": 10.66667,
-          "vwap": 6.73
+          "volume": 682300,
+          "change": 0.61,
+          "changePercent": 10.12,
+          "vwap": 6.5575
         }
       ],
       "daysSinceFiling": 29,
@@ -8402,10 +8439,10 @@
           "high": 6.28,
           "low": 5.15,
           "close": 6.23,
-          "volume": 119169,
+          "volume": 121200,
           "change": 0.38,
-          "changePercent": 6.49573,
-          "vwap": 5.89
+          "changePercent": 6.5,
+          "vwap": 5.8775
         }
       ],
       "daysSinceFiling": 28,
@@ -8636,10 +8673,10 @@
           "high": 10.07,
           "low": 9.3,
           "close": 9.38,
-          "volume": 22131,
+          "volume": 22200,
           "change": -0.52,
-          "changePercent": -5.25253,
-          "vwap": 9.58
+          "changePercent": -5.25,
+          "vwap": 9.6625
         }
       ],
       "daysSinceFiling": 9,
@@ -8753,10 +8790,10 @@
           "high": 1.06,
           "low": 0.88,
           "close": 0.9,
-          "volume": 2965161,
+          "volume": 2989117,
           "change": -0.12,
-          "changePercent": -11.76471,
-          "vwap": 0.94667
+          "changePercent": -11.76,
+          "vwap": 0.965
         }
       ],
       "daysSinceFiling": 3,
@@ -9017,7 +9054,7 @@
       "form": "424B5",
       "cik": "0000894158",
       "price": 0.2574,
-      "marketCap": 2470062,
+      "marketCap": 8684573,
       "peakGain": 9.843683988170687,
       "currentGain": 8.745247148288984,
       "pullback": 1.0984368398817033,
@@ -9104,10 +9141,10 @@
           "high": 0.26,
           "low": 0.2038,
           "close": 0.2574,
-          "volume": 1886852,
+          "volume": 2164381,
           "change": 0.0536,
-          "changePercent": 26.30029,
-          "vwap": 0.2404
+          "changePercent": 26.3,
+          "vwap": 0.23125
         }
       ],
       "daysSinceFiling": 29,
@@ -9218,13 +9255,13 @@
           "symbol": "GWH",
           "date": "2025-11-26",
           "open": 2.61,
-          "high": 2.6525,
-          "low": 2.5048,
+          "high": 2.65,
+          "low": 2.5,
           "close": 2.65,
-          "volume": 393976,
+          "volume": 395417,
           "change": 0.04,
-          "changePercent": 1.53257,
-          "vwap": 2.6
+          "changePercent": 1.53,
+          "vwap": 2.6025
         }
       ],
       "daysSinceFiling": 14,
@@ -9336,12 +9373,12 @@
           "date": "2025-11-26",
           "open": 1.94,
           "high": 2.03,
-          "low": 1.925,
+          "low": 1.91,
           "close": 1.95,
-          "volume": 157478,
+          "volume": 158071,
           "change": 0.01,
-          "changePercent": 0.51546392,
-          "vwap": 1.97
+          "changePercent": 0.51546,
+          "vwap": 1.9575
         }
       ],
       "daysSinceFiling": 14,
@@ -9453,12 +9490,12 @@
           "date": "2025-11-26",
           "open": 6.01,
           "high": 6.4,
-          "low": 5.7301,
+          "low": 5.73,
           "close": 6.26,
-          "volume": 3019693,
+          "volume": 3024201,
           "change": 0.25,
-          "changePercent": 4.15973,
-          "vwap": 6.13
+          "changePercent": 4.16,
+          "vwap": 6.1
         }
       ],
       "daysSinceFiling": 22,
