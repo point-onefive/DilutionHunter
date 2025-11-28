@@ -101,7 +101,7 @@ ${greeting ? `👋 Greeting: "${greeting}"` : ''}
 ${'─'.repeat(40)}
 ${hookWithGreeting}
 ${'─'.repeat(40)}
-[${hookWithGreeting.length}/280 chars]${hookWithGreeting.length > 280 ? ' ⚠️ TOO LONG!' : ''}
+[${hookWithGreeting.length} chars]
 `);
 
   const breakdownTweets = Array.isArray(tweets.breakdown) ? tweets.breakdown : [tweets.breakdown];
@@ -111,7 +111,7 @@ ${'─'.repeat(40)}
 💬 THREAD ${i + 1}/${breakdownTweets.length}:
 ${'─'.repeat(40)}
 ${tweet}
-[${tweet.length}/280 chars]`);
+[${tweet.length} chars]`);
   });
 
   console.log(`
@@ -211,12 +211,7 @@ Example:
     ? `${greeting}\n\n${data.tweets.hook}`
     : data.tweets.hook;
   
-  // Check character limit
-  if (hookWithGreeting.length > 280) {
-    console.log(`❌ First tweet is ${hookWithGreeting.length} chars (max 280).`);
-    console.log('   Shorten greeting or edit the hook.\n');
-    return;
-  }
+  // No character limit check - Twitter/X allows longer posts
   
   if (previewOnly) {
     console.log('Preview mode - not posting.\n');

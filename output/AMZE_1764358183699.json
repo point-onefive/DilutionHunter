@@ -1,0 +1,63 @@
+{
+  "ticker": "AMZE",
+  "generatedAt": "2025-11-28T19:29:43.699Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 91% — needs bigger run for ideal setup",
+    "riskScore": 80,
+    "riskCategory": "HIGH RISK ALERT"
+  },
+  "tweets": {
+    "hook": "🚨 $AMZE\n\n+91% spike off lows, now sitting +47% with a 424B5 ATM filed 2025-11-13 and a $2.8M market cap.\nCash $300K vs $2.0M/month burn, runway under 1 month.\n\nA stressed balance sheet, fresh ATM, and a 45% pullback is a setup I watch for potential dilution waves, not ignore.\n\nFull breakdown below ↓",
+    "breakdown": [
+      "1/ What's an ATM?\n\nCompany files paperwork to let them sell new shares at market price through a broker. They usually sell into strength so they can raise more cash. More shares sold → more supply → price often weakens over time.",
+      "2/ The setup on $AMZE:\n\n• Market cap: ~$2.8M\n• ATM filed: 2025-11-13\n• Price ran +91%, still up +47%\n• Cash: $300K\n• Burn: $2.0M/month\n• Runway: < 1 month\n• Already raised $4.6M last quarter via stock\n\nHigh price + urgent cash need = classic dilution risk profile.",
+      "3/ What I’m watching now:\n\n• Heavy red candle on big volume\n• Selling pressure building after pops\n• Key support breaks that do not bounce\n• Already 45% off the recent high\n\nMotive is clear: critical distress level means the ATM is about survival, not optional.",
+      "4/ Bear vs bull paths:\n\nBear builds if:\n• Big red day with volume spike\n• Fails to reclaim recent highs on bounces\n• ATM usage shows up in filings or tape\n\nBull invalidation:\n• Strong, sustained breakout on volume that shrugs off selling.\n\nTraders get trapped when dilution hits during pullbacks, not at the top of the run.",
+      "5/ Final read on $AMZE:\n\nSub-$3M micro-cap, <1 month of cash, accelerating burn, fresh ATM, and already 45% off the spike high — I’m tracking for signs of active selling into strength and failed bounces.\n\nTracking, not acting yet.\nNot advice — pattern recognition only. 🦅"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/AMZE_1764358183683.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "watch",
+        "startDay": -14,
+        "endDay": -10,
+        "label": "ATM 424B5 filed 2025-11-13"
+      },
+      {
+        "type": "watch",
+        "startDay": -10,
+        "endDay": -2,
+        "label": "+91% spike zone"
+      },
+      {
+        "type": "danger",
+        "startDay": -2,
+        "endDay": 0,
+        "label": "45% pullback / watch for sell volume"
+      }
+    ],
+    "arrows": [
+      {
+        "day": -9,
+        "direction": "up",
+        "label": "Momentum pump into tiny float"
+      },
+      {
+        "day": -1,
+        "direction": "down",
+        "label": "Pullback with ATM overhead"
+      }
+    ],
+    "overallStyle": "cautious_watch"
+  },
+  "tickerData": {
+    "price": 0.48,
+    "marketCap": 2796087,
+    "peakGain": 91.2977099236641,
+    "currentGain": 46.564885496183194,
+    "pullback": 44.73282442748091
+  }
+}

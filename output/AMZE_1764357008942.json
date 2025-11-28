@@ -1,0 +1,69 @@
+{
+  "ticker": "AMZE",
+  "generatedAt": "2025-11-28T19:10:08.942Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 91% — needs bigger run for ideal setup",
+    "riskScore": 80,
+    "riskCategory": "HIGH RISK ALERT"
+  },
+  "tweets": {
+    "hook": "🚨 Dilution watch on $AMZE. Ripped +91%, still up +47% while a fresh ATM from 2025-11-13 hangs over a tiny ~$2.8M cap. Cash nearly gone, survival depends on selling shares into strength. Elevated risk setup. Full breakdown below ↓",
+    "breakdown": [
+      "1/ What's an ATM? Company files to sell new shares at market through a broker. They usually sell into price spikes so they can raise more cash. More shares sold → more supply → pressure on the stock.",
+      "2/ $AMZE setup:\n• Micro-cap ≈ $2.8–3M\n• ATM filed: 2025-11-13\n• Ran +91%, now holding +47%\n• Cash: $300K\n• Burn: $2.0M/month\n• Runway: < 1 month\nThey need cash fast. High price + critical cash need = classic dilution setup.",
+      "3/ What to watch on $AMZE:\n• Heavy red candle with big volume\n• Persistent selling on every bounce\n• Key support breaks and does not snap back\n• Already ~45% off the highs\nMotive is clear: balance sheet in critical distress, ATM ready.",
+      "4/ Scenarios:\nBear builds if:\n• Red candle + volume spike\n• Price cannot reclaim prior highs\n• ATM usage shows up in filings or tape\n\nBull invalidation: strong, sustained breakout on real volume.\nTraders get trapped when dilution hits during the pullback, not the run.",
+      "5/ Takeaway on $AMZE:\nMicro-cap, almost no cash, heavy burn, fresh ATM, and a recent spike already fading. Company has every reason to sell shares into strength to survive. Elevated risk profile.\nNot advice — pattern recognition only. 🦅"
+    ],
+    "hashtags": [
+      "#Stocks",
+      "#Trading",
+      "#SmallCaps",
+      "#Dilution"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/AMZE_1764357008926.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "watch",
+        "startDay": -14,
+        "endDay": -10,
+        "label": "ATM filed 11/13 – dilution overhang starts"
+      },
+      {
+        "type": "entry",
+        "startDay": -9,
+        "endDay": -3,
+        "label": "91% spike zone – prime spot for ATM selling"
+      },
+      {
+        "type": "danger",
+        "startDay": -3,
+        "endDay": 0,
+        "label": "Pullback -45% from peak – watch for heavy red + volume"
+      }
+    ],
+    "arrows": [
+      {
+        "day": -9,
+        "direction": "up",
+        "label": "Momentum run into ATM overhang"
+      },
+      {
+        "day": -2,
+        "direction": "down",
+        "label": "Selling pressure / possible ATM activity"
+      }
+    ],
+    "overallStyle": "cautious_watch"
+  },
+  "tickerData": {
+    "price": 0.48,
+    "marketCap": 2796087,
+    "peakGain": 91.2977099236641,
+    "currentGain": 46.564885496183194,
+    "pullback": 44.73282442748091
+  }
+}

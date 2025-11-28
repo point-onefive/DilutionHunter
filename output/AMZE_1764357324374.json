@@ -1,0 +1,63 @@
+{
+  "ticker": "AMZE",
+  "generatedAt": "2025-11-28T19:15:24.374Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 91% — needs bigger run for ideal setup",
+    "riskScore": 80,
+    "riskCategory": "HIGH RISK ALERT"
+  },
+  "tweets": {
+    "hook": "🚨 $AMZE dilution risk on the table\n\n+91% spike off lows → still +47%\nATM filed 2025-11-13\n$3M cap · < 1 month cash runway\n\nTiny float, survival ATM, price already fading\n\nFull breakdown below ↓",
+    "breakdown": [
+      "1/ What's an ATM?\n\nCompany files to sell new shares at market prices through a broker. They usually hit the sell button into strength so they can raise more cash. More shares sold → more supply → price pressure.",
+      "2/ $AMZE setup:\n\n• Market cap: ~$3M\n• ATM filed: 2025-11-13\n• Ran +91% off lows → now +47%\n• Cash: $300K\n• Burn: $2.0M/month\n• Runway: < 1 month\n• Already raised $4.6M last quarter via stock\n\nHigh price + urgent cash need = classic dilution setup.",
+      "3/ Confirming signals to watch on $AMZE:\n\n• Big red candle with volume surge\n• Selling pressure building on every bounce\n• Prior support levels breaking and not reclaiming\n• Already 45% off the recent high\n\nMotive is clear: critical financial distress, ATM is survival.",
+      "4/ Scenarios:\n\nBear case builds if:\n• Red candle + volume spike\n• Price cannot retest or break recent highs\n• ATM usage shows up in filings or tape\n\nBull invalidation: strong, sustained breakout on real volume.\n\nTraders get trapped when dilution hits during pullbacks, not at the top of the run.",
+      "5/ Takeaway on $AMZE:\n\nMicro-cap, ~$3M cap, almost no cash, heavy burn, and a fresh ATM while price is still elevated. That is an elevated risk profile for dilution hitting the tape.\n\nNot advice — pattern recognition only. 🦅"
+    ],
+    "hashtags": [
+      "#Stocks",
+      "#Trading",
+      "#SmallCaps",
+      "#Dilution"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/AMZE_1764357324359.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "watch",
+        "startDay": -14,
+        "endDay": -1,
+        "label": "Post-ATM filing pump +91% → now +47%"
+      },
+      {
+        "type": "danger",
+        "startDay": 0,
+        "endDay": 10,
+        "label": "High risk dilution zone: <1 month runway"
+      }
+    ],
+    "arrows": [
+      {
+        "day": -7,
+        "direction": "up",
+        "label": "Momentum run into ATM window"
+      },
+      {
+        "day": 2,
+        "direction": "down",
+        "label": "Watch for heavy red candle + volume"
+      }
+    ],
+    "overallStyle": "cautious_watch"
+  },
+  "tickerData": {
+    "price": 0.48,
+    "marketCap": 2796087,
+    "peakGain": 91.2977099236641,
+    "currentGain": 46.564885496183194,
+    "pullback": 44.73282442748091
+  }
+}

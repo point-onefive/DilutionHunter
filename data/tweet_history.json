@@ -35,7 +35,25 @@
       "peakGain": 215.11627906976747,
       "currentGain": 54.06976744186046,
       "notes": "Posted with greeting: GM! Happy Thanksgiving 🦃 - testing out a new scanner i've been working on for traditional markets"
+    },
+    {
+      "ticker": "AMZE",
+      "bucket": "WATCH_LIST",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T19:35:38.686Z",
+      "peakGain": 91.2977099236641,
+      "currentGain": 46.564885496183194,
+      "notes": "Posted via post.js"
+    },
+    {
+      "ticker": "AMZE",
+      "bucket": "WATCH_LIST",
+      "date": "2025-11-28",
+      "timestamp": "2025-11-28T19:36:20.969Z",
+      "peakGain": 91.2977099236641,
+      "currentGain": 46.564885496183194,
+      "notes": "Posted via post.js"
     }
   ],
-  "lastUpdated": "2025-11-27T14:03:36.130Z"
+  "lastUpdated": "2025-11-28T19:36:20.969Z"
 }

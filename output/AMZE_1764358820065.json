@@ -1,0 +1,57 @@
+{
+  "ticker": "AMZE",
+  "generatedAt": "2025-11-28T19:40:20.065Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 91% — needs bigger run for ideal setup",
+    "riskScore": 80,
+    "riskCategory": "HIGH RISK ALERT"
+  },
+  "tweets": {
+    "hook": "🚨 $AMZE dilution watch\n\n+91% spike off lows, now holding +47% after a 45% pullback with a fresh 424B5 ATM filed 2025-11-13 and <1 month of cash left on a $2.8M micro-cap.\n\nCompany has ~$300K cash vs ~$2.0M monthly burn and $8.1M debt, so the ATM is a survival tool, not optional.\n\nThis looks like a fragile bounce under an active ATM where any renewed strength could be used to dump shares into the market.\n\n🧵 Full breakdown below",
+    "breakdown": [
+      "1️⃣ What's an ATM? Company files paperwork letting them sell new shares at market price through a broker. They typically sell into pumps to maximize cash raised, which increases share supply and can pressure the stock when buyers dry up.",
+      "2️⃣ The setup on $AMZE:\n• Market cap: ~$2.8M micro-cap\n• ATM filed: 2025-11-13\n• Price: ran +91% off lows → now +47% with a 45% pullback\n• Cash: ~$300K\n• Burn: ~$2.0M/month\n• Runway: < 1 month of cash left\n• Debt: ~$8.1M\nHigh price after a run + emergency cash need + active ATM = classic dilution setup risk.",
+      "3️⃣ What confirms trouble:\n• Heavy red candle with big volume after any bounce\n• Selling pressure expanding intraday\n• Key support breaks and does not recover\n• Already 45% off the highs with critical distress level\nMotive is clear: they need cash now, so any strength is at risk of being met with ATM selling.",
+      "4️⃣ Scenarios on $AMZE:\nBear thesis builds if:\n• Red candle + sell volume spike\n• Price fails to reclaim recent highs\n• Signs or disclosures of ATM usage\nBull invalidation: strong, sustained volume breakout that holds gains despite obvious dilution risk.\nTraders get trapped when dilution hits during pullbacks and weak bounces, not during the first big run.",
+      "5️⃣ Final takeaway on $AMZE:\nFresh ATM, sub-1 month cash runway, $8.1M debt, and a +91% move that already gave back 45% puts this in elevated risk territory if the company starts selling into any new strength.\nI’m watching for volume spikes on red days and failed bounces, not acting — tracking the setup as conditions develop.\nNot advice — pattern recognition only. 🦅"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/AMZE_1764358820050.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "watch",
+        "startDay": -14,
+        "endDay": 0,
+        "label": "Post-424B5 ATM window — watch for sell volume on red days"
+      },
+      {
+        "type": "danger",
+        "startDay": -3,
+        "endDay": 2,
+        "label": "45% off peak + any high-volume breakdown"
+      }
+    ],
+    "arrows": [
+      {
+        "day": -10,
+        "direction": "up",
+        "label": "+91% spike — ideal ATM selling zone"
+      },
+      {
+        "day": -1,
+        "direction": "down",
+        "label": "Watch for heavy red candle + volume"
+      }
+    ],
+    "overallStyle": "cautious_watch"
+  },
+  "tickerData": {
+    "price": 0.48,
+    "marketCap": 2796087,
+    "peakGain": 91.2977099236641,
+    "currentGain": 46.564885496183194,
+    "pullback": 44.73282442748091
+  }
+}

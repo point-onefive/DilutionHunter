@@ -1,0 +1,74 @@
+{
+  "ticker": "AMZE",
+  "generatedAt": "2025-11-28T19:17:05.258Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 91% — needs bigger run for ideal setup",
+    "riskScore": 80,
+    "riskCategory": "HIGH RISK ALERT"
+  },
+  "tweets": {
+    "hook": "🚨 $AMZE dilution radar lighting up\n\n+91% spike off lows → still +47%\nATM filed 2025-11-13\n$3M cap with < 1 month cash runway\n\nPrice up, balance sheet stressed, ATM ready\n\nFull breakdown below ↓",
+    "breakdown": [
+      "1/ What's an ATM?\n\nCompany files to sell new shares at market prices through a broker. They usually wait for spikes, then dump shares into strength to raise cash. More shares → more supply → pressure on price.",
+      "2/ $AMZE setup:\n\n• Market cap: ~$3M\n• ATM filed: 2025-11-13\n• Move: +91% peak → now +47%\n• Cash: $300K\n• Burn: $2.0M/month\n• Runway: < 1 month\n• Debt: $8.1M\n\nHigh price + almost no cash + fresh ATM = classic dilution setup.",
+      "3/ What to watch on $AMZE:\n\n• Heavy red candle with big volume\n• Selling pressure growing each day\n• Support breaks that do not bounce\n• Already ~45% off the highs\n\nMotive is clear: critical distress, ATM is survival, not optional.",
+      "4/ Scenarios on $AMZE:\n\nBear builds if:\n• Large red day with volume spike\n• Price cannot reclaim recent highs\n• ATM usage starts showing up\n\nBull invalidation: strong volume breakout that holds.\n\nTraders get trapped when dilution hits during pullbacks, not the run.",
+      "5/ Takeaway on $AMZE:\n\nMicro-cap, ~$3M cap, $300K cash, $2.0M/month burn, < 1 month runway, recent ATM, and a big recent spike.\n\nElevated risk profile. Pattern fits raise-into-strength playbook.\n\nNot advice — pattern recognition only. 🦅"
+    ],
+    "hashtags": [
+      "#Stocks",
+      "#Trading",
+      "#MicroCap",
+      "#Dilution"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/AMZE_1764357425243.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "watch",
+        "startDay": -14,
+        "endDay": -10,
+        "label": "ATM filing zone (424B5 hits)"
+      },
+      {
+        "type": "entry",
+        "startDay": -9,
+        "endDay": -3,
+        "label": "+91% spike window (prime raise zone)"
+      },
+      {
+        "type": "danger",
+        "startDay": -3,
+        "endDay": 0,
+        "label": "45% off highs · watch for sell volume + ATM usage"
+      }
+    ],
+    "arrows": [
+      {
+        "day": -9,
+        "direction": "up",
+        "label": "Momentum ramp into potential ATM selling"
+      },
+      {
+        "day": -2,
+        "direction": "down",
+        "label": "Pullback starts · monitor volume / filings"
+      },
+      {
+        "day": 0,
+        "direction": "down",
+        "label": "Risk zone if red candle + volume spike"
+      }
+    ],
+    "overallStyle": "cautious_watch"
+  },
+  "tickerData": {
+    "price": 0.48,
+    "marketCap": 2796087,
+    "peakGain": 91.2977099236641,
+    "currentGain": 46.564885496183194,
+    "pullback": 44.73282442748091
+  }
+}

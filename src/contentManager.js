@@ -79,7 +79,7 @@ export function classifyTicker(ticker) {
       reason: `Peak ${peakGain.toFixed(0)}% on day ${peakDay}, pullback ${pullback.toFixed(0)}%, still at ${currentGain.toFixed(0)}%`,
       headline: `Alert: ${ticker.ticker} showing dilution signals after ${peakGain.toFixed(0)}% run`,
       angle: 'live_alert',
-      tweetable: true,
+      tweetable: hasVisibleRamp, // Skip same-day pump & dumps
       quality: qualityScore,
       qualityNote
     };
@@ -114,7 +114,7 @@ export function classifyTicker(ticker) {
       reason,
       headline: `Watching: ${ticker.ticker} with ATM filing — ${peakGain.toFixed(0)}% peak`,
       angle,
-      tweetable: true,
+      tweetable: hasVisibleRamp, // Skip same-day pump & dumps
       quality: qualityScore,
       qualityNote
     };

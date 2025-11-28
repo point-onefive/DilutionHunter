@@ -31,13 +31,108 @@ const FMP_KEY = process.env.FMP_API_KEY;
 const FMP_BASE = 'https://financialmodelingprep.com/stable';
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// FINANCIAL HEALTH DATA (Balance Sheet + Cash Flow)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Fetch financial health indicators: cash, debt, burn rate, runway
+ */
+async function fetchFinancialHealth(ticker) {
+  try {
+    // Fetch balance sheet and cash flow in parallel
+    const [balanceRes, cashFlowRes] = await Promise.all([
+      fetch(`${FMP_BASE}/balance-sheet-statement?symbol=${ticker}&period=quarter&limit=1&apikey=${FMP_KEY}`),
+      fetch(`${FMP_BASE}/cash-flow-statement?symbol=${ticker}&period=quarter&limit=2&apikey=${FMP_KEY}`)
+    ]);
+    
+    const balanceSheet = await balanceRes.json();
+    const cashFlow = await cashFlowRes.json();
+    
+    if (!balanceSheet?.length || !cashFlow?.length) {
+      console.log(`   ⚠️  No financial data available for ${ticker}`);
+      return null;
+    }
+    
+    const bs = balanceSheet[0];
+    const cf = cashFlow[0]; // Most recent quarter
+    const cfPrev = cashFlow[1]; // Previous quarter (for trend)
+    
+    // Extract key metrics
+    const cash = bs.cashAndCashEquivalents || 0;
+    const totalDebt = bs.totalDebt || (bs.shortTermDebt || 0) + (bs.longTermDebt || 0);
+    const operatingCashFlow = cf.operatingCashFlow || cf.netCashProvidedByOperatingActivities || 0;
+    const quarterlyBurn = operatingCashFlow < 0 ? Math.abs(operatingCashFlow) : 0;
+    const monthlyBurn = quarterlyBurn / 3;
+    
+    // Calculate runway (months of cash left at current burn rate)
+    const runwayMonths = monthlyBurn > 0 ? cash / monthlyBurn : null;
+    
+    // Previous quarter burn for trend
+    const prevOperatingCF = cfPrev?.operatingCashFlow || cfPrev?.netCashProvidedByOperatingActivities || 0;
+    const prevQuarterlyBurn = prevOperatingCF < 0 ? Math.abs(prevOperatingCF) : 0;
+    const burnTrend = quarterlyBurn > prevQuarterlyBurn ? 'accelerating' : 
+                      quarterlyBurn < prevQuarterlyBurn * 0.8 ? 'improving' : 'stable';
+    
+    // Recent stock issuance (signs of active dilution)
+    const recentStockIssuance = cf.commonStockIssuance || cf.netCommonStockIssuance || 0;
+    
+    return {
+      // Cash position
+      cash,
+      cashFormatted: formatMoney(cash),
+      
+      // Debt
+      totalDebt,
+      debtFormatted: formatMoney(totalDebt),
+      
+      // Burn rate
+      quarterlyBurn,
+      monthlyBurn,
+      monthlyBurnFormatted: formatMoney(monthlyBurn),
+      burnTrend,
+      
+      // Runway (months of cash left at current burn rate)
+      runwayMonths,
+      runwayFormatted: runwayMonths !== null ? 
+        (runwayMonths < 1 ? '< 1 month of cash left' : 
+         runwayMonths < 12 ? `~${Math.round(runwayMonths)} months of cash left` : 
+         `~${Math.round(runwayMonths / 12)} years of cash`) : 'N/A',
+      
+      // Dilution signals
+      recentStockIssuance,
+      hasRecentDilution: recentStockIssuance > 0,
+      
+      // Report date
+      reportDate: bs.date,
+      reportPeriod: bs.period,
+      
+      // Distress indicators
+      isDistressed: (runwayMonths !== null && runwayMonths < 6) || (totalDebt > cash * 5),
+      distressLevel: runwayMonths !== null && runwayMonths < 3 ? 'critical' :
+                     runwayMonths !== null && runwayMonths < 6 ? 'severe' :
+                     runwayMonths !== null && runwayMonths < 12 ? 'moderate' : 'low'
+    };
+  } catch (error) {
+    console.log(`   ⚠️  Failed to fetch financials: ${error.message}`);
+    return null;
+  }
+}
+
+function formatMoney(amount) {
+  if (amount >= 1e9) return `$${(amount / 1e9).toFixed(1)}B`;
+  if (amount >= 1e6) return `$${(amount / 1e6).toFixed(1)}M`;
+  if (amount >= 1e3) return `$${(amount / 1e3).toFixed(0)}K`;
+  return `$${amount.toLocaleString()}`;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // OPENAI TWEET GENERATION
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const SYSTEM_PROMPT = `You are DilutionHunter, a sharp-eyed analyst who spots dilution patterns in small-cap stocks.
 
 Your communication style:
-- Short-form, direct, punchy, zero jargon where avoidable
+- Short-form, direct, punchy, zero jargon
 - Feels like a trader whispering what's about to break
 - Sounds like a signal, not a research paper
 - Risk awareness framing, never trade suggestions
@@ -47,19 +142,35 @@ Two-layer communication:
 2. Full breakdown thread — narrative + metrics + thesis
 
 Language rules:
-- Every acronym explained in plain English
-- ATM = "At-The-Market offering" (company sells new shares directly into market)
-- Use analogies: pizza slices, watered-down coffee
-- Assume reader has ZERO finance knowledge
+- Plain English, no analogies or metaphors (no pizza, pie, coffee references)
+- Explain mechanics directly: "company sells shares → more supply → price drops"
 - Include framing: "not advice — pattern recognition", "elevated risk profile"
 
 You don't give financial advice — you spot patterns and explain mechanics.`;
+
+// ATM explanation variations (rotate to avoid repetition)
+const ATM_EXPLANATIONS = [
+  "ATM = At-The-Market offering. Company hired a broker to sell new shares directly into the open market at current prices. They can sell whenever they want — you won't know until it's done.",
+  "ATM filing means the company got SEC approval to sell shares directly into the market. No announcement, no discount — just quiet selling into any buying pressure.",
+  "What's an ATM? Company files paperwork letting them sell new shares at market price through a broker. They typically sell into pumps to maximize cash raised.",
+  "ATM = permission to print shares. Company can now sell stock directly into the market whenever they need cash. More shares = each share worth less.",
+  "The ATM filing: company lined up a broker to drip-sell new shares into the market. They don't announce when — you find out later when the share count increases.",
+];
+
+function getATMExplanation() {
+  // Rotate based on day of year to vary explanations
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+  return ATM_EXPLANATIONS[dayOfYear % ATM_EXPLANATIONS.length];
+}
 
 function buildPrompt(context) {
   // Calculate risk score for categorization
   const riskScore = calculateRiskScore(context);
   const alertTone = riskScore >= 65 ? 'HIGH RISK ALERT' : 'WATCH';
   const alertEmoji = riskScore >= 65 ? '🚨' : '🟡';
+  
+  // Get today's ATM explanation variation
+  const atmExplanation = getATMExplanation();
   
   // Calculate additional metrics
   const marketCapSize = context.marketCap < 50000000 ? 'micro-cap (extremely vulnerable)' :
@@ -70,6 +181,30 @@ function buildPrompt(context) {
   const filingAge = context.daysSinceFiling <= 3 ? 'just filed' :
                     context.daysSinceFiling <= 7 ? 'very fresh' :
                     context.daysSinceFiling <= 14 ? 'recent' : 'within window';
+
+  // Build financial health section if available
+  const fh = context.financialHealth;
+  const financialHealthSection = fh ? `
+## FINANCIAL HEALTH (Why They Need Cash)
+- Cash on Hand: ${fh.cashFormatted}
+- Total Debt: ${fh.debtFormatted}
+- Monthly Burn Rate: ${fh.monthlyBurnFormatted}/month
+- How Long Cash Lasts: ${fh.runwayFormatted}
+- Distress Level: ${fh.distressLevel.toUpperCase()}
+- Burn Trend: ${fh.burnTrend}
+- Report Date: ${fh.reportDate} (${fh.reportPeriod})
+${fh.hasRecentDilution ? `- ⚠️ Already diluted $${(fh.recentStockIssuance / 1e6).toFixed(1)}M last quarter via stock issuance` : ''}
+
+THIS IS THE "WHY": ${
+  fh.runwayMonths !== null && fh.runwayMonths < 3 ? `With only ${fh.runwayFormatted}, this company is running on fumes. The ATM isn't optional — it's survival.` :
+  fh.runwayMonths !== null && fh.runwayMonths < 6 ? `At ${fh.cashFormatted} cash with ${fh.monthlyBurnFormatted}/month burn, they have ${fh.runwayFormatted}. The ATM is their lifeline.` :
+  fh.runwayMonths !== null && fh.runwayMonths < 12 ? `Burning ${fh.monthlyBurnFormatted}/month with ${fh.cashFormatted} cash = ~${Math.round(fh.runwayMonths)} months runway. They'll likely tap this ATM soon.` :
+  fh.totalDebt > fh.cash * 3 ? `Debt (${fh.debtFormatted}) is crushing their ${fh.cashFormatted} cash position. ATM dilution likely to shore up balance sheet.` :
+  `Balance sheet isn't critical yet, but the ATM gives them a loaded gun for dilution whenever they want.`
+}` : `
+## FINANCIAL HEALTH
+- Data not available for this ticker
+- Default assumption: Small-cap with ATM filing = likely burning cash`;
 
   return `Generate a TWO-LAYER Twitter alert for this dilution setup.
 
@@ -88,6 +223,7 @@ function buildPrompt(context) {
 - Peak Gain: +${context.peakGain?.toFixed(0)}%
 - Current Gain: ${context.currentGain >= 0 ? '+' : ''}${context.currentGain?.toFixed(0)}%
 - Pullback from Peak: -${context.pullbackFromPeak?.toFixed(0)}%
+${financialHealthSection}
 
 ## RISK ASSESSMENT
 - Score: ${riskScore}%
@@ -98,44 +234,79 @@ function buildPrompt(context) {
 
 Return JSON with these fields:
 
-### 1. tweetAlert (max 280 chars) — THE FAST ALERT
-This is the HOOK. Must be readable in 3 seconds. 5-7 lines max.
-Format EXACTLY like this template:
+### 1. tweetAlert — THE FAST ALERT
+This is the HOOK. Write it like a trader's quick heads-up — punchy, direct, delivers value fast. Not an essay, but complete enough to understand the setup.
 
-"${alertEmoji} Dilution Risk Setup — $${context.ticker}
+FORMAT WITH LINE BREAKS for visual clarity (use \\n in JSON):
+${alertEmoji} [Hook line about ticker]
 
-+${context.peakGain?.toFixed(0)}% spike → now ${context.currentGain >= 0 ? '+' : ''}${context.currentGain?.toFixed(0)}%
-ATM filed ${context.filingDate} (${filingAge})
-$${((context.marketCap || 0) / 1e6).toFixed(0)}M cap = vulnerable
-Volume fading from peak
+[Key stats - spike, current level, ATM date]
+[Financial context - cash/runway if critical]
 
-Pump → ATM → slow bleed pattern forming
+[ONE-SENTENCE NARRATIVE — see below]
 
-Full breakdown below ↓"
+🧵 Full breakdown below
 
-### 2. tweetBreakdown — Array of 5 tweets (each max 280 chars)
+**THE NARRATIVE SENTENCE IS CRITICAL.** Based on the bucket and this ticker's specific metrics, write ONE sentence that answers: "What story is the data telling, and why should the reader care?"
 
-**Thread Tweet 1 — ATM Explainer (analogy required)**
-Explain what ATM means in plain English. Use pizza or pie analogy.
-Example: "ATM = At-The-Market offering. Company can sell new shares anytime → more supply → weaker price. Like splitting a pizza into more slices — same pie, smaller pieces. 🍕"
+BUCKET: ${context.bucket}
+${context.bucket === 'ACTIONABLE' ? `
+ACTIONABLE NARRATIVE GUIDANCE:
+This setup has LIVE dilution risk. Use the specific metrics (${fh ? `${fh.runwayFormatted}, ${fh.cashFormatted} cash, ${fh.monthlyBurnFormatted}/mo burn` : 'cash-strapped balance sheet'}, +${context.peakGain?.toFixed(0)}% spike, ATM filed ${context.filingDate}) to explain WHY this is urgent.
+Example angles:
+- "With ${fh?.runwayFormatted || 'almost no cash left'} and a ${filingAge} ATM, the ingredients for dilution are live."
+- "This has the markers historically seen before dilution events — risk is developing now."
+Goal: communicate urgency + ongoing threat using THIS company's numbers.
+` : context.bucket === 'WATCH_LIST' ? `
+WATCH_LIST NARRATIVE GUIDANCE:
+Conditions are forming but not confirmed. Use the specific metrics (${fh ? `${fh.runwayFormatted}` : 'unknown financials'}, +${context.peakGain?.toFixed(0)}% spike, ${context.pullbackFromPeak?.toFixed(0)}% pullback) to explain what's developing.
+Example angles:
+- "Conditions forming that often precede dilution — not confirmed, but tracking."
+- "+${context.peakGain?.toFixed(0)}% run with ATM overhead — watching for breakdown signals."
+Goal: signal interest, not action. Use THIS company's situation.
+` : `
+CASE_STUDY NARRATIVE GUIDANCE:
+The dilution already played out. Use the metrics (+${context.peakGain?.toFixed(0)}% peak → now ${context.currentGain >= 0 ? '+' : ''}${context.currentGain?.toFixed(0)}%, ${context.pullbackFromPeak?.toFixed(0)}% crash) to frame the educational lesson.
+Example angles:
+- "This chart shows how dilution unfolded — useful blueprint for future setups."
+- "From +${context.peakGain?.toFixed(0)}% to ${context.currentGain >= 0 ? '+' : ''}${context.currentGain?.toFixed(0)}% — textbook ATM dilution pattern."
+Goal: turn this specific outcome into pattern recognition education.
+`}
 
-**Thread Tweet 2 — The Setup (bullet points with numbers)**
-Why this caught my eye:
-• Market cap: $${((context.marketCap || 0) / 1e6).toFixed(0)}M (tiny = vulnerable)
-• ATM filed: ${context.filingDate} (${context.daysSinceFiling} days ago)
+MUST include these elements:
+- ${alertEmoji} emoji at start
+- The ticker ($${context.ticker})
+- Key stats (spike, current level, ATM date, cash situation if relevant)
+- ONE-SENTENCE NARRATIVE tailored to this ticker's bucket + metrics
+- End with "🧵 Full breakdown below"
+
+VARY the structure. The narrative sentence should feel specific to THIS company, not generic.
+
+### 2. tweetBreakdown — Array of 5 tweets (keep each punchy but complete)
+
+Use NUMBER EMOJIS instead of "1/" "2/" etc. Use: 1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣
+
+**Thread Tweet 1 — ATM Explainer (NO analogies, direct explanation)**
+Start with "1️⃣" then the content. Use this explanation (or rephrase slightly): "${atmExplanation}"
+
+**Thread Tweet 2 — The Setup + WHY They Need Cash**
+Start with "2️⃣". Combine price action with financial evidence:
+• Market cap: $${((context.marketCap || 0) / 1e6).toFixed(0)}M
+• ATM filed: ${context.filingDate}
 • Spiked +${context.peakGain?.toFixed(0)}% → now ${context.currentGain >= 0 ? '+' : ''}${context.currentGain?.toFixed(0)}%
-High price + cash need = prime dilution setup
+${fh ? `• Cash: ${fh.cashFormatted} | Burn: ${fh.monthlyBurnFormatted}/mo | ${fh.runwayFormatted}` : '• Financials: Typical small-cap cash crunch'}
+High price + cash need = dilution setup
 
 **Thread Tweet 3 — Confirming Signals**
-What to watch for:
+Start with "3️⃣". What to watch for:
 • Heavy red candle with volume
 • Selling pressure expanding
 • Support break without recovery
-• ${context.pullbackFromPeak?.toFixed(0)}% off highs — cracks forming
-Motive: company likely needs funding
+• ${context.pullbackFromPeak?.toFixed(0)}% off highs already
+${fh && fh.distressLevel !== 'low' ? `Motive clear: ${fh.distressLevel} distress level` : 'Company has motive to raise cash'}
 
 **Thread Tweet 4 — Bear vs Bull Scenarios**
-Bear thesis builds if:
+Start with "4️⃣". Bear thesis builds if:
 • Red candle + sell volume spike
 • Price fails to reclaim highs
 • ATM usage confirmed
@@ -145,31 +316,33 @@ Bull invalidation: strong volume breakout
 Traders get trapped when dilution lands during pullbacks — not the run.
 
 **Thread Tweet 5 — Final Takeaway**
-Pattern recognition frame. Risk awareness. Single sentence summary.
-Example: "Not advice — just pattern recognition. Big spike + small cap + fresh ATM = elevated risk profile. Watch how it reacts to selling pressure. 🦅"
+Start with "5️⃣". Reinforce the narrative from the alert tweet. Reference THIS company's specific situation:
+${context.bucket === 'ACTIONABLE' ? `- Summarize why the risk is LIVE (use their cash/runway/burn numbers)
+- "The setup is in motion" framing` : context.bucket === 'WATCH_LIST' ? `- Summarize what you're watching for (specific to their metrics)
+- "Tracking, not acting yet" framing` : `- Summarize the lesson learned from this specific outcome
+- "Blueprint for next time" framing`}
+End with: "Not advice — pattern recognition only. 🦅"
 
 ### 3. chartAnnotations
 - highlightZones: Array of { type: 'entry'|'danger'|'watch', startDay, endDay, label }
 - arrows: Array of { day, direction: 'up'|'down', label }
 - overallStyle: 'bearish_confirmed'|'cautious_watch'|'neutral_watch'
 
-### 4. hashtags — Array of 3-4 tags like #Stocks #Trading #Dilution
+### 4. sentiment — 'bearish'|'cautious'|'neutral'
 
-### 5. sentiment — 'bearish'|'cautious'|'neutral'
-
-### 6. riskCategory — '${alertTone}'
+### 5. riskCategory — '${alertTone}'
 
 ## CRITICAL REQUIREMENTS
-✓ Alert tweet must be 5-7 lines, readable in 3 seconds
-✓ Must end alert with "Full breakdown below ↓"
-✓ Include: peak %, current %, ATM age, market cap, volume trend
+✓ Alert tweet: punchy but complete — include ONE-SENTENCE NARRATIVE specific to this ticker's bucket + metrics
+✓ Alert must end with "🧵 Full breakdown below"
+✓ Include financial evidence (cash, burn, runway) in Thread Tweet 2
 ✓ Use ${alertEmoji} emoji for ${alertTone} tone
-✓ Every acronym explained
-✓ At least one analogy (pizza, pie, coffee)
+✓ NO ANALOGIES — explain mechanics directly
 ✓ Both bear AND bull scenarios in thread
 ✓ "Traders get trapped when..." insight
 ✓ No financial advice — pattern spotting only
-✓ Risk framing: "elevated risk profile", "not advice"
+✓ NO HASHTAGS — do not include any hashtags
+✓ Keep tweets punchy and scannable — not essays, but complete thoughts
 
 Respond ONLY with valid JSON.`;
 }
@@ -200,13 +373,13 @@ function calculateRiskScore(context) {
 
 async function generateContent(context) {
   const response = await openai.chat.completions.create({
-    model: 'gpt-4o',
+    model: 'gpt-5.1',  // Upgraded from gpt-4o
     messages: [
       { role: 'system', content: SYSTEM_PROMPT },
       { role: 'user', content: buildPrompt(context) }
     ],
     temperature: 0.7,
-    max_tokens: 2000
+    max_completion_tokens: 2000  // GPT-5+ uses max_completion_tokens instead of max_tokens
   });
   
   let content = response.choices[0].message.content;
@@ -339,9 +512,24 @@ export async function runPipeline(ticker, options = {}) {
     return null;
   }
   
+  // Step 2.5: Fetch financial health data
+  console.log(`\n💰 Step 2.5: Fetching financial health...`);
+  const financialHealth = await fetchFinancialHealth(ticker);
+  if (financialHealth) {
+    console.log(`   ✓ Cash: ${financialHealth.cashFormatted}`);
+    console.log(`   ✓ Debt: ${financialHealth.debtFormatted}`);
+    console.log(`   ✓ Monthly Burn: ${financialHealth.monthlyBurnFormatted}`);
+    console.log(`   ✓ Runway: ${financialHealth.runwayFormatted}`);
+    console.log(`   ✓ Distress Level: ${financialHealth.distressLevel}`);
+  } else {
+    console.log(`   ⚠️  No financial data available`);
+  }
+  
   // Step 3: Generate content via OpenAI
   console.log(`\n🤖 Step 3: Generating content via OpenAI...`);
   const context = generateGPTContext(tickerData, classification, tweetDecision);
+  // Add financial health to context
+  context.financialHealth = financialHealth;
   const generated = await generateContent(context);
   const riskScore = calculateRiskScore(context);
   console.log(`   ✓ Risk Score: ${riskScore}% (${generated.riskCategory})`);

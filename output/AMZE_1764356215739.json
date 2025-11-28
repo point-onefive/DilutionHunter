@@ -1,0 +1,68 @@
+{
+  "ticker": "AMZE",
+  "generatedAt": "2025-11-28T18:56:55.739Z",
+  "classification": {
+    "bucket": "WATCH_LIST",
+    "reason": "Peak 91% — needs bigger run for ideal setup",
+    "riskScore": 80,
+    "riskCategory": "HIGH RISK ALERT"
+  },
+  "tweets": {
+    "hook": "🚨 Dilution Risk Setup — $AMZE\n\n+91% spike → now +45%\nATM filed 2025-11-13 (recent)\n$2.8M cap = vulnerable\nVolume fading from peak\n\nPump → ATM → slow bleed pattern forming\n\nFull breakdown below ↓",
+    "breakdown": [
+      "What's an ATM? Company files to sell new shares at market through a broker. Company sells shares → share count rises → more supply. They usually sell into strong spikes to raise the most cash. That selling pressure often caps or reverses the move.",
+      "Why this caught my eye:\n• Market cap: $2.8M (tiny = vulnerable)\n• ATM filed: 2025-11-13 (14 days ago)\n• Spiked +91% → now +45%\nHigh price + likely cash need + fresh ATM = prime dilution setup if they start selling into strength.",
+      "What to watch for:\n• Heavy red candle with volume\n• Selling pressure expanding\n• Support break without recovery\n• 46% off highs — cracks forming\nMotive: company likely needs funding, ATM gives them a direct way to dump shares into any bounce.",
+      "Bear thesis builds if:\n• Red candle + sell volume spike\n• Price fails to reclaim recent highs\n• ATM usage confirmed in filings\n\nBull invalidation: strong volume breakout that holds.\n\nTraders get trapped when dilution hits during pullbacks, not during the first run.",
+      "Not advice — just pattern recognition. Big spike + micro-cap + fresh ATM = elevated risk profile. Company selling shares into the market can shift momentum fast. Watch how $AMZE reacts when real selling pressure shows up. 🦅"
+    ],
+    "hashtags": [
+      "#Stocks",
+      "#Trading",
+      "#Dilution",
+      "#SmallCaps"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/AMZE_1764356215724.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "watch",
+        "startDay": -14,
+        "endDay": 0,
+        "label": "Post-ATM filing spike + pullback zone"
+      },
+      {
+        "type": "danger",
+        "startDay": -3,
+        "endDay": 0,
+        "label": "46% off highs / potential sell pressure"
+      }
+    ],
+    "arrows": [
+      {
+        "day": -14,
+        "direction": "up",
+        "label": "ATM filed 2025-11-13"
+      },
+      {
+        "day": -7,
+        "direction": "up",
+        "label": "+91% peak"
+      },
+      {
+        "day": 0,
+        "direction": "down",
+        "label": "Now +45% / watch for red volume"
+      }
+    ],
+    "overallStyle": "cautious_watch"
+  },
+  "tickerData": {
+    "price": 0.4745,
+    "marketCap": 2764048,
+    "peakGain": 91.2977099236641,
+    "currentGain": 44.885496183206094,
+    "pullback": 46.41221374045801
+  }
+}
