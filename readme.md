@@ -2,7 +2,7 @@
 
 **Automated ATM dilution risk detection and Twitter content pipeline**
 
-Scans SEC EDGAR for At-The-Market (ATM) offerings, analyzes post-filing price action, generates professional analyst-grade Twitter threads, and posts educational content about dilution risk patterns.
+Scans SEC EDGAR for At-The-Market (ATM) offerings, analyzes post-filing price action, fetches financial health data (cash, burn rate, debt), generates professional analyst-grade Twitter threads, and posts educational content about dilution risk patterns.
 
 ---
 
@@ -10,9 +10,10 @@ Scans SEC EDGAR for At-The-Market (ATM) offerings, analyzes post-filing price ac
 
 - 🔍 **ATM Filing Detection** — Scans SEC EDGAR for recent 424B5 ATM filings
 - 📊 **Price Analysis** — Tracks peak gains, pullbacks, and current performance post-filing
+- 💰 **Financial Health** — Fetches cash, debt, burn rate, months of cash left from balance sheets
 - 🎯 **Smart Classification** — 3-bucket system (Actionable, Watch List, Case Study)
 - 🚫 **Quality Filtering** — Skips same-day pump & dump patterns
-- 🧵 **Professional Threads** — 5-6 tweet threads with education, metrics, bull/bear framing
+- 🧵 **Professional Threads** — 6-tweet threads with education, metrics, bull/bear framing
 - 📈 **Chart Generation** — Candlestick charts with ATM filing date marker
 - ✅ **Manual Approval** — Review before posting to Twitter
 
@@ -105,27 +106,39 @@ node src/post.js MNDR --live
 ### Tweet Thread Structure
 
 ```
-Tweet 1: Hook + Setup
-$ANVS up +65% after a +75% peak — but an ATM filing on Nov 13 makes this move *fragile.* 🧵
+Alert Tweet (with chart):
+🚨 $AMZE dilution watch
 
-Tweet 2: Education
-ATM = At-The-Market offering. Company can sell new shares anytime → more supply → weaker price. 🍕
++91% spike off lows, now holding +47%
+ATM filed 2025-11-13
+$2.8M cap with < 1 month of cash left
 
-Tweet 3: Key Signals
-• Market cap: $97M (tiny = vulnerable)
-• ATM filed: 2025-11-13 (14 days ago)
-• Price spiked +75% → now +65%
+Company has ~$300K cash vs ~$2.0M monthly burn, so the ATM is survival, not optional.
 
-Tweet 4: Additional Context
-• Volume fading — early signs of distribution
-• Small float → dilution hits harder
+🧵 Full breakdown below
 
-Tweet 5: Bull/Bear Framing
-Bear thesis: Heavy red candle, fails to reclaim highs
-Bull case: Strong volume breakout → ATM may pause
+Thread:
+1️⃣ What's an ATM? Company files paperwork to sell new shares at market price through a broker. They usually sell into strength to maximize cash raised.
 
-Tweet 6: CTA + Disclaimer
-This isn't advice — just pattern recognition. 🦅
+2️⃣ The setup on $AMZE:
+• Market cap: ~$2.8M
+• ATM filed: 2025-11-13
+• Price: ran +91% → now +47%
+• Cash: $300K | Burn: $2.0M/mo | < 1 month of cash left
+
+3️⃣ What I'm watching:
+• Heavy red candle with volume
+• Selling pressure growing
+• Support breaks that don't bounce
+Motive clear: critical distress level
+
+4️⃣ Scenarios:
+Bear builds if: large red day, can't reclaim highs, ATM usage shows up
+Bull invalidation: strong volume breakout that holds
+Traders get trapped when dilution hits during pullbacks, not the run.
+
+5️⃣ Takeaway: Fresh ATM, sub-$3M cap, < 1 month of cash, and a spike already fading. This is a watch setup, not an action setup.
+Not advice — pattern recognition only. 🦅
 ```
 
 ### Chart Features
@@ -214,6 +227,7 @@ node src/chartGenerator.js
 
 ## Documentation
 
+- [v2.2 Updates](logs/2025-11-28-v2.2-updates.md) — Financial health data, narrative generation, formatting
 - [v2 Architecture](logs/2025-11-27-v2-architecture.md) — Current system design
 - [v1 Technical Spec](logs/2025-11-26-technical-spec.md) — Legacy scoring system
 
