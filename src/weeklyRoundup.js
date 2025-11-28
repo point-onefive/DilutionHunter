@@ -241,4 +241,9 @@ const days = daysArg ? parseInt(daysArg.split('=')[1]) : 5;  // 5 business days 
 // Parse --post
 const shouldPost = args.includes('--post');
 
-generateWeeklyRoundup({ days, post: shouldPost });
+const result = await generateWeeklyRoundup({ days, post: shouldPost });
+
+// Exit with code 2 if nothing new to post (allows workflow to skip commit step)
+if (result === null) {
+  process.exit(2);
+}
