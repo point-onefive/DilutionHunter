@@ -1,11 +1,11 @@
 name: DilutionHunter Scan
 
 on:
-  # Scheduled runs - 3x per day (9am, 1pm, 5pm ET roughly)
-  schedule:
-    - cron: "0 14 * * 1-5"  # 2pm UTC = 9am ET (weekdays only)
-    - cron: "0 18 * * 1-5"  # 6pm UTC = 1pm ET
-    - cron: "0 22 * * 1-5"  # 10pm UTC = 5pm ET
+  # Scheduled runs - DISABLED until we're satisfied with output
+  # schedule:
+  #   - cron: "0 14 * * 1-5"  # 2pm UTC = 9am ET (weekdays only)
+  #   - cron: "0 18 * * 1-5"  # 6pm UTC = 1pm ET
+  #   - cron: "0 22 * * 1-5"  # 10pm UTC = 5pm ET
   
   # Manual trigger
   workflow_dispatch:

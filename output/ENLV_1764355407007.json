@@ -1,0 +1,63 @@
+{
+  "ticker": "ENLV",
+  "generatedAt": "2025-11-28T18:43:27.007Z",
+  "classification": {
+    "bucket": "CASE_STUDY",
+    "reason": "Peaked 85%, now -1% — crashed 86% from peak",
+    "riskScore": 90,
+    "riskCategory": "HIGH RISK ALERT"
+  },
+  "tweets": {
+    "hook": "🚨 Dilution Risk Setup — $ENLV\n\n+85% spike → now -1%\nATM filed 2025-11-24 (very fresh)\n$23M cap = vulnerable\nVolume fading from peak\n\nPump → ATM → slow bleed pattern forming\n\nFull breakdown below ↓",
+    "breakdown": [
+      "ATM = At-The-Market offering. Company can sell new shares anytime → more supply → weaker price. Like splitting a pizza into more slices — same pie, smaller pieces. 🍕",
+      "Why this caught my eye:\n• Market cap: $23M (tiny = vulnerable)\n• ATM filed: 2025-11-24 (4 days ago)\n• Spiked +85% → now -1%\nHigh price + cash need = prime dilution setup",
+      "What to watch for:\n• Heavy red candle with volume\n• Selling pressure expanding\n• Support break without recovery\n• 86% off highs — cracks forming\nMotive: company likely needs funding",
+      "Bear thesis builds if:\n• Red candle + sell volume spike\n• Price fails to reclaim highs\n• ATM usage confirmed\n\nBull invalidation: strong volume breakout\n\nTraders get trapped when dilution lands during pullbacks — not the run.",
+      "Not advice — just pattern recognition. Big spike + small cap + fresh ATM = elevated risk profile. Watch how it reacts to selling pressure. 🦅"
+    ],
+    "hashtags": [
+      "#Stocks",
+      "#Trading",
+      "#Dilution",
+      "#MicroCap"
+    ]
+  },
+  "chartPath": "/Users/td/dev/DilutionHunter/output/charts/ENLV_1764355406978.png",
+  "chartAnnotations": {
+    "highlightZones": [
+      {
+        "type": "danger",
+        "startDay": 1,
+        "endDay": 4,
+        "label": "ATM filed"
+      },
+      {
+        "type": "watch",
+        "startDay": 5,
+        "endDay": 10,
+        "label": "Volume decline"
+      }
+    ],
+    "arrows": [
+      {
+        "day": 2,
+        "direction": "down",
+        "label": "Price drop"
+      },
+      {
+        "day": 6,
+        "direction": "down",
+        "label": "Volume fade"
+      }
+    ],
+    "overallStyle": "bearish_confirmed"
+  },
+  "tickerData": {
+    "price": 0.9699,
+    "marketCap": 23140165,
+    "peakGain": 84.6938775510204,
+    "currentGain": -1.030612244897959,
+    "pullback": 85.72448979591836
+  }
+}
