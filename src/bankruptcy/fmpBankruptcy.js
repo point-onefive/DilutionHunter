@@ -17,17 +17,23 @@ import 'dotenv/config';
 const FMP_API_KEY = process.env.FMP_API_KEY;
 const FMP_BASE = 'https://financialmodelingprep.com/stable';
 
-async function fmpGet(endpoint) {
+async function fmpGet(endpoint, silent = false) {
   const url = `${FMP_BASE}${endpoint}${endpoint.includes('?') ? '&' : '?'}apikey=${FMP_API_KEY}`;
   
   try {
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`FMP ${response.status}: ${response.statusText}`);
+      // Only log critical errors (not 402 premium tier or 404 for optional endpoints)
+      if (!silent && response.status !== 402 && response.status !== 404) {
+        console.error(`   ⚠️  FMP ${response.status}: ${endpoint.split('?')[0]}`);
+      }
+      return null;
     }
     return await response.json();
   } catch (error) {
-    console.error(`FMP fetch error for ${endpoint}:`, error.message);
+    if (!silent) {
+      console.error(`   ⚠️  FMP error: ${error.message}`);
+    }
     return null;
   }
 }
@@ -40,13 +46,14 @@ export async function fetchBankruptcyInputs(symbol) {
   console.log(`   📊 Fetching bankruptcy data for ${symbol}...`);
   
   // Parallel fetch all required data
+  // Note: key-metrics (Altman Z) and insider-trading may 402/404 on free tier - that's OK
   const [quote, balanceSheet, cashFlow, income, keyMetrics, insiders] = await Promise.all([
     fmpGet(`/profile?symbol=${symbol}`),
     fmpGet(`/balance-sheet-statement?symbol=${symbol}&period=quarter&limit=4`),
     fmpGet(`/cash-flow-statement?symbol=${symbol}&period=quarter&limit=4`),
     fmpGet(`/income-statement?symbol=${symbol}&period=quarter&limit=4`),
-    fmpGet(`/key-metrics?symbol=${symbol}&period=quarter&limit=4`),
-    fmpGet(`/insider-trading?symbol=${symbol}&limit=50`)
+    fmpGet(`/key-metrics?symbol=${symbol}&period=quarter&limit=4`, true),  // Premium - silent fail OK
+    fmpGet(`/insider-trading?symbol=${symbol}&limit=50`, true)             // May 404 - silent fail OK
   ]);
 
   return {
@@ -61,41 +68,71 @@ export async function fetchBankruptcyInputs(symbol) {
 }
 
 /**
- * Fetch universe candidates from FMP screener
- * Pre-filter to small/mid caps with signs of distress
+ * Fetch fresh universe candidates from FMP market movers
+ * Combines biggest-losers + most-actives + biggest-gainers for viral potential
+ * These endpoints work on free tier and give us FRESH daily candidates
  */
 export async function fetchUniverseCandidates(options = {}) {
   const {
     minMarketCap = 10_000_000,      // $10M minimum
-    maxMarketCap = 5_000_000_000,   // $5B maximum
-    minPrice = 0.50,                 // Above $0.50 (avoid pennies)
-    maxPrice = 50,                   // Under $50
-    limit = 500
+    maxMarketCap = 10_000_000_000,  // $10B maximum  
+    minPrice = 0.20,                 // Above $0.20 
+    maxPrice = 100                   // Under $100
   } = options;
 
-  console.log('📡 Fetching universe candidates from FMP screener...');
+  console.log('📡 Fetching fresh universe from FMP market movers...');
   
-  // Use stock screener to find small/mid caps
-  const screenerUrl = `/stock-screener?marketCapMoreThan=${minMarketCap}&marketCapLowerThan=${maxMarketCap}&priceMoreThan=${minPrice}&priceLowerThan=${maxPrice}&isActivelyTrading=true&exchange=NYSE,NASDAQ&limit=${limit}`;
-  
-  const results = await fmpGet(screenerUrl);
-  
-  if (!results || !Array.isArray(results)) {
-    console.error('Failed to fetch screener results');
+  // Fetch from multiple working endpoints in parallel
+  const [losers, actives, gainers] = await Promise.all([
+    fmpGet('/biggest-losers'),
+    fmpGet('/most-actives'),
+    fmpGet('/biggest-gainers')
+  ]);
+
+  // Combine all results
+  const allResults = [
+    ...(losers || []),
+    ...(actives || []),
+    ...(gainers || [])
+  ];
+
+  if (allResults.length === 0) {
+    console.log('   ⚠️  No results from FMP market movers');
     return [];
   }
 
-  console.log(`   Found ${results.length} candidates from screener`);
+  // Deduplicate by symbol
+  const seen = new Set();
+  const candidates = [];
   
-  // Extract just the symbols
-  return results.map(r => ({
-    symbol: r.symbol,
-    companyName: r.companyName,
-    marketCap: r.marketCap,
-    price: r.price,
-    sector: r.sector,
-    industry: r.industry
-  }));
+  for (const r of allResults) {
+    if (!r.symbol || seen.has(r.symbol)) continue;
+    seen.add(r.symbol);
+    
+    // Filter by price (market cap not always available in these endpoints)
+    const price = r.price || 0;
+    if (price < minPrice || price > maxPrice) continue;
+    
+    // Skip ETFs/ETNs and funds
+    if (r.name && /\b(ETF|ETN|Fund|Trust|Index)\b/i.test(r.name)) continue;
+    
+    // Skip non-US exchanges
+    if (r.exchange && !['NASDAQ', 'NYSE', 'AMEX'].includes(r.exchange)) continue;
+    
+    candidates.push({
+      symbol: r.symbol,
+      companyName: r.name,
+      price: r.price,
+      change: r.change,
+      changesPercentage: r.changesPercentage,
+      exchange: r.exchange,
+      source: losers?.includes(r) ? 'loser' : actives?.includes(r) ? 'active' : 'gainer'
+    });
+  }
+
+  console.log(`   ✅ Found ${candidates.length} fresh candidates (${losers?.length || 0} losers, ${actives?.length || 0} actives, ${gainers?.length || 0} gainers)`);
+  
+  return candidates;
 }
 
 /**

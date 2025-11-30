@@ -120,44 +120,56 @@ function getCooldownInfo(symbol, posted) {
 // UNIVERSE MANAGEMENT
 // ═══════════════════════════════════════════════════════════════════════════════
 
+// Core distressed watchlist - always included
+const CORE_DISTRESS_LIST = [
+  'MULN', 'WKHS', 'GOEV', 'NKLA', 'LCID', 'RIVN', 'FFIE', 'FSR', 'LAZR', 'QS',
+  'PLUG', 'FCEL', 'BLNK', 'CHPT', 'EVGO', 'RIDE', 'ARVL', 'PTRA', 'XL',
+  'BYND', 'TTCF', 'OTLY', 'PRTY',
+  'TLRY', 'CGC', 'ACB', 'SNDL', 'HEXO', 'GRWG',
+  'BBBY', 'GME', 'AMC', 'CLOV', 'WISH', 'SOFI', 'OPEN', 'HOOD',
+  'SPCE', 'RKLB', 'ASTR', 'RDW', 'ASTS',
+  'UPST', 'AFRM', 'LMND', 'ROOT'
+];
+
 async function loadUniverse() {
   const data = loadJson(UNIVERSE_FILE);
   if (data?.symbols?.length) {
-    console.log(`📂 Loaded ${data.symbols.length} tickers from universe file`);
+    console.log(`📂 Loaded ${data.symbols.length} tickers from cached universe`);
     return data.symbols;
   }
   
-  console.log('⚠️  No universe file found. Run with --refresh to build one.');
-  return [];
+  // Fallback to core list
+  console.log(`📂 Using core distress list (${CORE_DISTRESS_LIST.length} tickers)`);
+  return CORE_DISTRESS_LIST;
 }
 
 async function refreshUniverse() {
-  console.log('🔄 Refreshing universe from FMP screener...');
+  console.log('🔄 Refreshing universe from FMP market movers...\n');
   
-  const candidates = await fetchUniverseCandidates({
-    minMarketCap: 10_000_000,     // $10M
-    maxMarketCap: 2_000_000_000,  // $2B (focus on small caps)
-    minPrice: 0.50,
-    maxPrice: 30,
-    limit: 500
-  });
-
-  if (!candidates.length) {
-    console.error('❌ Failed to fetch universe candidates');
-    return [];
-  }
+  // Fetch fresh candidates from FMP (losers, actives, gainers)
+  const freshCandidates = await fetchUniverseCandidates();
+  const freshSymbols = freshCandidates.map(c => c.symbol);
+  
+  // Merge with core distress list (deduplicated)
+  const allSymbols = [...new Set([...freshSymbols, ...CORE_DISTRESS_LIST])];
+  
+  console.log(`\n   📊 Fresh from FMP: ${freshSymbols.length}`);
+  console.log(`   📋 Core list: ${CORE_DISTRESS_LIST.length}`);
+  console.log(`   ✅ Total unique: ${allSymbols.length}\n`);
 
   const universeData = {
     refreshedAt: new Date().toISOString(),
-    count: candidates.length,
-    symbols: candidates.map(c => c.symbol),
-    details: candidates
+    count: allSymbols.length,
+    freshCount: freshSymbols.length,
+    coreCount: CORE_DISTRESS_LIST.length,
+    symbols: allSymbols,
+    freshDetails: freshCandidates
   };
 
   saveJson(UNIVERSE_FILE, universeData);
-  console.log(`✅ Saved ${candidates.length} tickers to universe file`);
+  console.log(`💾 Saved combined universe to file`);
   
-  return candidates.map(c => c.symbol);
+  return allSymbols;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -237,8 +249,8 @@ export async function runBankruptcyScan(options = {}) {
       console.log(' skip (no data)');
     }
 
-    // Rate limiting - small delay between tickers
-    await new Promise(r => setTimeout(r, 200));
+    // Rate limiting - delay between tickers to avoid 429
+    await new Promise(r => setTimeout(r, 500));
   }
 
   // Step 3: Sort by VIS (Viral Insolvency Score) and classify

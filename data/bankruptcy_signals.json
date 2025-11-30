@@ -1,8 +1,85 @@
 {
-  "scannedAt": "2025-11-30T07:34:19.781Z",
-  "totalScanned": 1,
+  "scannedAt": "2025-11-30T07:47:16.144Z",
+  "totalScanned": 50,
   "primeAlerts": [],
   "watchlist": [
+    {
+      "symbol": "CLSK",
+      "vis": 73,
+      "score": 60,
+      "viralityScore": 93,
+      "classification": "DISTRESS_WATCHLIST",
+      "visClassification": "WATCHLIST",
+      "shouldPost": true,
+      "metrics": {
+        "price": 15.21,
+        "companyName": "CleanSpark, Inc.",
+        "cash": 42966000,
+        "cashFormatted": "$43.0M",
+        "monthlyBurn": 39803000,
+        "monthlyBurnFormatted": "$39.8M",
+        "runwayMonths": 1.0794663718815165,
+        "runwayFormatted": "1.1 months",
+        "runwayCategory": "CRITICAL",
+        "totalDebt": 824437000,
+        "totalDebtFormatted": "$824.4M",
+        "debtToCashMultiple": 19.188125494577108,
+        "cashDebtRatio": 0.05211556492491239,
+        "ebit": 127285000,
+        "interestExpense": 5055000,
+        "interestCoverage": 25.18001978239367,
+        "revenueChangePct": 37.796507830887336,
+        "revenueTrend": "GROWING",
+        "negativeIncomeCount": 2,
+        "ocfNegativeCount": 4,
+        "ocfWorsening": true,
+        "ocfTrend": "DETERIORATING",
+        "altmanZScore": null,
+        "zCategory": "UNKNOWN",
+        "netInsiderFlow": 0,
+        "insiderBias": "BALANCED",
+        "totalSellValue": 0,
+        "totalBuyValue": 0
+      },
+      "virality": {
+        "score": 93,
+        "tier": "HIGH_VIRAL",
+        "breakdown": {
+          "volume": {
+            "score": 35,
+            "max": 35,
+            "reason": "Very high volume (>5M)"
+          },
+          "marketCap": {
+            "score": 18,
+            "max": 25,
+            "reason": "Mid cap (>$500M)"
+          },
+          "news": {
+            "score": 20,
+            "max": 20,
+            "reason": "Heavy news coverage (16 articles)"
+          },
+          "options": {
+            "score": 20,
+            "max": 20,
+            "reason": "Options available"
+          }
+        },
+        "avgVolume": 50915490,
+        "newsCount": 16,
+        "hasOptions": true,
+        "recentNews": []
+      },
+      "outcomes": {
+        "dilution": 50,
+        "restructure": 25,
+        "bankruptcy": 25,
+        "primaryOutcome": "DILUTION",
+        "confidence": "HIGH",
+        "rawTotal": 100
+      }
+    },
     {
       "symbol": "BYND",
       "vis": 68,
@@ -79,7 +156,145 @@
         "confidence": "HIGH",
         "rawTotal": 95
       }
+    },
+    {
+      "symbol": "AMZE",
+      "vis": 63,
+      "score": 75,
+      "viralityScore": 45,
+      "classification": "INSOLVENCY_ALERT",
+      "visClassification": "WATCHLIST",
+      "shouldPost": true,
+      "metrics": {
+        "price": 0.48,
+        "companyName": "Amaze Holdings, Inc.",
+        "cash": 299938,
+        "cashFormatted": "$299.9K",
+        "monthlyBurn": 1958230.6666666667,
+        "monthlyBurnFormatted": "$2.0M",
+        "runwayMonths": 0.15316785969375074,
+        "runwayFormatted": "<1 month",
+        "runwayCategory": "CRITICAL",
+        "totalDebt": 8101631,
+        "totalDebtFormatted": "$8.1M",
+        "debtToCashMultiple": 27.011018943915076,
+        "cashDebtRatio": 0.03702192805374621,
+        "ebit": -4695776,
+        "interestExpense": 480007,
+        "interestCoverage": -9.782724001941638,
+        "revenueChangePct": 1962.760673639892,
+        "revenueTrend": "GROWING",
+        "negativeIncomeCount": 4,
+        "ocfNegativeCount": 4,
+        "ocfWorsening": true,
+        "ocfTrend": "DETERIORATING",
+        "altmanZScore": null,
+        "zCategory": "UNKNOWN",
+        "netInsiderFlow": 0,
+        "insiderBias": "BALANCED",
+        "totalSellValue": 0,
+        "totalBuyValue": 0
+      },
+      "virality": {
+        "score": 45,
+        "tier": "MODERATE_VIRAL",
+        "breakdown": {
+          "volume": {
+            "score": 35,
+            "max": 35,
+            "reason": "Very high volume (>5M)"
+          },
+          "marketCap": {
+            "score": 0,
+            "max": 25,
+            "reason": "Nano cap (<$10M)"
+          },
+          "news": {
+            "score": 10,
+            "max": 20,
+            "reason": "Moderate news coverage (2 articles)"
+          },
+          "options": {
+            "score": 0,
+            "max": 20,
+            "reason": "No options chain"
+          }
+        },
+        "avgVolume": 111138170,
+        "newsCount": 2,
+        "hasOptions": false,
+        "recentNews": []
+      },
+      "outcomes": {
+        "dilution": 31,
+        "restructure": 26,
+        "bankruptcy": 43,
+        "primaryOutcome": "BANKRUPTCY",
+        "confidence": "HIGH",
+        "rawTotal": 175
+      }
     }
   ],
-  "storeOnly": []
+  "storeOnly": [
+    {
+      "symbol": "QNTM",
+      "vis": 57,
+      "score": 72,
+      "viralityScore": 35
+    },
+    {
+      "symbol": "CETY",
+      "vis": 54,
+      "score": 70,
+      "viralityScore": 30
+    },
+    {
+      "symbol": "ECDA",
+      "vis": 53,
+      "score": 68,
+      "viralityScore": 30
+    },
+    {
+      "symbol": "ZYXI",
+      "vis": 49,
+      "score": 55,
+      "viralityScore": 40
+    },
+    {
+      "symbol": "CLSD",
+      "vis": 48,
+      "score": 60,
+      "viralityScore": 30
+    },
+    {
+      "symbol": "ATLN",
+      "vis": 47,
+      "score": 72,
+      "viralityScore": 10
+    },
+    {
+      "symbol": "ARBKL",
+      "vis": 46,
+      "score": 65,
+      "viralityScore": 18
+    },
+    {
+      "symbol": "MENS",
+      "vis": 46,
+      "score": 62,
+      "viralityScore": 23
+    },
+    {
+      "symbol": "CYPH",
+      "vis": 45,
+      "score": 52,
+      "viralityScore": 35
+    },
+    {
+      "symbol": "LPTX",
+      "vis": 41,
+      "score": 52,
+      "viralityScore": 25
+    }
+  ]
 }
