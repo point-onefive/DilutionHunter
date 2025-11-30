@@ -2,9 +2,10 @@
 
 **Automated dilution risk detection + bankruptcy watchdog for Twitter**
 
-Two scanner systems:
+Three scanner systems:
 1. **ATM Scanner** — Detects At-The-Market offerings from SEC EDGAR
 2. **Bankruptcy Watchdog** — Identifies companies at risk of insolvency with VIS prioritization
+3. **CDE Detector** — Critical Distress Events where multiple failure signals converge
 
 ---
 
@@ -17,14 +18,20 @@ Two scanner systems:
 - 🎯 **Smart Classification** — 3-bucket system (Actionable, Watch List, Case Study)
 - 🚫 **Quality Filtering** — Skips same-day pump & dump patterns
 
-### Bankruptcy Watchdog (NEW)
+### Bankruptcy Watchdog
 - 💀 **Insolvency Detection** — 0-100 bankruptcy risk score across 7 factors
 - 📈 **VIS Prioritization** — Viral Insolvency Score = Risk × Attention
 - 🔮 **Outcome Probabilities** — Dilution / Restructuring / Bankruptcy estimates
 - 🧭 **Daily Radar** — Summary tweet of all tracked distress tickers
 - ⏳ **Anti-Duplication** — 30-day cooldown prevents repeat posts
 
-### Both Systems
+### CDE Detector (NEW)
+- 🔥 **Convergence Detection** — Finds tickers where Dilution + Bankruptcy + Attention align
+- 🎯 **Multi-Scanner Crossover** — Only triggers when ALL THREE signals present
+- 💀 **Death Spiral Alert** — These are the loud failures that reprice violently
+- 📊 **Intensity Scoring** — Measures how strongly signals converge
+
+### All Systems
 - 🧵 **Professional Threads** — AI-generated analyst-grade content
 - 📈 **Chart Generation** — Candlestick charts with markers
 - ✅ **Manual Approval** — Review before posting to Twitter
@@ -118,6 +125,28 @@ node src/bankruptcy/bankruptcyRadar.js --post          # Post radar tweet
 | 60-74 | WATCHLIST | Auto-post as watchlist |
 | <60 | STORE_ONLY | Save data, don't post |
 
+### CDE Detector (Critical Distress Events)
+
+#### 1. Scan for CDEs
+
+```bash
+node src/cde/cdeDetector.js                    # Scan from existing signals
+node src/cde/cdeDetector.js --ticker=AMZE      # Check single ticker
+node src/cde/cdeDetector.js --ticker=AMZE --post  # Post CDE thread
+```
+
+#### 2. CDE Criteria
+
+All three must be true:
+
+| Signal | Scanner | Threshold |
+|--------|---------|-----------|
+| 🔫 Dilution Active | Dilution Hunter | ATM/shelf detected |
+| 🏚 Bankruptcy Risk | Bankruptcy Watchdog | Risk ≥ 50/100 |
+| 📢 Market Attention | VIS Score | VIS ≥ 60/100 |
+
+When all three converge → **Critical Distress Event**
+
 ---
 
 ## Output Examples
@@ -198,6 +227,9 @@ Not advice — pattern recognition only. 🦅
 | `src/bankruptcy/viralityEngine.js` | Virality scoring |
 | `src/bankruptcy/outcomeModel.js` | Probability estimates |
 | `src/bankruptcy/bankruptcyRadar.js` | Daily dashboard |
+| **CDE Detector** | |
+| `src/cde/cdeDetector.js` | Multi-scanner convergence detection |
+| `src/cde/cdeThesis.js` | CDE thread generation |
 
 ---
 
@@ -255,6 +287,7 @@ node src/chartGenerator.js
 
 ## Documentation
 
+- [CDE System](logs/2025-11-30-cde-system.md) — Critical Distress Events, dynamic universe, company names
 - [v3.0 Bankruptcy Watchdog](logs/2025-11-30-v3-bankruptcy-watchdog.md) — VIS system, outcome model, compressed threads
 - [v2.2 Updates](logs/2025-11-28-v2.2-updates.md) — Financial health data, narrative generation, formatting
 - [v2 Architecture](logs/2025-11-27-v2-architecture.md) — Current system design
@@ -268,6 +301,8 @@ node src/chartGenerator.js
 - [x] Outcome probability model
 - [x] Anti-duplication (30-day cooldown)
 - [x] Daily radar dashboard
+- [x] CDE (Critical Distress Event) detection
+- [x] Dynamic universe refresh from FMP market movers
 - [ ] Automated GitHub Actions scheduling
 - [ ] Discord webhook alerts
 - [ ] Performance tracking (post-alert price drops)

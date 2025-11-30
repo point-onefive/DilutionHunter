@@ -89,13 +89,14 @@ Based on the financial data, our model estimates:
 
 ### Tweet 1: HOOK (Market Impact Framing)
 - Start with 🚨 
+- MUST include both TICKER ($${symbol}) AND COMPANY NAME (${metrics.companyName || symbol}) for search visibility
 - Frame WHY THIS MATTERS TO TRADERS, not just the company
-- Include ticker, key stat (runway), and market reaction framing
+- Include key stat (runway) and market reaction framing
 - End with 🧵
 
 GOOD EXAMPLES:
-- "$BYND is burning cash fast — only 9.1 months of runway left. If financing doesn't arrive, the market won't ignore this."
-- "$BYND has less than one year of oxygen left. If financing fails, this doesn't fade quietly — it snaps."
+- "🚨 Beyond Meat $BYND is burning cash fast — only 9.1 months of runway left. If financing doesn't arrive, the market won't ignore this. 🧵"
+- "🚨 Beyond Meat $BYND has less than one year of oxygen left. If financing fails, this doesn't fade quietly — it snaps. 🧵"
 
 BAD: "Company is on our watchlist" (too passive, no stakes)
 
@@ -225,7 +226,8 @@ export async function generateBankruptcyThread(analysis) {
 export function generateFallbackThread(analysis) {
   const { symbol, score, metrics, outcomes, virality, vis } = analysis;
 
-  const tweet1 = `1️⃣ 🚨 $${symbol} is burning cash fast — only ${metrics.runwayFormatted} of runway left.
+  const companyName = metrics.companyName || symbol;
+  const tweet1 = `1️⃣ 🚨 ${companyName} $${symbol} is burning cash fast — only ${metrics.runwayFormatted} of runway left.
 If financing doesn't arrive, the market won't ignore this. 🧵`;
 
   const tweet2 = `2️⃣ Think of a car at high speed with the fuel light flashing.
@@ -258,7 +260,7 @@ Distress events don't sell off slowly — they reprice suddenly.
 Bear confirms if burn accelerates.
 Bull invalidates if cash flow stabilizes.`;
 
-  const tweet6 = `6️⃣ $${symbol} remains a high-attention, high-risk distress story.
+  const tweet6 = `6️⃣ ${companyName} $${symbol} remains a high-attention, high-risk distress story.
 Watching for: heavy red day + volume spike. That's when distress gets priced.
 Not advice — pattern recognition only.`;
 
