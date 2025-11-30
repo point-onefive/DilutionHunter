@@ -11,6 +11,7 @@
  * 5. Generate tweet threads for top alerts
  * 6. Post to Twitter (if not DRY_RUN)
  * 7. Save results to bankruptcy_signals.json
+ * 8. (Optional) Run CDE crossover detection
  * 
  * Anti-Duplication:
  * - Tracks posted tickers in bankruptcy_posted.json
@@ -24,6 +25,7 @@
  *   node src/bankruptcy/bankruptcyScan.js --ticker=MULN    # Scan single ticker
  *   node src/bankruptcy/bankruptcyScan.js --refresh        # Refresh universe first
  *   node src/bankruptcy/bankruptcyScan.js --status         # Show posting history & cooldowns
+ *   node src/bankruptcy/bankruptcyScan.js --cde            # Run CDE crossover after scan
  *   node src/bankruptcy/bankruptcyScan.js --force --post   # Bypass VIS threshold & cooldown
  */
 
@@ -496,14 +498,30 @@ if (isMainModule) {
   const refresh = args.includes('--refresh');
   const post = args.includes('--post');
   const force = args.includes('--force');  // Force post even if VIS is low or on cooldown
+  const runCDE = args.includes('--cde');   // Run CDE crossover detection after scan
   const tickerArg = args.find(a => a.startsWith('--ticker='));
   const ticker = tickerArg ? tickerArg.split('=')[1] : null;
   const maxArg = args.find(a => a.startsWith('--max='));
   const maxTickers = maxArg ? parseInt(maxArg.split('=')[1]) : MAX_TICKERS_PER_RUN;
 
   runBankruptcyScan({ refresh, post, ticker, maxTickers, force })
-    .then(result => {
+    .then(async (result) => {
       if (!result) process.exit(1);
+      
+      // Run CDE crossover detection if requested
+      if (runCDE) {
+        console.log('\n');
+        console.log('═'.repeat(80));
+        console.log('🔥 Running CDE (Critical Distress Event) crossover detection...');
+        console.log('═'.repeat(80));
+        
+        try {
+          const { runCDEScan } = await import('../cde/cdeDetector.js');
+          await runCDEScan({ post: false });  // Preview only, use --post separately for CDE
+        } catch (err) {
+          console.error('CDE scan error:', err.message);
+        }
+      }
     })
     .catch(err => {
       console.error('Scanner error:', err);

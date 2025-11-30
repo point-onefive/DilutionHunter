@@ -122,11 +122,34 @@ const KNOWN_DILUTION_ACTIVE = new Set([
   'WKHS',   // ATM programs
 ]);
 
+// Load ATM candidates from DilutionHunter's cache
+function loadATMCandidates() {
+  const cachePath = path.join(DATA_DIR, 'candidates_cache.json');
+  try {
+    if (fs.existsSync(cachePath)) {
+      const data = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
+      // Filter to recent filings (last 90 days)
+      const recentCandidates = (data.candidates || []).filter(c => {
+        if (!c.fileDate) return false;
+        const fileDate = new Date(c.fileDate);
+        const daysSince = Math.floor((Date.now() - fileDate) / (1000 * 60 * 60 * 24));
+        return daysSince <= 90;
+      });
+      return new Set(recentCandidates.map(c => c.ticker.toUpperCase()));
+    }
+  } catch (e) {
+    // Ignore cache errors
+  }
+  return new Set();
+}
+
 async function checkDilutionMechanism(symbol) {
   console.log(`   🔫 Checking dilution mechanism for ${symbol}...`);
   
-  // First check our known list (manual override for FMP gaps)
-  if (KNOWN_DILUTION_ACTIVE.has(symbol.toUpperCase())) {
+  const upperSymbol = symbol.toUpperCase();
+  
+  // 1. Check manual override list first
+  if (KNOWN_DILUTION_ACTIVE.has(upperSymbol)) {
     console.log(`   ✅ ${symbol} in known dilution list`);
     return {
       hasActiveMechanism: true,
@@ -136,6 +159,19 @@ async function checkDilutionMechanism(symbol) {
     };
   }
   
+  // 2. Check DilutionHunter's ATM candidates cache (SEC EDGAR data)
+  const atmCandidates = loadATMCandidates();
+  if (atmCandidates.has(upperSymbol)) {
+    console.log(`   ✅ ${symbol} has recent ATM filing (from SEC EDGAR cache)`);
+    return {
+      hasActiveMechanism: true,
+      offeringCount: 1,
+      recentFilings: 1,
+      details: { source: 'sec_edgar_cache', note: 'Recent ATM filing detected' }
+    };
+  }
+  
+  // 3. Try FMP API as fallback
   try {
     const offerings = await getOfferings(symbol);
     
@@ -148,6 +184,10 @@ async function checkDilutionMechanism(symbol) {
       const daysSince = Math.floor((Date.now() - filingDate) / (1000 * 60 * 60 * 24));
       return daysSince < 180;
     }) || [];
+
+    if (hasActiveOffering || recentFilings.length > 0) {
+      console.log(`   ✅ ${symbol} has offerings via FMP`);
+    }
 
     return {
       hasActiveMechanism: hasActiveOffering || recentFilings.length > 0,
