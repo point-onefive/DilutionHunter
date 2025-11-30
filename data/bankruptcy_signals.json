@@ -1,0 +1,85 @@
+{
+  "scannedAt": "2025-11-30T07:34:19.781Z",
+  "totalScanned": 1,
+  "primeAlerts": [],
+  "watchlist": [
+    {
+      "symbol": "BYND",
+      "vis": 68,
+      "score": 57,
+      "viralityScore": 85,
+      "classification": "DISTRESS_WATCHLIST",
+      "visClassification": "WATCHLIST",
+      "shouldPost": true,
+      "metrics": {
+        "price": 0.9809,
+        "companyName": "Beyond Meat, Inc.",
+        "cash": 117296000,
+        "cashFormatted": "$117.3M",
+        "monthlyBurn": 12927666.666666666,
+        "monthlyBurnFormatted": "$12.9M",
+        "runwayMonths": 9.073253745197638,
+        "runwayFormatted": "9.1 months",
+        "runwayCategory": "OK",
+        "totalDebt": 1311574000,
+        "totalDebtFormatted": "$1.3B",
+        "debtToCashMultiple": 11.181745328058927,
+        "cashDebtRatio": 0.08943147698871737,
+        "ebit": -92600001,
+        "interestExpense": 10469999,
+        "interestCoverage": -8.844318036706595,
+        "revenueChangePct": -8.400949672571683,
+        "revenueTrend": "FLAT",
+        "negativeIncomeCount": 4,
+        "ocfNegativeCount": 4,
+        "ocfWorsening": true,
+        "ocfTrend": "DETERIORATING",
+        "altmanZScore": null,
+        "zCategory": "UNKNOWN",
+        "netInsiderFlow": 0,
+        "insiderBias": "BALANCED",
+        "totalSellValue": 0,
+        "totalBuyValue": 0
+      },
+      "virality": {
+        "score": 85,
+        "tier": "HIGH_VIRAL",
+        "breakdown": {
+          "volume": {
+            "score": 35,
+            "max": 35,
+            "reason": "Very high volume (>5M)"
+          },
+          "marketCap": {
+            "score": 10,
+            "max": 25,
+            "reason": "Small cap (>$50M)"
+          },
+          "news": {
+            "score": 20,
+            "max": 20,
+            "reason": "Heavy news coverage (7 articles)"
+          },
+          "options": {
+            "score": 20,
+            "max": 20,
+            "reason": "Options available"
+          }
+        },
+        "avgVolume": 65645959,
+        "newsCount": 7,
+        "hasOptions": true,
+        "recentNews": []
+      },
+      "outcomes": {
+        "dilution": 32,
+        "restructure": 53,
+        "bankruptcy": 16,
+        "primaryOutcome": "RESTRUCTURING",
+        "confidence": "HIGH",
+        "rawTotal": 95
+      }
+    }
+  ],
+  "storeOnly": []
+}

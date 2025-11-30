@@ -1,20 +1,32 @@
 # DilutionHunter 🦅
 
-**Automated ATM dilution risk detection and Twitter content pipeline**
+**Automated dilution risk detection + bankruptcy watchdog for Twitter**
 
-Scans SEC EDGAR for At-The-Market (ATM) offerings, analyzes post-filing price action, fetches financial health data (cash, burn rate, debt), generates professional analyst-grade Twitter threads, and posts educational content about dilution risk patterns.
+Two scanner systems:
+1. **ATM Scanner** — Detects At-The-Market offerings from SEC EDGAR
+2. **Bankruptcy Watchdog** — Identifies companies at risk of insolvency with VIS prioritization
 
 ---
 
 ## Features
 
+### ATM Dilution Scanner
 - 🔍 **ATM Filing Detection** — Scans SEC EDGAR for recent 424B5 ATM filings
 - 📊 **Price Analysis** — Tracks peak gains, pullbacks, and current performance post-filing
 - 💰 **Financial Health** — Fetches cash, debt, burn rate, months of cash left from balance sheets
 - 🎯 **Smart Classification** — 3-bucket system (Actionable, Watch List, Case Study)
 - 🚫 **Quality Filtering** — Skips same-day pump & dump patterns
-- 🧵 **Professional Threads** — 6-tweet threads with education, metrics, bull/bear framing
-- 📈 **Chart Generation** — Candlestick charts with ATM filing date marker
+
+### Bankruptcy Watchdog (NEW)
+- 💀 **Insolvency Detection** — 0-100 bankruptcy risk score across 7 factors
+- 📈 **VIS Prioritization** — Viral Insolvency Score = Risk × Attention
+- 🔮 **Outcome Probabilities** — Dilution / Restructuring / Bankruptcy estimates
+- 🧭 **Daily Radar** — Summary tweet of all tracked distress tickers
+- ⏳ **Anti-Duplication** — 30-day cooldown prevents repeat posts
+
+### Both Systems
+- 🧵 **Professional Threads** — AI-generated analyst-grade content
+- 📈 **Chart Generation** — Candlestick charts with markers
 - ✅ **Manual Approval** — Review before posting to Twitter
 
 ---
@@ -61,7 +73,9 @@ DRY_RUN=true
 
 ## Usage
 
-### 1. Daily Scan (Dry Run)
+### ATM Dilution Scanner
+
+#### 1. Daily Scan (Dry Run)
 
 Scan for ATM candidates and generate content:
 
@@ -70,34 +84,39 @@ node src/dailyRun.js              # Uses cache (fast, no API calls if recent)
 node src/dailyRun.js --no-cache   # Force fresh API calls
 ```
 
-This will:
-- Scan recent ATM filings from SEC EDGAR
-- Enrich with FMP price data (cached for 1 hour)
-- Select top 2 candidates (fresher filings prioritized)
-- Generate tweet threads + charts
-- Save to `/output/` folder
-
-### 2. Review Output
+#### 2. Post to Twitter
 
 ```bash
-# View generated content
-cat output/TICKER_*.json
-
-# Open chart image
-open output/charts/TICKER_*.png
+node src/post.js MNDR             # Preview mode
+node src/post.js MNDR --live      # Live posting
 ```
 
-### 3. Post to Twitter
+### Bankruptcy Watchdog
 
-After reviewing, manually post approved tickers:
+#### 1. Scan for Distress
 
 ```bash
-# Preview mode (respects DRY_RUN in .env)
-node src/post.js MNDR
-
-# Live posting (overrides DRY_RUN)
-node src/post.js MNDR --live
+node src/bankruptcy/bankruptcyScan.js                  # Scan universe, preview
+node src/bankruptcy/bankruptcyScan.js --post           # Scan + post top alert
+node src/bankruptcy/bankruptcyScan.js --ticker=BYND    # Single ticker
+node src/bankruptcy/bankruptcyScan.js --refresh        # Refresh universe
+node src/bankruptcy/bankruptcyScan.js --status         # Show cooldowns
 ```
+
+#### 2. Daily Radar
+
+```bash
+node src/bankruptcy/bankruptcyRadar.js                 # Preview radar
+node src/bankruptcy/bankruptcyRadar.js --post          # Post radar tweet
+```
+
+#### 3. VIS Thresholds
+
+| VIS Score | Classification | Action |
+|-----------|---------------|--------|
+| ≥75 | PRIME_ALERT | Auto-post immediately |
+| 60-74 | WATCHLIST | Auto-post as watchlist |
+| <60 | STORE_ONLY | Save data, don't post |
 
 ---
 
@@ -163,6 +182,7 @@ Not advice — pattern recognition only. 🦅
 
 | File | Purpose |
 |------|---------|
+| **ATM Scanner** | |
 | `src/dailyRun.js` | Main entry point — daily orchestrator |
 | `src/post.js` | Manual posting with preview/confirmation |
 | `src/atmScanner.js` | SEC EDGAR filing detection |
@@ -170,6 +190,14 @@ Not advice — pattern recognition only. 🦅
 | `src/contentPipeline.js` | OpenAI thread generation |
 | `src/chartGenerator.js` | Canvas chart rendering |
 | `src/twitterPoster.js` | Twitter API posting |
+| **Bankruptcy Watchdog** | |
+| `src/bankruptcy/bankruptcyScan.js` | Main orchestrator + CLI |
+| `src/bankruptcy/bankruptcyScoreEngine.js` | Risk scoring (0-100) + VIS |
+| `src/bankruptcy/bankruptcyThesis.js` | OpenAI thread generation |
+| `src/bankruptcy/fmpBankruptcy.js` | FMP data fetching |
+| `src/bankruptcy/viralityEngine.js` | Virality scoring |
+| `src/bankruptcy/outcomeModel.js` | Probability estimates |
+| `src/bankruptcy/bankruptcyRadar.js` | Daily dashboard |
 
 ---
 
@@ -227,6 +255,7 @@ node src/chartGenerator.js
 
 ## Documentation
 
+- [v3.0 Bankruptcy Watchdog](logs/2025-11-30-v3-bankruptcy-watchdog.md) — VIS system, outcome model, compressed threads
 - [v2.2 Updates](logs/2025-11-28-v2.2-updates.md) — Financial health data, narrative generation, formatting
 - [v2 Architecture](logs/2025-11-27-v2-architecture.md) — Current system design
 - [v1 Technical Spec](logs/2025-11-26-technical-spec.md) — Legacy scoring system
@@ -235,6 +264,10 @@ node src/chartGenerator.js
 
 ## Roadmap
 
+- [x] Bankruptcy Watchdog with VIS prioritization
+- [x] Outcome probability model
+- [x] Anti-duplication (30-day cooldown)
+- [x] Daily radar dashboard
 - [ ] Automated GitHub Actions scheduling
 - [ ] Discord webhook alerts
 - [ ] Performance tracking (post-alert price drops)
