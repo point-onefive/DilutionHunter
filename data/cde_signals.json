@@ -1,46 +1,57 @@
 {
-  "scannedAt": "2025-11-30T08:02:14.648Z",
-  "totalScanned": 1,
-  "cdeEvents": [
+  "scannedAt": "2025-12-01T15:03:43.403Z",
+  "totalScanned": 10,
+  "cdeEvents": [],
+  "nearMisses": [
     {
-      "symbol": "AMZE",
-      "cdeIntensity": 49,
-      "bankruptcyScore": 75,
-      "vis": 63,
-      "viralityScore": 45,
-      "dilutionActive": true,
-      "recentFilings": 1,
-      "metrics": {
-        "price": 0.48,
-        "companyName": "Amaze Holdings, Inc.",
-        "cash": 299938,
-        "cashFormatted": "$299.9K",
-        "monthlyBurn": 1958230.6666666667,
-        "monthlyBurnFormatted": "$2.0M",
-        "runwayMonths": 0.15316785969375074,
-        "runwayFormatted": "<1 month",
-        "runwayCategory": "CRITICAL",
-        "totalDebt": 8101631,
-        "totalDebtFormatted": "$8.1M",
-        "debtToCashMultiple": 27.011018943915076,
-        "cashDebtRatio": 0.03702192805374621,
-        "ebit": -4695776,
-        "interestExpense": 480007,
-        "interestCoverage": -9.782724001941638,
-        "revenueChangePct": 1962.760673639892,
-        "revenueTrend": "GROWING",
-        "negativeIncomeCount": 4,
-        "ocfNegativeCount": 4,
-        "ocfWorsening": true,
-        "ocfTrend": "DETERIORATING",
-        "altmanZScore": null,
-        "zCategory": "UNKNOWN",
-        "netInsiderFlow": 0,
-        "insiderBias": "BALANCED",
-        "totalSellValue": 0,
-        "totalBuyValue": 0
+      "symbol": "PLUG",
+      "bankruptcyScore": 62,
+      "vis": 74,
+      "criteria": {
+        "dilutionActive": false,
+        "bankruptcyRisk": true,
+        "visThreshold": true
+      }
+    },
+    {
+      "symbol": "CLSK",
+      "bankruptcyScore": 60,
+      "vis": 73,
+      "criteria": {
+        "dilutionActive": false,
+        "bankruptcyRisk": true,
+        "visThreshold": true
+      }
+    },
+    {
+      "symbol": "NFE",
+      "bankruptcyScore": 70,
+      "vis": 70,
+      "criteria": {
+        "dilutionActive": false,
+        "bankruptcyRisk": true,
+        "visThreshold": true
+      }
+    },
+    {
+      "symbol": "BYND",
+      "bankruptcyScore": 57,
+      "vis": 68,
+      "criteria": {
+        "dilutionActive": false,
+        "bankruptcyRisk": true,
+        "visThreshold": true
+      }
+    },
+    {
+      "symbol": "BURU",
+      "bankruptcyScore": 50,
+      "vis": 60,
+      "criteria": {
+        "dilutionActive": false,
+        "bankruptcyRisk": true,
+        "visThreshold": true
       }
     }
-  ],
-  "nearMisses": []
+  ]
 }

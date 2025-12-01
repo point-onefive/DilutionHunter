@@ -37,6 +37,7 @@ import { fileURLToPath } from 'url';
 import { fetchBankruptcyInputs, fetchUniverseCandidates, fetchViralityInputs } from './fmpBankruptcy.js';
 import { scoreBankruptcyRisk, scoreWithVIS } from './bankruptcyScoreEngine.js';
 import { generateBankruptcyThread, generateFallbackThread } from './bankruptcyThesis.js';
+import { generateBankruptcyCard } from './bankruptcyCard.js';
 import { postAlertThread } from '../twitterPoster.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -201,7 +202,9 @@ export async function runBankruptcyScan(options = {}) {
     post = false,
     ticker = null,
     maxTickers = MAX_TICKERS_PER_RUN,
-    force = false  // Force post even if VIS is below threshold
+    force = false,  // Force post even if VIS is below threshold
+    greeting = null,  // Prepend greeting to first tweet (e.g., "GM!")
+    noCard = true    // Skip card image generation by default (use --with-card to enable)
   } = options;
 
   console.log(`
@@ -383,11 +386,28 @@ export async function runBankruptcyScan(options = {}) {
         threadData = generateFallbackThread(selectedAlert);
       }
 
+      // Generate bankruptcy card image (unless --no-card)
+      let cardPath = null;
+      if (!noCard) {
+        console.log(`\n🎴 Generating bankruptcy card...`);
+        try {
+          cardPath = await generateBankruptcyCard(selectedAlert);
+          console.log(`   📸 Card saved: ${cardPath}`);
+        } catch (cardErr) {
+          console.error(`   ⚠️ Card generation failed: ${cardErr.message}`);
+        }
+      } else {
+        console.log(`\n🚫 Skipping card generation (--no-card)`);
+      }
+
       console.log(`
 ════════════════════════════════════════════════════════════════════════════════
 📝 BANKRUPTCY ${selectedAlert.visClassification} THREAD
 ════════════════════════════════════════════════════════════════════════════════
 `);
+      if (cardPath) {
+        console.log(`🖼️  Card: ${cardPath}\n`);
+      }
       threadData.thread.forEach((tweet, i) => {
         console.log(tweet);
         console.log('---');
@@ -397,12 +417,22 @@ export async function runBankruptcyScan(options = {}) {
         console.log('\n[DRY_RUN] Would post thread. Set DRY_RUN=false to post.');
       } else {
         console.log('\n🚀 Posting to Twitter...');
+        
+        // Prepend greeting if provided
+        const firstTweet = greeting 
+          ? `${greeting}\n\n${threadData.thread[0]}`
+          : threadData.thread[0];
+        
+        if (greeting) {
+          console.log(`   Greeting: "${greeting}"`);
+        }
+        
         try {
-          // Post as thread (alert tweet first, then rest)
+          // Post as thread (alert tweet first with card, then rest)
           const result = await postAlertThread(
-            threadData.thread[0],  // Alert tweet
+            firstTweet,  // Alert tweet (with greeting if provided)
             threadData.thread.slice(1),  // Rest of thread
-            null  // No chart for now
+            cardPath  // Attach bankruptcy card to first tweet
           );
           console.log(`✅ Posted! First tweet ID: ${result.tweetIds?.[0]}`);
           markAsPosted(selectedAlert.symbol);
@@ -498,13 +528,17 @@ if (isMainModule) {
   const refresh = args.includes('--refresh');
   const post = args.includes('--post');
   const force = args.includes('--force');  // Force post even if VIS is low or on cooldown
+  const withCard = args.includes('--with-card');  // Include card image (disabled by default)
+  const noCard = !withCard;  // No card unless --with-card is specified
   const runCDE = args.includes('--cde');   // Run CDE crossover detection after scan
   const tickerArg = args.find(a => a.startsWith('--ticker='));
   const ticker = tickerArg ? tickerArg.split('=')[1] : null;
   const maxArg = args.find(a => a.startsWith('--max='));
   const maxTickers = maxArg ? parseInt(maxArg.split('=')[1]) : MAX_TICKERS_PER_RUN;
+  const greetingArg = args.find(a => a.startsWith('--greeting=') || a.startsWith('-g='));
+  const greeting = greetingArg ? greetingArg.split('=')[1] : null;
 
-  runBankruptcyScan({ refresh, post, ticker, maxTickers, force })
+  runBankruptcyScan({ refresh, post, ticker, maxTickers, force, greeting, noCard })
     .then(async (result) => {
       if (!result) process.exit(1);
       

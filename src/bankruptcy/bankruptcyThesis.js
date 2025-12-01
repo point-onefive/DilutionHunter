@@ -85,98 +85,74 @@ Based on the financial data, our model estimates:
 - Average Volume: ${analysis.virality?.avgVolume ? (analysis.virality.avgVolume / 1_000_000).toFixed(1) + 'M' : 'N/A'}
 - Has Options: ${analysis.virality?.hasOptions ? 'Yes' : 'No'}
 
-## THREAD STRUCTURE (6 tweets) — Compressed for retention
+## CRITICAL NARRATIVE RULE
+Your job is NOT to report data — it's to make the reader FEEL the risk.
+The reader should walk away thinking: "This company is in a countdown where any bad news triggers a sharp repricing."
 
-### Tweet 1: HOOK (Market Impact Framing)
-- Start with 🚨 
-- MUST include both TICKER ($${symbol}) AND COMPANY NAME (${metrics.companyName || symbol}) for search visibility
-- Frame WHY THIS MATTERS TO TRADERS, not just the company
-- Include key stat (runway) and market reaction framing
-- End with 🧵
+## THREAD FORMAT RULES (MUST FOLLOW EXACTLY)
 
-GOOD EXAMPLES:
-- "🚨 Beyond Meat $BYND is burning cash fast — only 9.1 months of runway left. If financing doesn't arrive, the market won't ignore this. 🧵"
-- "🚨 Beyond Meat $BYND has less than one year of oxygen left. If financing fails, this doesn't fade quietly — it snaps. 🧵"
+### Tweet 1 — Hook + Runway + Narrative Frame
+- Start with: 1️⃣ 🚨 {TICKER} — {sector or product} — is running on a clock.
+- Show runway in first 2 lines
+- Include emotional framing (fast, loud, brink, countdown, pressure)
+- Use a one-line analogy like: race-car, fuel light blinking
 
-BAD: "Company is on our watchlist" (too passive, no stakes)
+REQUIRED STRUCTURE:
+1️⃣ 🚨 $${symbol} — {sector} — is running on a countdown.
+Only **${metrics.runwayFormatted} of cash** remain. Without funding, this doesn't fade — it breaks loud. 🧵
+{Analogy sentence}
 
-### Tweet 2: VISUAL METAPHOR
-- ONE vivid analogy that creates tension
-- Make the reader FEEL the urgency, not just understand it
-- Short, punchy, visceral
+### Tweet 2 — VIS definition + scores
+- Explain VIS briefly
+- Bold the scores
+- Use spacing, not paragraphs
 
-GOOD EXAMPLE:
-"Think of a car at high speed with the fuel light flashing. Debt is heavy, cash is thin, and the distance left is short."
+REQUIRED STRUCTURE:
+2️⃣ 🧮 **VIS = Bankruptcy Risk × Market Attention**
+Quiet collapses disappear — high-attention collapses detonate.
+**Risk: ${score}/100 | Attention: ${analysis.virality?.score || 'N/A'}/100**
 
-BAD: "The company has financial difficulties" (boring, no imagery)
+### Tweet 3 — Metrics + Outcome Probabilities
+- Group metrics in 5-bullet block
+- Show probabilities in one line below
 
-### Tweet 3: VIS EXPLANATION (WHY THIS TICKER MATTERS)
-This tweet explains why we're flagging THIS specific ticker. Frame toward trader reward:
+REQUIRED STRUCTURE:
+3️⃣ **Financial Stress Snapshot**
+• Runway: **${metrics.runwayFormatted}**
+• Burn: **${metrics.monthlyBurnFormatted}/mo**
+• Debt/Cash: **${metrics.debtToCashMultiple?.toFixed(1) || 'N/A'}x**
+• YoY Revenue: **${metrics.revenueChangePct?.toFixed(1) || 'N/A'}%**
+• Interest Coverage: **${metrics.interestCoverage?.toFixed(1) || 'N/A'}x**
+🔮 Outcome Model → Dilution ${outcomes?.dilution || 'N/A'}% · Restructure ${outcomes?.restructure || 'N/A'}% · Bankruptcy ${outcomes?.bankruptcy || 'N/A'}%
 
-"🧮 VIS = Bankruptcy risk × Market attention
+### Tweet 4 — Forward Signals + Bull/Bear Confirmation
+- Show what confirms the bearish thesis
+- Show what cancels it
+- End with compliance-safe line
 
-Quiet failures don't matter — loud ones move markets.
+REQUIRED STRUCTURE:
+4️⃣ $${symbol} doesn't need to blow up — it only needs to **not** secure capital.
+**Bear confirms:** burn accelerates + red volume spike
+**Bull invalidates:** liquidity secured + cash flow stabilizes
+Not advice — pattern recognition only. 🦅
 
-Risk Score: ${score}/100
-Attention Score: ${analysis.virality?.score || 'N/A'}/100"
-
-The point: High risk + high attention = where big moves happen.
-
-### Tweet 4: COMBINED BRIEFING (Evidence + Probabilities)
-COMBINE metrics and outcome probabilities into ONE tweet for better pacing:
-
-"📊 Key Stressors:
-• Runway: X months
-• Burn: $X/month  
-• Debt/Cash: Xx
-• Revenue: X%
-• Interest coverage: Xx
-
-🔮 Probabilities:
-• Restructure: X%
-• Dilution: X%
-• Bankruptcy: X%"
-
-This is the DATA tweet. Keep it tight — no explanations here.
-
-### Tweet 5: MARKET REACTION THESIS
-Explain what happens price-wise if distress escalates. This translates macro → trade psychology:
-
-"If financing fails, liquidity gaps and spreads widen fast.
-Distress events don't sell off slowly — they reprice suddenly.
-
-Bear confirms if burn accelerates.
-Bull invalidates if cash flow stabilizes."
-
-This is your EDGE — very few accounts explain WHY the move matters.
-
-### Tweet 6: FINAL READ + WATCH TRIGGER
-- One-sentence synthesis: high-attention, high-risk distress story
-- Add a watch trigger line (actionable insight without being advice)
-- End with: "Not advice — pattern recognition only."
-
-EXAMPLE:
-"$BYND remains a high-attention, high-risk distress story.
-Watching for: heavy red day + volume spike. That's when distress gets priced.
-Not advice — pattern recognition only."
-
-## FORMATTING RULES
-- Use 1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ 6️⃣ to number tweets
-- No hashtags
-- No character limit concerns
-- Be direct and sharp, not hype-y
-- This is risk illumination, not a call to action
+## BEHAVIORAL REQUIREMENTS
+✔ Tone: concise, assertive, high conviction
+✔ No filler language or long intros
+✔ No drifting into 5–6 tweets
+✔ Always produce clean whitespace exactly as shown
+✔ Use bold formatting (**) on metrics + VIS numbers
+✔ Use 1️⃣ 2️⃣ 3️⃣ 4️⃣ to number tweets
+✔ No hashtags
 
 ## OUTPUT FORMAT
 Return a JSON object:
 {
   "thread": [
-    "Tweet 1 text with 1️⃣ prefix (hook)",
-    "Tweet 2 text with 2️⃣ prefix (metaphor)",
-    "Tweet 3 text with 3️⃣ prefix (VIS explanation)",
-    "Tweet 4 text with 4️⃣ prefix (combined briefing: metrics + probabilities)",
-    "Tweet 5 text with 5️⃣ prefix (market reaction thesis + scenarios)",
-    "Tweet 6 text with 6️⃣ prefix (final read + watch trigger)"
+    "Tweet 1 text with 1️⃣ prefix (hook + metaphor)",
+    "Tweet 2 text with 2️⃣ prefix (VIS framing)",
+    "Tweet 3 text with 3️⃣ prefix (metrics + probabilities)",
+    "Tweet 4 text with 4️⃣ prefix (signal + CTA)"
   ],
   "headline": "Short 1-line summary for logging"
 }`;
@@ -220,56 +196,49 @@ export async function generateBankruptcyThread(analysis) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SIMPLE FALLBACK (if OpenAI fails) — Compressed 6-tweet format
+// SIMPLE FALLBACK (if OpenAI fails) — Condensed 4-tweet format
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export function generateFallbackThread(analysis) {
   const { symbol, score, metrics, outcomes, virality, vis } = analysis;
 
   const companyName = metrics.companyName || symbol;
-  const tweet1 = `1️⃣ 🚨 ${companyName} $${symbol} is burning cash fast — only ${metrics.runwayFormatted} of runway left.
-If financing doesn't arrive, the market won't ignore this. 🧵`;
+  
+  // Tweet 1: Hook + Runway + Narrative Frame
+  const tweet1 = `1️⃣ 🚨 $${symbol} — energy — is running on a countdown.
+Only **${metrics.runwayFormatted} of cash** remain. Without funding, this doesn't fade — it breaks loud. 🧵
+Race-car, fuel light blinking. Fast machine, thin runway.`;
 
-  const tweet2 = `2️⃣ Think of a car at high speed with the fuel light flashing.
-Debt is heavy, cash is thin, and the distance left is short.`;
+  // Tweet 2: VIS definition + scores
+  const tweet2 = `2️⃣ 🧮 **VIS = Bankruptcy Risk × Market Attention**
+Quiet collapses disappear — high-attention collapses detonate.
+**Risk: ${score}/100 | Attention: ${virality?.score || 'N/A'}/100**`;
 
-  const tweet3 = `3️⃣ 🧮 VIS = Bankruptcy risk × Market attention
+  // Tweet 3: Metrics + Outcome Probabilities
+  const debtCashRatio = metrics.debtToCashMultiple?.toFixed(1) || 'N/A';
+  const revChange = metrics.revenueChangePct ? `${metrics.revenueChangePct > 0 ? '+' : ''}${metrics.revenueChangePct.toFixed(1)}` : 'N/A';
+  const intCoverage = metrics.interestCoverage?.toFixed(1) || 'N/A';
+  
+  const tweet3 = `3️⃣ **Financial Stress Snapshot**
+• Runway: **${metrics.runwayFormatted}**
+• Burn: **${metrics.monthlyBurnFormatted}/mo**
+• Debt/Cash: **${debtCashRatio}x**
+• YoY Revenue: **${revChange}%**
+• Interest Coverage: **${intCoverage}x**
+🔮 Outcome Model → Dilution ${outcomes?.dilution || 'N/A'}% · Restructure ${outcomes?.restructure || 'N/A'}% · Bankruptcy ${outcomes?.bankruptcy || 'N/A'}%`;
 
-Quiet failures don't matter — loud ones move markets.
-
-Risk Score: ${score}/100
-Attention Score: ${virality?.score || 'N/A'}/100`;
-
-  // Combined briefing: metrics + probabilities
-  const tweet4 = `4️⃣ 📊 Key Stressors:
-• Runway: ${metrics.runwayFormatted}
-• Burn: ${metrics.monthlyBurnFormatted}/month
-• Debt/Cash: ${metrics.debtToCashMultiple?.toFixed(1)}x
-• Revenue: ${metrics.revenueChangePct ? `${metrics.revenueChangePct > 0 ? '+' : ''}${metrics.revenueChangePct?.toFixed(1)}%` : 'N/A'}
-• Interest coverage: ${metrics.interestCoverage?.toFixed(1)}x
-
-🔮 Probabilities:
-• Restructure: ${outcomes?.restructure || 'N/A'}%
-• Dilution: ${outcomes?.dilution || 'N/A'}%
-• Bankruptcy: ${outcomes?.bankruptcy || 'N/A'}%`;
-
-  // Market reaction thesis + scenarios
-  const tweet5 = `5️⃣ If financing fails, liquidity gaps widen fast.
-Distress events don't sell off slowly — they reprice suddenly.
-
-Bear confirms if burn accelerates.
-Bull invalidates if cash flow stabilizes.`;
-
-  const tweet6 = `6️⃣ ${companyName} $${symbol} remains a high-attention, high-risk distress story.
-Watching for: heavy red day + volume spike. That's when distress gets priced.
-Not advice — pattern recognition only.`;
+  // Tweet 4: Forward Signals + Bull/Bear
+  const tweet4 = `4️⃣ $${symbol} doesn't need to blow up — it only needs to **not** secure capital.
+**Bear confirms:** burn accelerates + red volume spike
+**Bull invalidates:** liquidity secured + cash flow stabilizes
+Not advice — pattern recognition only. 🦅`;
 
   return {
-    thread: [tweet1, tweet2, tweet3, tweet4, tweet5, tweet6],
+    thread: [tweet1, tweet2, tweet3, tweet4],
     headline: `Bankruptcy watch: $${symbol} (${score}/100)`,
     alertTweet: tweet1,
-    stats: tweet4,
-    outcomes: tweet4
+    stats: tweet3,
+    outcomes: tweet3
   };
 }
 
