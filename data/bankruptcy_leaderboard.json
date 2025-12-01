@@ -1,0 +1,162 @@
+{
+  "generatedAt": "2025-12-01T21:30:11.962Z",
+  "pipeline": {
+    "baseUniverse": 145,
+    "stage1Passed": 105,
+    "stage2Passed": 44,
+    "fullAnalyzed": 20,
+    "qualified": 10
+  },
+  "leaderboard": [
+    {
+      "rank": 1,
+      "ticker": "SNBR",
+      "companyName": "Sleep Number Corporation",
+      "vis": 67,
+      "bankruptcyScore": 72,
+      "viralityScore": 60,
+      "reason": "0.6mo runway · debt 744.2x cash → insolvency pressure",
+      "metrics": {
+        "runway": "0.6",
+        "debtCashRatio": "744.2",
+        "marketCap": 131042500,
+        "avgVolume": 1303802
+      }
+    },
+    {
+      "rank": 2,
+      "ticker": "AMC",
+      "companyName": "AMC",
+      "vis": 62,
+      "bankruptcyScore": 42,
+      "viralityScore": 93,
+      "reason": "debt 19.7x cash · negative int cov → can't service debt",
+      "metrics": {
+        "runway": "24.0",
+        "debtCashRatio": "19.7",
+        "marketCap": 1205417368,
+        "avgVolume": 11048325
+      }
+    },
+    {
+      "rank": 3,
+      "ticker": "LCID",
+      "companyName": "LCID",
+      "vis": 58,
+      "bankruptcyScore": 35,
+      "viralityScore": 93,
+      "reason": "negative int cov · $252.3M/mo burn → distress signals",
+      "metrics": {
+        "runway": "6.5",
+        "debtCashRatio": "1.7",
+        "marketCap": 3792983874,
+        "avgVolume": 9413710
+      }
+    },
+    {
+      "rank": 4,
+      "ticker": "FFIE",
+      "companyName": "FFIE",
+      "vis": 55,
+      "bankruptcyScore": 55,
+      "viralityScore": 55,
+      "reason": "5.3mo runway · negative int cov → can't service debt",
+      "metrics": {
+        "runway": "5.3",
+        "debtCashRatio": "1.4",
+        "marketCap": 105758499,
+        "avgVolume": 4080288
+      }
+    },
+    {
+      "rank": 5,
+      "ticker": "SPCE",
+      "companyName": "SPCE",
+      "vis": 54,
+      "bankruptcyScore": 47,
+      "viralityScore": 65,
+      "reason": "negative int cov · $18.8M/mo burn → distress signals",
+      "metrics": {
+        "runway": "8.5",
+        "debtCashRatio": "3.0",
+        "marketCap": 239528758,
+        "avgVolume": 1494222
+      }
+    },
+    {
+      "rank": 6,
+      "ticker": "BGL",
+      "companyName": "Blue Gold Limited",
+      "vis": 52,
+      "bankruptcyScore": 57,
+      "viralityScore": 45,
+      "reason": "0.6mo runway · debt 30.5x cash → high distress",
+      "metrics": {
+        "runway": "0.6",
+        "debtCashRatio": "30.5",
+        "marketCap": 129167090,
+        "avgVolume": 429075
+      }
+    },
+    {
+      "rank": 7,
+      "ticker": "CYPH",
+      "companyName": "Cypherpunk Technologies Inc.",
+      "vis": 49,
+      "bankruptcyScore": 52,
+      "viralityScore": 45,
+      "reason": "4.9mo runway · negative int cov → can't service debt",
+      "metrics": {
+        "runway": "4.9",
+        "debtCashRatio": "0.1",
+        "marketCap": 69681763,
+        "avgVolume": 7848057
+      }
+    },
+    {
+      "rank": 8,
+      "ticker": "LPTX",
+      "companyName": "Leap Therapeutics, Inc.",
+      "vis": 49,
+      "bankruptcyScore": 52,
+      "viralityScore": 45,
+      "reason": "4.9mo runway · negative int cov → can't service debt",
+      "metrics": {
+        "runway": "4.9",
+        "debtCashRatio": "0.1",
+        "marketCap": 51326941,
+        "avgVolume": 7324049
+      }
+    },
+    {
+      "rank": 9,
+      "ticker": "UPST",
+      "companyName": "UPST",
+      "vis": 48,
+      "bankruptcyScore": 25,
+      "viralityScore": 83,
+      "reason": "$40.9M/mo burn · debt 2.3x cash → financial strain",
+      "metrics": {
+        "runway": "20.5",
+        "debtCashRatio": "2.3",
+        "marketCap": 4305899782,
+        "avgVolume": 4113309
+      }
+    },
+    {
+      "rank": 10,
+      "ticker": "LEG",
+      "companyName": "Leggett & Platt, Incorporated",
+      "vis": 43,
+      "bankruptcyScore": 10,
+      "viralityScore": 93,
+      "reason": "debt 3.6x cash → financial strain",
+      "metrics": {
+        "runway": "24.0",
+        "debtCashRatio": "3.6",
+        "marketCap": 1616918860,
+        "avgVolume": 9762742
+      }
+    }
+  ]
+}

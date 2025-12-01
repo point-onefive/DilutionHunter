@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2025-12-01T20:52:42.006Z",
+  "period": "7d",
+  "totalScanned": 9,
+  "qualifyingTickers": 1,
+  "minScoreThreshold": 60,
+  "leaderboard": [
+    {
+      "rank": 1,
+      "ticker": "PLUG",
+      "companyName": "Plug Power Inc.",
+      "score": 62,
+      "primaryRisk": "INSOLVENCY",
+      "momentumRisk": 0,
+      "insolvencyRisk": 62,
+      "riskSummary": "5.5mo runway",
+      "hasDilution": false,
+      "hasBankruptcy": true,
+      "metrics": {
+        "runway": "5.5 months",
+        "runwayMonths": 5.541285323000868,
+        "burn": "$29.9M",
+        "debtCash": "6.0",
+        "vis": 74,
+        "outcomes": {
+          "dilution": 40,
+          "restructure": 35,
+          "bankruptcy": 25,
+          "primaryOutcome": "DILUTION",
+          "confidence": "HIGH",
+          "rawTotal": 100
+        }
+      }
+    }
+  ]
+}

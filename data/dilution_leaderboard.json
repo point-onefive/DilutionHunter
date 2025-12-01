@@ -1,0 +1,159 @@
+{
+  "generatedAt": "2025-12-01T22:09:43.666Z",
+  "period": "7d",
+  "totalFilings": 34,
+  "enriched": 34,
+  "qualified": 10,
+  "leaderboard": [
+    {
+      "rank": 1,
+      "ticker": "FTEL",
+      "companyName": "Fitell Corp",
+      "score": 77,
+      "reason": "0.7mo runway · -49% off peak → rally unwinding",
+      "metrics": {
+        "runway": "0.7",
+        "pullback": "48.8",
+        "peakGain": "95.1",
+        "daysSinceFiling": 3,
+        "marketCap": 1532833,
+        "debtCashRatio": "2.7"
+      }
+    },
+    {
+      "rank": 2,
+      "ticker": "WOK",
+      "companyName": "WORK Medical Technology Group LTD",
+      "score": 72,
+      "reason": "-31% off peak · debt 13.1x cash → dilution overhang severe",
+      "metrics": {
+        "runway": "3.6",
+        "pullback": "31.2",
+        "peakGain": "102.4",
+        "daysSinceFiling": 7,
+        "marketCap": 4029858,
+        "debtCashRatio": "13.1"
+      }
+    },
+    {
+      "rank": 3,
+      "ticker": "NWBO",
+      "companyName": "NORTHWEST BIOTHERAPEUTICS INC",
+      "score": 68,
+      "reason": "1.1mo runway · debt 33.8x cash → heavy dilution pressure",
+      "metrics": {
+        "runway": "1.1",
+        "pullback": "13.5",
+        "peakGain": "9.6",
+        "daysSinceFiling": 6,
+        "marketCap": 377466600,
+        "debtCashRatio": "33.8"
+      }
+    },
+    {
+      "rank": 4,
+      "ticker": "SRFM",
+      "companyName": "SURF AIR MOBILITY INC.",
+      "score": 68,
+      "reason": "1.2mo runway · -19% off peak → momentum reversed",
+      "metrics": {
+        "runway": "1.2",
+        "pullback": "18.6",
+        "peakGain": "11.0",
+        "daysSinceFiling": 7,
+        "marketCap": 65401299,
+        "debtCashRatio": "6.7"
+      }
+    },
+    {
+      "rank": 5,
+      "ticker": "YGMZ",
+      "companyName": "MingZhu Logistics Holdings Ltd",
+      "score": 65,
+      "reason": "0.6mo runway · debt 10.6x cash → cash almost gone",
+      "metrics": {
+        "runway": "0.6",
+        "pullback": "32.4",
+        "peakGain": "0.0",
+        "daysSinceFiling": 5,
+        "marketCap": 523335,
+        "debtCashRatio": "10.6"
+      }
+    },
+    {
+      "rank": 6,
+      "ticker": "TPST",
+      "companyName": "Tempest Therapeutics, Inc.",
+      "score": 60,
+      "reason": "2.7mo runway · -13% off peak → spike losing momentum",
+      "metrics": {
+        "runway": "2.7",
+        "pullback": "12.7",
+        "peakGain": "0.6",
+        "daysSinceFiling": 6,
+        "marketCap": 13544739,
+        "debtCashRatio": "2.2"
+      }
+    },
+    {
+      "rank": 7,
+      "ticker": "AERT",
+      "companyName": "Aeries Technology, Inc.",
+      "score": 58,
+      "reason": "2.7mo runway · debt 11.8x cash → likely raise into weakness",
+      "metrics": {
+        "runway": "2.7",
+        "pullback": "4.2",
+        "peakGain": "3.3",
+        "daysSinceFiling": 3,
+        "marketCap": 27182260,
+        "debtCashRatio": "11.8"
+      }
+    },
+    {
+      "rank": 8,
+      "ticker": "CJET",
+      "companyName": "Chijet Motor Company, Inc.",
+      "score": 58,
+      "reason": "0.7mo runway · debt 196.2x cash → distressed setup",
+      "metrics": {
+        "runway": "0.7",
+        "pullback": "13.0",
+        "peakGain": "4.1",
+        "daysSinceFiling": 6,
+        "marketCap": 363860,
+        "debtCashRatio": "196.2"
+      }
+    },
+    {
+      "rank": 9,
+      "ticker": "SPRC",
+      "companyName": "SciSparc Ltd.",
+      "score": 55,
+      "reason": "1.7mo runway · -26% off peak → dilution overhang building",
+      "metrics": {
+        "runway": "1.7",
+        "pullback": "26.0",
+        "peakGain": "11.6",
+        "daysSinceFiling": 3,
+        "marketCap": 957816,
+        "debtCashRatio": "0.0"
+      }
+    },
+    {
+      "rank": 10,
+      "ticker": "FBLG",
+      "companyName": "FibroBiologics, Inc.",
+      "score": 52,
+      "reason": "3.6mo runway · -11% off peak → fading after spike",
+      "metrics": {
+        "runway": "3.6",
+        "pullback": "11.1",
+        "peakGain": "11.1",
+        "daysSinceFiling": 6,
+        "marketCap": 10940971,
+        "debtCashRatio": "2.9"
+      }
+    }
+  ]
+}
