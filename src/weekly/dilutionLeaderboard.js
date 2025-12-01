@@ -32,6 +32,43 @@ const FMP_BASE = 'https://financialmodelingprep.com/stable';
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const DRY_RUN = process.env.DRY_RUN !== 'false';
 
+// Cooldown settings (7 days for weekly leaderboard = rolling week, no repeats)
+const COOLDOWN_DAYS = parseInt(process.env.DILUTION_COOLDOWN_DAYS || '7');
+const POSTED_FILE = path.join(DATA_DIR, 'dilution_posted.json');
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// COOLDOWN / DEDUPE HELPERS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function loadPostedHistory() {
+  try {
+    if (fs.existsSync(POSTED_FILE)) {
+      return JSON.parse(fs.readFileSync(POSTED_FILE, 'utf8'))?.tickers || {};
+    }
+  } catch (e) { /* ignore */ }
+  return {};
+}
+
+function savePostedHistory(tickers) {
+  fs.writeFileSync(POSTED_FILE, JSON.stringify({ tickers, updatedAt: new Date().toISOString() }, null, 2));
+}
+
+function isOnCooldown(ticker, posted) {
+  const lastPosted = posted[ticker];
+  if (!lastPosted) return false;
+  const daysSince = Math.floor((Date.now() - new Date(lastPosted).getTime()) / (1000 * 60 * 60 * 24));
+  return daysSince < COOLDOWN_DAYS;
+}
+
+function markTickersAsPosted(tickers) {
+  const posted = loadPostedHistory();
+  const today = new Date().toISOString().split('T')[0];
+  for (const t of tickers) {
+    posted[t] = today;
+  }
+  savePostedHistory(posted);
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // FMP HELPERS
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -363,14 +400,30 @@ export async function generateDilutionLeaderboard(options = {}) {
     return { ...t, scoring };
   });
 
-  // Filter by minimum score and sort
+  // Load cooldown history
+  const posted = loadPostedHistory();
+  const skippedCooldown = [];
+
+  // Filter by minimum score, exclude cooldown tickers, and sort
   const qualified = scored
-    .filter(t => t.scoring.score >= minScore)
+    .filter(t => {
+      if (t.scoring.score < minScore) return false;
+      if (isOnCooldown(t.ticker, posted)) {
+        skippedCooldown.push(t.ticker);
+        return false;
+      }
+      return true;
+    })
     .sort((a, b) => b.scoring.score - a.scoring.score)
     .slice(0, maxTickers);
 
   // Add rank for AI generation
   qualified.forEach((t, i) => { t.rank = i + 1; });
+
+  // Show cooldown skips
+  if (skippedCooldown.length > 0) {
+    console.log(`   ⏳ Skipped ${skippedCooldown.length} on cooldown: ${skippedCooldown.slice(0, 5).join(', ')}${skippedCooldown.length > 5 ? '...' : ''}\n`);
+  }
 
   console.log(`   ${qualified.length} tickers qualify (DSS ≥ ${minScore})\n`);
 
@@ -491,6 +544,9 @@ export async function runDilutionLeaderboard(options = {}) {
       try {
         const result = await postAlertThread(tweet, [], null);
         console.log(`✅ Posted!`);
+        // Mark all tickers in leaderboard as posted (7-day cooldown)
+        markTickersAsPosted(leaderboardData.map(t => t.ticker));
+        console.log(`   ⏳ ${leaderboardData.length} tickers on ${COOLDOWN_DAYS}-day cooldown`);
       } catch (e) {
         console.error(`❌ Post failed: ${e.message}`);
       }
