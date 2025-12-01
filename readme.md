@@ -2,10 +2,77 @@
 
 **Automated dilution risk detection + bankruptcy watchdog for Twitter**
 
-Three scanner systems:
-1. **ATM Scanner** — Detects At-The-Market offerings from SEC EDGAR
-2. **Bankruptcy Watchdog** — Identifies companies at risk of insolvency with VIS prioritization
-3. **CDE Detector** — Critical Distress Events where multiple failure signals converge
+## Scanner Systems
+
+| System | Purpose | Output |
+|--------|---------|--------|
+| **Weekly Leaderboards** | Consolidated top-10 rankings | 1 tweet per module |
+| **ATM Scanner** | Detects At-The-Market offerings from SEC EDGAR | Thread per ticker |
+| **Bankruptcy Watchdog** | Identifies companies at risk of insolvency | Thread per ticker |
+| **CDE Detector** | Critical Distress Events where multiple signals converge | Thread per ticker |
+
+---
+
+## 📅 Weekly Leaderboards (NEW)
+
+Production schedule: **One leaderboard per day**
+
+| Day | Module | Score | Command |
+|-----|--------|-------|---------|
+| **Monday** | Dilution Leaderboard | DSS | `node src/weekly/index.js dilution --post` |
+| **Tuesday** | Bankruptcy Watchlist | VIS | `node src/weekly/index.js bankruptcy --post` |
+| Wednesday | *(Future)* | — | TBD |
+| Thursday | *(Future)* | — | TBD |
+| Friday | *(Future)* | — | TBD |
+| Saturday | *(Future)* | — | TBD |
+| Sunday | *(Future)* | — | TBD |
+
+### Quick Commands
+
+```bash
+# Preview (no posting)
+node src/weekly/index.js dilution
+node src/weekly/index.js bankruptcy
+node src/weekly/index.js both
+
+# Post to Twitter
+node src/weekly/index.js dilution --post
+node src/weekly/index.js bankruptcy --post
+node src/weekly/index.js both --post          # Posts both with 30s delay
+```
+
+### Scoring Systems
+
+**DSS (Dilution Severity Score)** = dilution pressure × distress level
+- 40% Distress (runway, burn, debt)
+- 40% ATM Impact (pullback, recency, peak gain)
+- 20% Attention (volume, market cap)
+
+**VIS (Viral Insolvency Score)** = bankruptcy risk × market attention
+- 60% Bankruptcy Risk (7-factor score)
+- 40% Virality (volume, social attention)
+
+### Tweet Format
+
+```
+🔎 WEEKLY ATM DILUTION LEADERBOARD
+(DSS = dilution pressure × distress level)
+
+#1 $FTEL — DSS: 77
+→ 0.7mo runway · -49% off peak → rally unwinding
+
+#2 $WOK — DSS: 72
+→ -31% off peak · debt 13.1x cash → dilution overhang severe
+...
+
+Not advice — pattern recognition only.
+```
+
+### Cooldown System
+
+- **30-day cooldown** per ticker after posting
+- Prevents same ticker appearing week after week
+- Configurable via `DILUTION_COOLDOWN_DAYS` and `BANKRUPTCY_LB_COOLDOWN_DAYS`
 
 ---
 
@@ -211,6 +278,10 @@ Not advice — pattern recognition only. 🦅
 
 | File | Purpose |
 |------|---------|
+| **Weekly Leaderboards** | |
+| `src/weekly/index.js` | CLI entry point for weekly modules |
+| `src/weekly/dilutionLeaderboard.js` | ATM filings → DSS scoring → top 10 tweet |
+| `src/weekly/bankruptcyLeaderboard.js` | 3-stage filter → VIS scoring → top 10 tweet |
 | **ATM Scanner** | |
 | `src/dailyRun.js` | Main entry point — daily orchestrator |
 | `src/post.js` | Manual posting with preview/confirmation |
@@ -287,6 +358,7 @@ node src/chartGenerator.js
 
 ## Documentation
 
+- [Weekly Leaderboards](logs/2025-12-01-weekly-leaderboards.md) — DSS/VIS scoring, AI one-liners, production schedule
 - [CDE System](logs/2025-11-30-cde-system.md) — Critical Distress Events, dynamic universe, company names
 - [v3.0 Bankruptcy Watchdog](logs/2025-11-30-v3-bankruptcy-watchdog.md) — VIS system, outcome model, compressed threads
 - [v2.2 Updates](logs/2025-11-28-v2.2-updates.md) — Financial health data, narrative generation, formatting
@@ -303,6 +375,9 @@ node src/chartGenerator.js
 - [x] Daily radar dashboard
 - [x] CDE (Critical Distress Event) detection
 - [x] Dynamic universe refresh from FMP market movers
+- [x] Weekly Leaderboards (Dilution + Bankruptcy)
+- [x] AI-generated one-liners with varied clauses
+- [ ] 5 additional weekly modules (earnings, short squeeze, momentum, insider, options)
 - [ ] Automated GitHub Actions scheduling
 - [ ] Discord webhook alerts
 - [ ] Performance tracking (post-alert price drops)

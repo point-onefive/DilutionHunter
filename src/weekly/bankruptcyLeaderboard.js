@@ -36,8 +36,8 @@ const FMP_BASE = 'https://financialmodelingprep.com/stable';
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const DRY_RUN = process.env.DRY_RUN !== 'false';
 
-// Cooldown settings (7 days for weekly leaderboard = rolling week, no repeats)
-const COOLDOWN_DAYS = parseInt(process.env.BANKRUPTCY_LB_COOLDOWN_DAYS || '7');
+// Cooldown settings (30 days for weekly leaderboard = ~4 weeks before repeat)
+const COOLDOWN_DAYS = parseInt(process.env.BANKRUPTCY_LB_COOLDOWN_DAYS || '30');
 const POSTED_FILE = path.join(DATA_DIR, 'bankruptcy_lb_posted.json');
 
 // ═══════════════════════════════════════════════════════════════════════════════
