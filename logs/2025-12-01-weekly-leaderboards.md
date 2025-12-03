@@ -29,8 +29,11 @@ This marks the transition from **manual testing** to **production weekly schedul
 
 **Output Format:**
 ```
+GM
+
 🔎 WEEKLY ATM DILUTION LEADERBOARD
-(DSS = dilution pressure × distress level)
+ATMs let companies sell shares anytime — diluting you.
+Filings from 11/26–12/3 · DSS = dilution pressure × distress
 
 #1 $FTEL — DSS: 77
 → 0.7mo runway · -49% off peak → rally unwinding
@@ -64,8 +67,11 @@ Not advice — pattern recognition only.
 
 **Output Format:**
 ```
+GM
+
 ⚠️ WEEKLY BANKRUPTCY WATCHLIST
-(VIS = bankruptcy risk × market attention)
+Companies showing distress signals worth monitoring.
+Week of 11/26–12/3 · VIS = bankruptcy risk × attention
 
 #1 $SNBR — VIS: 67
 → 0.6mo runway · debt 744x cash → extreme insolvency pressure
@@ -184,17 +190,19 @@ This prevents reader confusion when metrics seem contradictory.
 
 The system is designed for **one leaderboard per day** across a 7-day week.
 
+**Fully automated via GitHub Actions** — runs at market open (9:30 AM ET).
+
 ### Weekly Schedule (Production)
 
-| Day | Module | Command |
-|-----|--------|---------|
-| **Monday** | Dilution Leaderboard | `node src/weekly/index.js dilution --post` |
-| **Tuesday** | Bankruptcy Watchlist | `node src/weekly/index.js bankruptcy --post` |
-| **Wednesday** | *(Future Module 3)* | TBD |
-| **Thursday** | *(Future Module 4)* | TBD |
-| **Friday** | *(Future Module 5)* | TBD |
-| **Saturday** | *(Future Module 6)* | TBD |
-| **Sunday** | *(Future Module 7)* | TBD |
+| Day | Time (ET) | Module | Workflow |
+|-----|-----------|--------|----------|
+| **Monday** | 9:30 AM | Dilution Leaderboard | `.github/workflows/weekly-dilution.yml` |
+| **Tuesday** | 9:30 AM | Bankruptcy Watchlist | `.github/workflows/weekly-bankruptcy.yml` |
+| **Wednesday** | — | *(Future Module 3)* | TBD |
+| **Thursday** | — | *(Future Module 4)* | TBD |
+| **Friday** | — | *(Future Module 5)* | TBD |
+| **Saturday** | — | *(Future Module 6)* | TBD |
+| **Sunday** | — | *(Future Module 7)* | TBD |
 
 ### Future Modules (Planned)
 5 additional weekly modules to be built:
@@ -308,10 +316,40 @@ Tweets are optimized to stay under 1000 characters (well within Twitter limit).
 
 ---
 
+## 🤖 GitHub Actions Automation
+
+Both leaderboards run automatically via GitHub Actions.
+
+### Workflow Files
+- `.github/workflows/weekly-dilution.yml` — Monday 9:30 AM ET
+- `.github/workflows/weekly-bankruptcy.yml` — Tuesday 9:30 AM ET
+
+### Required Secrets (GitHub Repo → Settings → Secrets)
+| Secret | Purpose |
+|--------|--------|
+| `FMP_API_KEY` | Financial data |
+| `OPENAI_API_KEY` | AI one-liners |
+| `TWITTER_API_KEY` | Twitter posting |
+| `TWITTER_API_SECRET` | Twitter posting |
+| `TWITTER_ACCESS_TOKEN` | Twitter posting |
+| `TWITTER_ACCESS_SECRET` | Twitter posting |
+
+### Trigger Behavior
+| Trigger | DRY_RUN | Result |
+|---------|---------|--------|
+| Cron (scheduled) | `false` | Posts for real |
+| Manual (default) | `true` | Dry run only |
+| Manual (dry_run=false) | `false` | Posts for real |
+
+### Manual Testing
+GitHub Actions → Select workflow → "Run workflow" → dry_run=true
+
+---
+
 ## 🚀 Next Steps
 
-1. **Test both leaderboards** with `--post` flag in production
+1. ~~Test both leaderboards with `--post` flag~~ ✅
 2. **Monitor cooldown behavior** across multiple weeks
 3. **Build remaining 5 weekly modules** for full 7-day coverage
-4. **Set up GitHub Actions** for automated scheduling
+4. ~~Set up GitHub Actions for automated scheduling~~ ✅
 5. **Add performance tracking** to measure post-alert price moves

@@ -15,17 +15,17 @@
 
 ## 📅 Weekly Leaderboards (NEW)
 
-Production schedule: **One leaderboard per day**
+Production schedule: **One leaderboard per day** — fully automated via GitHub Actions.
 
-| Day | Module | Score | Command |
-|-----|--------|-------|---------|
-| **Monday** | Dilution Leaderboard | DSS | `node src/weekly/index.js dilution --post` |
-| **Tuesday** | Bankruptcy Watchlist | VIS | `node src/weekly/index.js bankruptcy --post` |
-| Wednesday | *(Future)* | — | TBD |
-| Thursday | *(Future)* | — | TBD |
-| Friday | *(Future)* | — | TBD |
-| Saturday | *(Future)* | — | TBD |
-| Sunday | *(Future)* | — | TBD |
+| Day | Time (ET) | Module | Workflow |
+|-----|-----------|--------|----------|
+| **Monday** | 9:30 AM | Dilution Leaderboard (DSS) | `weekly-dilution.yml` |
+| **Tuesday** | 9:30 AM | Bankruptcy Watchlist (VIS) | `weekly-bankruptcy.yml` |
+| Wednesday | — | *(Future)* | TBD |
+| Thursday | — | *(Future)* | TBD |
+| Friday | — | *(Future)* | TBD |
+| Saturday | — | *(Future)* | TBD |
+| Sunday | — | *(Future)* | TBD |
 
 ### Quick Commands
 
@@ -55,8 +55,11 @@ node src/weekly/index.js both --post          # Posts both with 30s delay
 ### Tweet Format
 
 ```
+GM
+
 🔎 WEEKLY ATM DILUTION LEADERBOARD
-(DSS = dilution pressure × distress level)
+ATMs let companies sell shares anytime — diluting you.
+Filings from 11/26–12/3 · DSS = dilution pressure × distress
 
 #1 $FTEL — DSS: 77
 → 0.7mo runway · -49% off peak → rally unwinding
@@ -377,8 +380,9 @@ node src/chartGenerator.js
 - [x] Dynamic universe refresh from FMP market movers
 - [x] Weekly Leaderboards (Dilution + Bankruptcy)
 - [x] AI-generated one-liners with varied clauses
+- [x] Automated GitHub Actions scheduling (Mon/Tue 9:30 AM ET)
+- [x] GM greeting + date range in tweets
 - [ ] 5 additional weekly modules (earnings, short squeeze, momentum, insider, options)
-- [ ] Automated GitHub Actions scheduling
 - [ ] Discord webhook alerts
 - [ ] Performance tracking (post-alert price drops)
 - [ ] Web dashboard for candidate review
