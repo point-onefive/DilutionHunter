@@ -431,6 +431,13 @@ function generateFallbackReason(ticker) {
 export async function generateBankruptcyLeaderboard(options = {}) {
   const { maxTickers = 10, minVIS = 40 } = options;
 
+  // Calculate date range for display (week ending today)
+  const endDate = new Date();
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - 7);
+  const formatDate = (d) => `${d.getMonth() + 1}/${d.getDate()}`;
+  const dateRange = `${formatDate(startDate)}–${formatDate(endDate)}`;
+
   console.log(`
 ╔═══════════════════════════════════════════════════════════════════════════════╗
 ║  BANKRUPTCY LEADERBOARD — Weekly Distress Scan                                ║
@@ -506,6 +513,7 @@ export async function generateBankruptcyLeaderboard(options = {}) {
   const outputPath = path.join(DATA_DIR, 'bankruptcy_leaderboard.json');
   const output = {
     generatedAt: new Date().toISOString(),
+    dateRange,
     pipeline: {
       baseUniverse: baseUniverse.length,
       stage1Passed: stage1Passed.length,
@@ -543,7 +551,8 @@ Back next week.`;
   );
   
   return `⚠️ WEEKLY BANKRUPTCY WATCHLIST
-(VIS = bankruptcy risk × market attention)
+Companies showing distress signals worth monitoring.
+Week of ${leaderboardData.dateRange} · VIS = bankruptcy risk × attention
 
 ${lines.join('\n\n')}
 

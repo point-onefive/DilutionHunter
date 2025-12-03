@@ -1,159 +1,129 @@
 {
-  "generatedAt": "2025-12-03T17:31:08.109Z",
+  "generatedAt": "2025-12-03T17:52:33.991Z",
   "period": "7d",
   "dateRange": "11/26–12/3",
   "totalFilings": 30,
   "enriched": 30,
-  "qualified": 10,
+  "qualified": 8,
   "leaderboard": [
     {
       "rank": 1,
-      "ticker": "FTEL",
-      "companyName": "Fitell Corp",
-      "score": 77,
-      "reason": "0.7mo runway · -122% off peak → cash almost gone",
+      "ticker": "BTBD",
+      "companyName": "BT Brands, Inc.",
+      "score": 41,
+      "reason": "9.2mo runway · $9M cap → attention-driven risk",
       "metrics": {
-        "runway": "0.7",
-        "pullback": "122.0",
-        "peakGain": "143.9",
-        "daysSinceFiling": 5,
-        "marketCap": 1290007,
-        "debtCashRatio": "2.7"
+        "runway": "9.2",
+        "pullback": "10.1",
+        "peakGain": "5.0",
+        "daysSinceFiling": 2,
+        "marketCap": 9307789,
+        "debtCashRatio": "4.8"
       }
     },
     {
       "rank": 2,
-      "ticker": "YGMZ",
-      "companyName": "MingZhu Logistics Holdings Ltd",
-      "score": 65,
-      "reason": "0.6mo runway · debt 10.6x cash → pressure to raise high",
+      "ticker": "GANX",
+      "companyName": "Gain Therapeutics, Inc.",
+      "score": 41,
+      "reason": "6.1mo runway · -11% off peak → spike losing momentum",
       "metrics": {
-        "runway": "0.6",
-        "pullback": "52.8",
-        "peakGain": "0.0",
-        "daysSinceFiling": 7,
-        "marketCap": 363242,
-        "debtCashRatio": "10.6"
-      }
-    },
-    {
-      "rank": 3,
-      "ticker": "AERT",
-      "companyName": "Aeries Technology, Inc.",
-      "score": 59,
-      "reason": "2.7mo runway · debt 11.8x cash → heavy dilution pressure",
-      "metrics": {
-        "runway": "2.7",
-        "pullback": "5.4",
-        "peakGain": "3.2",
+        "runway": "6.1",
+        "pullback": "11.1",
+        "peakGain": "14.1",
         "daysSinceFiling": 5,
-        "marketCap": 26864710,
-        "debtCashRatio": "11.8"
-      }
-    },
-    {
-      "rank": 4,
-      "ticker": "LNAI",
-      "companyName": "Lunai Bioworks Inc.",
-      "score": 58,
-      "reason": "1.0mo runway · debt 7.8x cash → likely raise into weakness",
-      "metrics": {
-        "runway": "1.0",
-        "pullback": "0.0",
-        "peakGain": "0.0",
-        "daysSinceFiling": 0,
-        "marketCap": 20467913,
-        "debtCashRatio": "7.8"
-      }
-    },
-    {
-      "rank": 5,
-      "ticker": "ARMP",
-      "companyName": "Armata Pharmaceuticals, Inc.",
-      "score": 58,
-      "reason": "6.6mo runway · debt 22.0x cash → setup despite runway",
-      "metrics": {
-        "runway": "6.6",
-        "pullback": "22.0",
-        "peakGain": "2.8",
-        "daysSinceFiling": 2,
-        "marketCap": 207079860,
-        "debtCashRatio": "22.0"
-      }
-    },
-    {
-      "rank": 6,
-      "ticker": "SPRC",
-      "companyName": "SciSparc Ltd.",
-      "score": 55,
-      "reason": "1.7mo runway · $1M cap → dilution overhang building",
-      "metrics": {
-        "runway": "1.7",
-        "pullback": "31.7",
-        "peakGain": "11.6",
-        "daysSinceFiling": 5,
-        "marketCap": 887541,
+        "marketCap": 118574404,
         "debtCashRatio": "0.0"
       }
     },
     {
-      "rank": 7,
-      "ticker": "AQMS",
-      "companyName": "Aqua Metals, Inc.",
-      "score": 44,
-      "reason": "4.5mo runway · $22M cap → spike losing momentum",
+      "rank": 3,
+      "ticker": "ACTU",
+      "companyName": "ACTUATE THERAPEUTICS, INC.",
+      "score": 41,
+      "reason": "9.9mo runway · -8% off peak → attention-driven risk",
       "metrics": {
-        "runway": "4.5",
-        "pullback": "9.4",
-        "peakGain": "7.0",
-        "daysSinceFiling": 1,
-        "marketCap": 22093318,
-        "debtCashRatio": "0.3"
+        "runway": "9.9",
+        "pullback": "7.5",
+        "peakGain": "15.1",
+        "daysSinceFiling": 5,
+        "marketCap": 169211428,
+        "debtCashRatio": "0.0"
+      }
+    },
+    {
+      "rank": 4,
+      "ticker": "ATON",
+      "companyName": "AlphaTON Capital Corp",
+      "score": 38,
+      "reason": "6.2mo runway · $4M cap → cash almost gone",
+      "metrics": {
+        "runway": "6.2",
+        "pullback": "35.9",
+        "peakGain": "0.4",
+        "daysSinceFiling": 7,
+        "marketCap": 3720477,
+        "debtCashRatio": "0.0"
+      }
+    },
+    {
+      "rank": 5,
+      "ticker": "RDHL",
+      "companyName": "RedHill Biopharma Ltd.",
+      "score": 36,
+      "reason": "4.2mo runway · $4M cap → likely raise into weakness",
+      "metrics": {
+        "runway": "4.2",
+        "pullback": "5.5",
+        "peakGain": "13.6",
+        "daysSinceFiling": 7,
+        "marketCap": 3962529,
+        "debtCashRatio": "0.1"
+      }
+    },
+    {
+      "rank": 6,
+      "ticker": "CIK",
+      "companyName": "Western Midstream Operating, LP",
+      "score": 33,
+      "reason": "999.0mo runway · debt 2057.3x cash → volume-driven distress signal",
+      "metrics": {
+        "runway": "999.0",
+        "pullback": "0.0",
+        "peakGain": "0.0",
+        "daysSinceFiling": 0,
+        "marketCap": 155111636,
+        "debtCashRatio": "2057.3"
+      }
+    },
+    {
+      "rank": 7,
+      "ticker": "DWTX",
+      "companyName": "Dogwood Therapeutics, Inc.",
+      "score": 32,
+      "reason": "6.7mo runway · $12M cap → pressure to raise high",
+      "metrics": {
+        "runway": "6.7",
+        "pullback": "8.0",
+        "peakGain": "3.4",
+        "daysSinceFiling": 5,
+        "marketCap": 11849049,
+        "debtCashRatio": "0.0"
       }
     },
     {
       "rank": 8,
-      "ticker": "CAMP",
-      "companyName": "Camp4 Therapeutics Corp",
-      "score": 44,
-      "reason": "9.9mo runway · $71M cap → attention-driven risk",
+      "ticker": "PSNL",
+      "companyName": "Personalis, Inc.",
+      "score": 30,
+      "reason": "9.9mo runway · -5% off peak → setup despite runway",
       "metrics": {
         "runway": "9.9",
-        "pullback": "10.0",
+        "pullback": "4.6",
         "peakGain": "0.0",
-        "daysSinceFiling": 2,
-        "marketCap": 70517540,
-        "debtCashRatio": "0.3"
-      }
-    },
-    {
-      "rank": 9,
-      "ticker": "MYNZ",
-      "companyName": "MAINZ BIOMED N.V.",
-      "score": 44,
-      "reason": "2.8mo runway · $5M cap → momentum reversed",
-      "metrics": {
-        "runway": "2.8",
-        "pullback": "4.0",
-        "peakGain": "19.0",
-        "daysSinceFiling": 7,
-        "marketCap": 4706058,
+        "daysSinceFiling": 5,
+        "marketCap": 914189967,
         "debtCashRatio": "0.9"
-      }
-    },
-    {
-      "rank": 10,
-      "ticker": "MNDR",
-      "companyName": "Mobile-health Network Solutions",
-      "score": 43,
-      "reason": "2.9mo runway · $2M cap → reversal forming",
-      "metrics": {
-        "runway": "2.9",
-        "pullback": "0.0",
-        "peakGain": "0.0",
-        "daysSinceFiling": 0,
-        "marketCap": 1638649,
-        "debtCashRatio": "0.2"
       }
     }
   ]

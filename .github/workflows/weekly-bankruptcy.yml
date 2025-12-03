@@ -1,10 +1,10 @@
-name: Weekly Dilution Leaderboard
+name: Weekly Bankruptcy Leaderboard
 
 on:
-  # Every Monday at 9:30am ET = 14:30 UTC (13:30 UTC during DST)
+  # Every Tuesday at 9:30am ET = 14:30 UTC (13:30 UTC during DST)
   # Using 14:30 UTC to hit 9:30 ET during EST (winter)
   schedule:
-    - cron: "30 14 * * 1"  # 1 = Monday
+    - cron: "30 14 * * 2"  # 2 = Tuesday
   
   # Manual trigger for testing
   workflow_dispatch:
@@ -23,7 +23,7 @@ env:
   DRY_RUN: ${{ github.event.inputs.dry_run || (github.event_name == 'schedule' && 'false') || 'true' }}
 
 jobs:
-  dilution-leaderboard:
+  bankruptcy-leaderboard:
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Allow pushing commits (to update cooldown file)
@@ -43,7 +43,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: Run Dilution Leaderboard
+      - name: Run Bankruptcy Leaderboard
         id: leaderboard
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -54,14 +54,14 @@ jobs:
           TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
           DRY_RUN: ${{ env.DRY_RUN }}
         run: |
-          echo "🔎 Running Weekly Dilution Leaderboard"
+          echo "⚠️ Running Weekly Bankruptcy Leaderboard"
           echo "DRY_RUN: $DRY_RUN"
-          node src/weekly/index.js dilution --post --greeting="GM"
+          node src/weekly/index.js bankruptcy --post --greeting="GM"
       
       - name: Commit updated cooldown file
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add data/dilution_posted.json
-          git diff --staged --quiet || git commit -m "Update dilution cooldown [skip ci]"
+          git add data/bankruptcy_lb_posted.json
+          git diff --staged --quiet || git commit -m "Update bankruptcy cooldown [skip ci]"
           git push
