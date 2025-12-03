@@ -62,6 +62,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add data/bankruptcy_lb_posted.json
+          git add data/bankruptcy_lb_posted.json 2>/dev/null || true
           git diff --staged --quiet || git commit -m "Update bankruptcy cooldown [skip ci]"
-          git push
+          git push || true
