@@ -359,6 +359,13 @@ function generateFallbackReason(ticker, scoring) {
 export async function generateDilutionLeaderboard(options = {}) {
   const { days = 7, maxTickers = 10, minScore = 30 } = options;
 
+  // Calculate date range for display
+  const endDate = new Date();
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - days);
+  const formatDate = (d) => `${d.getMonth() + 1}/${d.getDate()}`;
+  const dateRange = `${formatDate(startDate)}–${formatDate(endDate)}`;
+
   console.log(`
 ╔═══════════════════════════════════════════════════════════════════════════════╗
 ║  DILUTION LEADERBOARD — Weekly ATM Scan                                       ║
@@ -473,6 +480,7 @@ export async function generateDilutionLeaderboard(options = {}) {
   const output = {
     generatedAt: new Date().toISOString(),
     period: `${days}d`,
+    dateRange,
     totalFilings: filings.length,
     enriched: enriched.length,
     qualified: qualified.length,
@@ -506,7 +514,8 @@ Back next week with fresh scans.`;
   );
   
   return `🔎 WEEKLY ATM DILUTION LEADERBOARD
-(DSS = dilution pressure × distress level)
+ATMs let companies sell shares anytime — diluting you.
+Filings from ${leaderboardData.dateRange} · DSS = dilution pressure × distress
 
 ${lines.join('\n\n')}
 
@@ -544,9 +553,10 @@ export async function runDilutionLeaderboard(options = {}) {
       try {
         const result = await postAlertThread(tweet, [], null);
         console.log(`✅ Posted!`);
-        // Mark all tickers in leaderboard as posted (7-day cooldown)
-        markTickersAsPosted(leaderboardData.map(t => t.ticker));
-        console.log(`   ⏳ ${leaderboardData.length} tickers on ${COOLDOWN_DAYS}-day cooldown`);
+        // Mark all tickers in leaderboard as posted (30-day cooldown)
+        const tickers = leaderboardData.leaderboard.map(t => t.ticker);
+        markTickersAsPosted(tickers);
+        console.log(`   ⏳ ${tickers.length} tickers on ${COOLDOWN_DAYS}-day cooldown`);
       } catch (e) {
         console.error(`❌ Post failed: ${e.message}`);
       }

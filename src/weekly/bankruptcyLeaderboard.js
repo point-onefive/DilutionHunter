@@ -581,9 +581,10 @@ export async function runBankruptcyLeaderboard(options = {}) {
       try {
         await postAlertThread(tweet, [], null);
         console.log(`✅ Posted!`);
-        // Mark all tickers in leaderboard as posted (7-day cooldown)
-        markTickersAsPosted(leaderboardData.map(t => t.ticker));
-        console.log(`   ⏳ ${leaderboardData.length} tickers on ${COOLDOWN_DAYS}-day cooldown`);
+        // Mark all tickers in leaderboard as posted (30-day cooldown)
+        const tickers = leaderboardData.leaderboard.map(t => t.ticker);
+        markTickersAsPosted(tickers);
+        console.log(`   ⏳ ${tickers.length} tickers on ${COOLDOWN_DAYS}-day cooldown`);
       } catch (e) {
         console.error(`❌ Post failed: ${e.message}`);
       }

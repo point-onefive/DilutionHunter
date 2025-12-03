@@ -1,26 +1,27 @@
 {
-  "generatedAt": "2025-12-01T21:30:11.962Z",
+  "generatedAt": "2025-12-03T16:57:15.318Z",
   "pipeline": {
-    "baseUniverse": 145,
-    "stage1Passed": 105,
-    "stage2Passed": 44,
-    "fullAnalyzed": 20,
+    "baseUniverse": 157,
+    "stage1Passed": 121,
+    "stage2Passed": 51,
+    "fullAnalyzed": 28,
     "qualified": 10
   },
   "leaderboard": [
     {
       "rank": 1,
-      "ticker": "SNBR",
-      "companyName": "Sleep Number Corporation",
-      "vis": 67,
-      "bankruptcyScore": 72,
-      "viralityScore": 60,
-      "reason": "0.6mo runway · debt 744.2x cash → insolvency pressure",
+      "ticker": "SOC",
+      "companyName": "Sable Offshore Corp.",
+      "vis": 64,
+      "bankruptcyScore": 65,
+      "viralityScore": 63,
+      "reason": "1.1mo runway · $36.9M/mo burn → cash nearly exhausted",
       "metrics": {
-        "runway": "0.6",
-        "debtCashRatio": "744.2",
-        "marketCap": 131042500,
-        "avgVolume": 1303802
+        "runway": "1.1",
+        "debtCashRatio": "0.0",
+        "monthlyBurn": 36875333.333333336,
+        "marketCap": 506989439,
+        "avgVolume": 1974477
       }
     },
     {
@@ -30,132 +31,141 @@
       "vis": 62,
       "bankruptcyScore": 42,
       "viralityScore": 93,
-      "reason": "debt 19.7x cash · negative int cov → can't service debt",
+      "reason": "24.0mo runway · debt 19.7x cash → long-term burn unsustainable",
       "metrics": {
         "runway": "24.0",
         "debtCashRatio": "19.7",
-        "marketCap": 1205417368,
-        "avgVolume": 11048325
+        "monthlyBurn": 4966666.666666667,
+        "marketCap": 1169511319,
+        "avgVolume": 8047860
       }
     },
     {
       "rank": 3,
-      "ticker": "LCID",
-      "companyName": "LCID",
-      "vis": 58,
-      "bankruptcyScore": 35,
-      "viralityScore": 93,
-      "reason": "negative int cov · $252.3M/mo burn → distress signals",
-      "metrics": {
-        "runway": "6.5",
-        "debtCashRatio": "1.7",
-        "marketCap": 3792983874,
-        "avgVolume": 9413710
-      }
-    },
-    {
-      "rank": 4,
       "ticker": "FFIE",
       "companyName": "FFIE",
       "vis": 55,
       "bankruptcyScore": 55,
       "viralityScore": 55,
-      "reason": "5.3mo runway · negative int cov → can't service debt",
+      "reason": "5.3mo runway · $11.9M/mo burn → solvency risk growing",
       "metrics": {
         "runway": "5.3",
         "debtCashRatio": "1.4",
+        "monthlyBurn": 11854333.333333334,
         "marketCap": 105758499,
         "avgVolume": 4080288
       }
     },
     {
-      "rank": 5,
-      "ticker": "SPCE",
-      "companyName": "SPCE",
+      "rank": 4,
+      "ticker": "KMTS",
+      "companyName": "KESTRA MEDICAL TECHNOLOGIES, LTD.",
       "vis": 54,
-      "bankruptcyScore": 47,
-      "viralityScore": 65,
-      "reason": "negative int cov · $18.8M/mo burn → distress signals",
+      "bankruptcyScore": 35,
+      "viralityScore": 83,
+      "reason": "23.0mo runway · $8.8M/mo burn → structural cash flow issues",
       "metrics": {
-        "runway": "8.5",
-        "debtCashRatio": "3.0",
-        "marketCap": 239528758,
-        "avgVolume": 1494222
+        "runway": "23.0",
+        "debtCashRatio": "0.0",
+        "monthlyBurn": 8758000,
+        "marketCap": 1346914452,
+        "avgVolume": 1132202
+      }
+    },
+    {
+      "rank": 5,
+      "ticker": "LCID",
+      "companyName": "LCID",
+      "vis": 54,
+      "bankruptcyScore": 35,
+      "viralityScore": 83,
+      "reason": "6.5mo runway · $252.3M/mo burn → burn rate unsustainable",
+      "metrics": {
+        "runway": "6.5",
+        "debtCashRatio": "1.7",
+        "monthlyBurn": 252272000,
+        "marketCap": 3892481861,
+        "avgVolume": 2733933
       }
     },
     {
       "rank": 6,
-      "ticker": "BGL",
-      "companyName": "Blue Gold Limited",
-      "vis": 52,
-      "bankruptcyScore": 57,
-      "viralityScore": 45,
-      "reason": "0.6mo runway · debt 30.5x cash → high distress",
+      "ticker": "SMX",
+      "companyName": "SMX (Security Matters) Public Limited Company",
+      "vis": 53,
+      "bankruptcyScore": 52,
+      "viralityScore": 55,
+      "reason": "5.4mo runway · debt 10.9x cash → liquidity tightening",
       "metrics": {
-        "runway": "0.6",
-        "debtCashRatio": "30.5",
-        "marketCap": 129167090,
-        "avgVolume": 429075
+        "runway": "5.4",
+        "debtCashRatio": "10.9",
+        "monthlyBurn": 138517,
+        "marketCap": 72669400,
+        "avgVolume": 2364732
       }
     },
     {
       "rank": 7,
-      "ticker": "CYPH",
-      "companyName": "Cypherpunk Technologies Inc.",
-      "vis": 49,
-      "bankruptcyScore": 52,
-      "viralityScore": 45,
-      "reason": "4.9mo runway · negative int cov → can't service debt",
+      "ticker": "ADCT",
+      "companyName": "ADC Therapeutics S.A.",
+      "vis": 52,
+      "bankruptcyScore": 37,
+      "viralityScore": 75,
+      "reason": "23.8mo runway · $9.9M/mo burn → attention-driven distress signal",
       "metrics": {
-        "runway": "4.9",
-        "debtCashRatio": "0.1",
-        "marketCap": 69681763,
-        "avgVolume": 7848057
+        "runway": "23.8",
+        "debtCashRatio": "0.5",
+        "monthlyBurn": 9876666.666666666,
+        "marketCap": 358110544,
+        "avgVolume": 4104691
       }
     },
     {
       "rank": 8,
-      "ticker": "LPTX",
-      "companyName": "Leap Therapeutics, Inc.",
-      "vis": 49,
-      "bankruptcyScore": 52,
-      "viralityScore": 45,
-      "reason": "4.9mo runway · negative int cov → can't service debt",
+      "ticker": "AEVA",
+      "companyName": "Aeva Technologies, Inc.",
+      "vis": 50,
+      "bankruptcyScore": 35,
+      "viralityScore": 73,
+      "reason": "4.2mo runway · $10.8M/mo burn → liquidity deteriorating",
       "metrics": {
-        "runway": "4.9",
+        "runway": "4.2",
         "debtCashRatio": "0.1",
-        "marketCap": 51326941,
-        "avgVolume": 7324049
+        "monthlyBurn": 10770666.666666666,
+        "marketCap": 715385363,
+        "avgVolume": 3745207
       }
     },
     {
       "rank": 9,
+      "ticker": "POET",
+      "companyName": "POET Technologies Inc.",
+      "vis": 48,
+      "bankruptcyScore": 30,
+      "viralityScore": 75,
+      "reason": "14.7mo runway · debt 0.5x cash → deteriorating fundamentals",
+      "metrics": {
+        "runway": "14.7",
+        "debtCashRatio": "0.5",
+        "monthlyBurn": 921482.3333333334,
+        "marketCap": 453379801,
+        "avgVolume": 11417988
+      }
+    },
+    {
+      "rank": 10,
       "ticker": "UPST",
       "companyName": "UPST",
       "vis": 48,
       "bankruptcyScore": 25,
       "viralityScore": 83,
-      "reason": "$40.9M/mo burn · debt 2.3x cash → financial strain",
+      "reason": "20.5mo runway · debt 2.3x cash → attention-driven distress signal",
       "metrics": {
         "runway": "20.5",
         "debtCashRatio": "2.3",
-        "marketCap": 4305899782,
-        "avgVolume": 4113309
-      }
-    },
-    {
-      "rank": 10,
-      "ticker": "LEG",
-      "companyName": "Leggett & Platt, Incorporated",
-      "vis": 43,
-      "bankruptcyScore": 10,
-      "viralityScore": 93,
-      "reason": "debt 3.6x cash → financial strain",
-      "metrics": {
-        "runway": "24.0",
-        "debtCashRatio": "3.6",
-        "marketCap": 1616918860,
-        "avgVolume": 9762742
+        "monthlyBurn": 40876333.333333336,
+        "marketCap": 4250446486,
+        "avgVolume": 1110467
       }
     }
   ]
