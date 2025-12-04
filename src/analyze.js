@@ -88,30 +88,43 @@ async function analyzeTicker(ticker) {
 
   // Bankruptcy Risk Score
   console.log(`\n💀 BANKRUPTCY RISK ANALYSIS`);
-  if (bankruptcyData && viralityData) {
-    const visResult = scoreWithVIS({ ...bankruptcyData, ...viralityData });
-    console.log(`   Bankruptcy Risk Score: ${visResult.bankruptcyScore}/100`);
-    console.log(`   Virality Score: ${visResult.viralityScore}/100`);
-    console.log(`   VIS (Combined): ${visResult.vis}/100`);
-    
-    let riskLevel = 'LOW';
-    let riskEmoji = '✅';
-    if (visResult.bankruptcyScore >= 70) { riskLevel = 'CRITICAL'; riskEmoji = '🔴'; }
-    else if (visResult.bankruptcyScore >= 50) { riskLevel = 'HIGH'; riskEmoji = '🟠'; }
-    else if (visResult.bankruptcyScore >= 30) { riskLevel = 'MODERATE'; riskEmoji = '🟡'; }
-    
-    console.log(`   Risk Level: ${riskEmoji} ${riskLevel}`);
-    
-    // Breakdown
-    if (visResult.breakdown) {
-      console.log(`\n   Risk Factors:`);
-      const b = visResult.breakdown;
-      if (b.burnRisk) console.log(`   • Burn Rate Risk: ${b.burnRisk}/20`);
-      if (b.runwayRisk) console.log(`   • Runway Risk: ${b.runwayRisk}/25`);
-      if (b.debtRisk) console.log(`   • Debt Risk: ${b.debtRisk}/20`);
-      if (b.liquidityRisk) console.log(`   • Liquidity Risk: ${b.liquidityRisk}/15`);
-      if (b.ocfRisk) console.log(`   • Cash Flow Risk: ${b.ocfRisk}/10`);
-      if (b.marketCapRisk) console.log(`   • Market Cap Risk: ${b.marketCapRisk}/10`);
+  if (bankruptcyData) {
+    try {
+      // Merge with defaults for missing virality data
+      const combined = {
+        ...bankruptcyData,
+        avgVolume: viralityData?.avgVolume || q?.avgVolume || 0,
+        volume: viralityData?.volume || q?.volume || 0,
+        marketCap: viralityData?.marketCap || q?.marketCap || 0,
+        newsCount: viralityData?.newsCount || 0,
+        socialMentions: viralityData?.socialMentions || 0
+      };
+      const visResult = scoreWithVIS(combined);
+      console.log(`   Bankruptcy Risk Score: ${visResult.bankruptcyScore}/100`);
+      console.log(`   Virality Score: ${visResult.viralityScore}/100`);
+      console.log(`   VIS (Combined): ${visResult.vis}/100`);
+      
+      let riskLevel = 'LOW';
+      let riskEmoji = '✅';
+      if (visResult.bankruptcyScore >= 70) { riskLevel = 'CRITICAL'; riskEmoji = '🔴'; }
+      else if (visResult.bankruptcyScore >= 50) { riskLevel = 'HIGH'; riskEmoji = '🟠'; }
+      else if (visResult.bankruptcyScore >= 30) { riskLevel = 'MODERATE'; riskEmoji = '🟡'; }
+      
+      console.log(`   Risk Level: ${riskEmoji} ${riskLevel}`);
+      
+      // Breakdown
+      if (visResult.breakdown) {
+        console.log(`\n   Risk Factors:`);
+        const b = visResult.breakdown;
+        if (b.burnRisk) console.log(`   • Burn Rate Risk: ${b.burnRisk}/20`);
+        if (b.runwayRisk) console.log(`   • Runway Risk: ${b.runwayRisk}/25`);
+        if (b.debtRisk) console.log(`   • Debt Risk: ${b.debtRisk}/20`);
+        if (b.liquidityRisk) console.log(`   • Liquidity Risk: ${b.liquidityRisk}/15`);
+        if (b.ocfRisk) console.log(`   • Cash Flow Risk: ${b.ocfRisk}/10`);
+        if (b.marketCapRisk) console.log(`   • Market Cap Risk: ${b.marketCapRisk}/10`);
+      }
+    } catch (e) {
+      console.log(`   ⚠️ Error calculating risk: ${e.message}`);
     }
   } else {
     console.log(`   ⚠️ Could not calculate bankruptcy risk`);
@@ -139,10 +152,20 @@ async function analyzeTicker(ticker) {
   
   const issues = [];
   if (bankruptcyData) {
-    const visResult = scoreWithVIS({ ...bankruptcyData, ...viralityData });
-    if (visResult.bankruptcyScore >= 50) issues.push(`High bankruptcy risk (${visResult.bankruptcyScore}/100)`);
-    if (bankruptcyData.runwayMonths < 6) issues.push(`Low cash runway (${bankruptcyData.runwayMonths?.toFixed(1)}mo)`);
-    if (bankruptcyData.totalDebt > bankruptcyData.cash * 5) issues.push(`High debt/cash ratio`);
+    try {
+      const combined = {
+        ...bankruptcyData,
+        avgVolume: viralityData?.avgVolume || q?.avgVolume || 0,
+        volume: viralityData?.volume || q?.volume || 0,
+        marketCap: viralityData?.marketCap || q?.marketCap || 0,
+        newsCount: viralityData?.newsCount || 0,
+        socialMentions: viralityData?.socialMentions || 0
+      };
+      const visResult = scoreWithVIS(combined);
+      if (visResult.bankruptcyScore >= 50) issues.push(`High bankruptcy risk (${visResult.bankruptcyScore}/100)`);
+    } catch (e) { /* ignore scoring errors */ }
+    if (bankruptcyData.runwayMonths && bankruptcyData.runwayMonths < 6) issues.push(`Low cash runway (${bankruptcyData.runwayMonths?.toFixed(1)}mo)`);
+    if (bankruptcyData.totalDebt && bankruptcyData.cash && bankruptcyData.totalDebt > bankruptcyData.cash * 5) issues.push(`High debt/cash ratio`);
   }
   if (tickerFilings.length > 0) issues.push(`Active ATM filing (dilution risk)`);
   
