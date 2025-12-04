@@ -13,6 +13,24 @@
 
 ---
 
+## Quick Ticker Analysis
+
+Analyze any ticker for dilution and bankruptcy risk:
+
+```bash
+node src/analyze.js FFIE           # Single ticker
+node src/analyze.js ET DOC MULN    # Multiple tickers
+```
+
+**Checks performed:**
+- Company info & market data
+- Financial health (cash, debt, burn rate, runway)
+- Bankruptcy risk score (0-100) with factor breakdown
+- ATM filings in last 90 days (dilution risk)
+- Overall verdict with red flags
+
+---
+
 ## 📅 Weekly Leaderboards (NEW)
 
 Production schedule: **One leaderboard per day** — fully automated via GitHub Actions.
