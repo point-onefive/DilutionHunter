@@ -20,7 +20,7 @@ on:
 
 env:
   # Scheduled runs post for real, manual defaults to dry run
-  DRY_RUN: ${{ github.event.inputs.dry_run || (github.event_name == 'schedule' && 'false') || 'true' }}
+  DRY_RUN: ${{ github.event_name == 'schedule' && 'false' || github.event.inputs.dry_run || 'true' }}
 
 jobs:
   bankruptcy-leaderboard:
