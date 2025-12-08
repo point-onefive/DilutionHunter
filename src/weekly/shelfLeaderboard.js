@@ -361,21 +361,21 @@ async function generateAIOneLiners(tickers) {
 Format MUST be: "metric1 · metric2 → meaning clause"
 
 RULES:
-1. Use exactly 2 quantitative metrics from: Xmo runway, debt Xx cash, $XM cap, $XM/mo burn, filed Xd ago, form type
-2. End with a SHORT meaning clause (2-5 words) like:
-   - "dilution likely imminent"
-   - "raising capital soon"
-   - "shelf loaded for use"
-   - "preparing to issue shares"
-   - "capital raise setup"
-   - "dilution on deck"
-   - "shelf ready to deploy"
+1. Use exactly 2 quantitative metrics from: Xmo runway, debt Xx cash, $XM cap, $XM/mo burn, filed Xd ago
+2. End with a SHORT meaning clause (2-5 words). VARY these across tickers - use DIFFERENT phrases:
+   - "dilution imminent"
+   - "emergency capital needed"
+   - "shelf prepped for use"
+   - "filing suggests raise incoming"
+   - "high re-pricing risk"
    - "watch for offerings"
-   - "pressure to raise high"
-   - "ammunition stockpiled"
-3. Vary the meaning clauses - don't repeat the same phrase more than twice
-4. For long runway (>12mo) with high SDR, explain with clauses like "shelf despite runway" or "preemptive shelf filing"
-5. Replace "microcap" with actual "$XM cap" number
+   - "early shelf positioning"
+   - "preemptive shelf filing"
+   - "dilution setup forming"
+   - "funding likely soon"
+3. NEVER repeat the same meaning clause twice in the list
+4. For market cap < $1M, say "ultra-microcap funding likely" or similar
+5. For long runway (>6mo) with high SDR, use "early shelf positioning" or "preemptive filing"
 6. Keep total length under 60 characters
 
 Tickers to analyze:
@@ -419,8 +419,14 @@ function generateFallbackReason(t, scoring) {
     parts.push(`filed ${t.daysSinceFiling}d ago`);
   }
   
-  const meanings = ['dilution on deck', 'shelf ready', 'capital raise setup', 'preparing to raise'];
-  const meaning = meanings[Math.floor(Math.random() * meanings.length)];
+  // Varied meanings based on metrics
+  let meaning;
+  if (t.runwayMonths < 1) meaning = 'dilution imminent';
+  else if (t.runwayMonths < 3 && t.debtCashRatio > 10) meaning = 'emergency capital needed';
+  else if (t.marketCap < 1e6) meaning = 'ultra-microcap funding likely';
+  else if (t.runwayMonths > 6) meaning = 'early shelf positioning';
+  else if (t.debtCashRatio > 20) meaning = 'high re-pricing risk';
+  else meaning = 'dilution setup forming';
   
   return `${parts.slice(0, 2).join(' · ')} → ${meaning}`;
 }
@@ -586,13 +592,14 @@ Back next week with fresh scans.`;
   );
   
   return `📋 WEEKLY SHELF OFFERING RADAR
-Shelf filings = the gun is loaded. We watch for the trigger.
-These aren't announced. We dig through SEC filings.
-Filings from ${leaderboardData.dateRange} · SDR = shelf dilution risk × urgency
+Shelf = legal paperwork to issue new shares later.
+Gun is loaded — now we watch for the trigger.
+Filings from ${leaderboardData.dateRange} · SDR (0–100) = shelf dilution risk × urgency
 
 ${lines.join('\n\n')}
 
-Not advice — pattern recognition only.`;
+Companies file shelves quietly. Most investors never read them.
+We do.`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
