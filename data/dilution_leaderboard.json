@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2025-12-08T16:09:44.168Z",
+  "generatedAt": "2025-12-08T17:45:43.192Z",
   "period": "7d",
   "dateRange": "12/1–12/8",
-  "totalFilings": 37,
-  "enriched": 36,
+  "totalFilings": 38,
+  "enriched": 37,
   "qualified": 10,
   "leaderboard": [
     {
@@ -11,44 +11,44 @@
       "ticker": "EUDA",
       "companyName": "EUDA Health Holdings Ltd",
       "score": 64,
-      "reason": "1.1mo runway · -8% off peak → dilution overhang building",
+      "reason": "1.1mo runway · debt 24.6x cash → dilution overhang building",
       "metrics": {
         "runway": "1.1",
-        "pullback": "8.1",
+        "pullback": "9.9",
         "peakGain": "13.4",
         "daysSinceFiling": 4,
-        "marketCap": 109840243,
+        "marketCap": 108918765,
         "debtCashRatio": "24.6"
       }
     },
     {
       "rank": 2,
-      "ticker": "MIRA",
-      "companyName": "MIRA PHARMACEUTICALS, INC.",
-      "score": 49,
-      "reason": "5.9mo runway · $60M cap → likely raise into weakness",
+      "ticker": "CAPR",
+      "companyName": "CAPRICOR THERAPEUTICS, INC.",
+      "score": 50,
+      "reason": "4.2mo runway · -6% off peak → momentum reversed",
       "metrics": {
-        "runway": "5.9",
-        "pullback": "5.2",
-        "peakGain": "3.4",
+        "runway": "4.2",
+        "pullback": "6.3",
+        "peakGain": "17.5",
         "daysSinceFiling": 3,
-        "marketCap": 59659247,
-        "debtCashRatio": "0.0"
+        "marketCap": 1361953370,
+        "debtCashRatio": "0.7"
       }
     },
     {
       "rank": 3,
-      "ticker": "CAPR",
-      "companyName": "CAPRICOR THERAPEUTICS, INC.",
-      "score": 46,
-      "reason": "4.2mo runway · -1% off peak → fading after spike",
+      "ticker": "MIRA",
+      "companyName": "MIRA PHARMACEUTICALS, INC.",
+      "score": 45,
+      "reason": "5.9mo runway · $60M cap → likely raise into weakness",
       "metrics": {
-        "runway": "4.2",
-        "pullback": "0.8",
-        "peakGain": "17.6",
+        "runway": "5.9",
+        "pullback": "4.5",
+        "peakGain": "3.4",
         "daysSinceFiling": 3,
-        "marketCap": 1377954837,
-        "debtCashRatio": "0.7"
+        "marketCap": 59868577,
+        "debtCashRatio": "0.0"
       }
     },
     {
@@ -56,58 +56,58 @@
       "ticker": "TARA",
       "companyName": "Protara Therapeutics, Inc.",
       "score": 45,
-      "reason": "3.1mo runway · -3% off peak → momentum reversed",
+      "reason": "3.1mo runway · -2% off peak → fading after spike",
       "metrics": {
         "runway": "3.1",
-        "pullback": "3.4",
-        "peakGain": "8.4",
+        "pullback": "1.9",
+        "peakGain": "8.6",
         "daysSinceFiling": 3,
-        "marketCap": 216860401,
+        "marketCap": 220410429,
         "debtCashRatio": "0.3"
       }
     },
     {
       "rank": 5,
-      "ticker": "KALA",
-      "companyName": "KALA BIO, Inc.",
-      "score": 45,
-      "reason": "7.9mo runway · $6M cap → pressure to raise high",
+      "ticker": "TOVX",
+      "companyName": "Theriva Biologics, Inc.",
+      "score": 44,
+      "reason": "4.9mo runway · $7M cap → cash almost gone",
       "metrics": {
-        "runway": "7.9",
-        "pullback": "23.5",
-        "peakGain": "2.0",
-        "daysSinceFiling": 3,
-        "marketCap": 5531175,
-        "debtCashRatio": "2.8"
+        "runway": "4.9",
+        "pullback": "16.5",
+        "peakGain": "25.0",
+        "daysSinceFiling": 5,
+        "marketCap": 7314755,
+        "debtCashRatio": "0.7"
       }
     },
     {
       "rank": 6,
-      "ticker": "TOVX",
-      "companyName": "Theriva Biologics, Inc.",
-      "score": 44,
-      "reason": "4.9mo runway · +25% spike → spike losing momentum",
+      "ticker": "KALA",
+      "companyName": "KALA BIO, Inc.",
+      "score": 41,
+      "reason": "7.9mo runway · $6M cap → attention-driven risk",
       "metrics": {
-        "runway": "4.9",
-        "pullback": "13.9",
-        "peakGain": "25.0",
-        "daysSinceFiling": 5,
-        "marketCap": 7395730,
-        "debtCashRatio": "0.7"
+        "runway": "7.9",
+        "pullback": "18.9",
+        "peakGain": "2.0",
+        "daysSinceFiling": 3,
+        "marketCap": 5959459,
+        "debtCashRatio": "2.8"
       }
     },
     {
       "rank": 7,
       "ticker": "INTS",
       "companyName": "INTENSITY THERAPEUTICS, INC.",
-      "score": 36,
+      "score": 40,
       "reason": "8.9mo runway · $23M cap → setup despite runway",
       "metrics": {
         "runway": "8.9",
-        "pullback": "9.7",
+        "pullback": "11.4",
         "peakGain": "22.0",
         "daysSinceFiling": 4,
-        "marketCap": 23234996,
+        "marketCap": 23192562,
         "debtCashRatio": "0.0"
       }
     },
@@ -116,13 +116,13 @@
       "ticker": "CMND",
       "companyName": "Clearmind Medicine Inc.",
       "score": 35,
-      "reason": "11.7mo runway · $1M cap → attention-driven risk",
+      "reason": "11.7mo runway · $1M cap → volume-driven distress signal",
       "metrics": {
         "runway": "11.7",
-        "pullback": "11.6",
+        "pullback": "11.9",
         "peakGain": "22.4",
         "daysSinceFiling": 5,
-        "marketCap": 637004,
+        "marketCap": 653394,
         "debtCashRatio": "0.0"
       }
     },
@@ -131,13 +131,13 @@
       "ticker": "BTBD",
       "companyName": "BT Brands, Inc.",
       "score": 34,
-      "reason": "9.2mo runway · $10M cap → volume-driven distress signal",
+      "reason": "9.2mo runway · $10M cap → setup despite runway",
       "metrics": {
         "runway": "9.2",
-        "pullback": "5.3",
+        "pullback": "6.9",
         "peakGain": "5.0",
         "daysSinceFiling": 7,
-        "marketCap": 9847558,
+        "marketCap": 9608755,
         "debtCashRatio": "4.8"
       }
     },
@@ -149,10 +149,10 @@
       "reason": "999.0mo runway · debt 611.4x cash → distressed setup",
       "metrics": {
         "runway": "999.0",
-        "pullback": "2.1",
-        "peakGain": "1.4",
+        "pullback": "2.0",
+        "peakGain": "1.7",
         "daysSinceFiling": 3,
-        "marketCap": 243348893,
+        "marketCap": 244198773,
         "debtCashRatio": "611.4"
       }
     }

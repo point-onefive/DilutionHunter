@@ -500,7 +500,7 @@ export async function generateDilutionLeaderboard(options = {}) {
 
 async function generateTweet(leaderboardData) {
   if (!leaderboardData?.leaderboard?.length) {
-    return `🔎 Weekly ATM Dilution Scan
+    return `🔴 Weekly ATM Dilution Scan
 
 No significant ATM setups this week.
 Quiet week = less dilution pressure.
@@ -513,14 +513,14 @@ Back next week with fresh scans.`;
     `#${t.rank} $${t.ticker} — Risk: ${t.score}/100\n→ ${t.reason}`
   );
   
-  return `🔎 WEEKLY ATM DILUTION LEADERBOARD
+  return `🔴 WEEKLY ATM DILUTION LEADERBOARD
 ATMs let companies sell shares anytime — diluting you.
-These aren't announced. We dig through SEC filings.
-Filings from ${leaderboardData.dateRange}
+These aren't announced. 🔎 We dig through SEC filings.
+📅 Filings from ${leaderboardData.dateRange}
 
 ${lines.join('\n\n')}
 
-Not advice — pattern recognition only.`;
+⚠️ Not advice — pattern recognition only. 📉 Dilution is quiet — until it isn't.`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════

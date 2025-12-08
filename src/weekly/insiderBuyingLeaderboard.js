@@ -356,21 +356,15 @@ RULES:
    - "CEO + Director · 2-week base"
    - "management · post-earnings dip"
    - "10% owner · consolidation"
+   - "CEO · rally" (for rising price cases)
 3. End with a SHORT bullish meaning clause (2-4 words):
-   - "loading the dip"
-   - "conviction buy"
-   - "quiet accumulation"
-   - "stealth positioning"
-   - "smart money entry"
-   - "dip buyer detected"
-   - "accumulation signal"
-   - "loading before move"
-   - "confidence buy"
-   - "pre-breakout setup"
+   - For DIPS/FLAT: "loading the dip", "conviction buy", "quiet accumulation", "smart money entry", "dip buyer detected", "accumulation signal", "loading before move", "confidence buy"
+   - For RALLY cases (price up >10%): "rare bullish tell", "insiders buying strength", "conviction entry into strength", "high-conviction momentum buy"
 4. NEVER repeat the same meaning clause OR price phrasing twice in the list
 5. If hasCEO=true, mention "CEO". If hasCFO=true, mention "CFO". If both, use "CEO + CFO"
 6. If isClusterBuy=true (2+ insiders), VARY the label: "cluster", "multiple insiders", "management", "X insiders"
 7. Keep total length under 55 characters
+8. For stocks where priceChange30d > 10%, use rally-specific meaning clauses to explain the anomaly
 
 Tickers to analyze:
 ${JSON.stringify(tickerData, null, 2)}
@@ -409,9 +403,10 @@ const PRICE_CONTEXTS = [
 // Bullish meaning clauses
 const MEANING_CLAUSES = {
   majorDip: ['loading the dip', 'conviction buy', 'smart money entry', 'bottom fishing'],
-  dip: ['dip buyer detected', 'accumulation signal', 'quiet accumulation', 'stealth positioning'],
-  flat: ['loading before move', 'pre-breakout setup', 'confidence buy', 'patient accumulation'],
+  dip: ['dip buyer detected', 'accumulation signal', 'quiet accumulation', 'accumulation phase'],
+  flat: ['loading before move', 'flat base build', 'confidence buy', 'patient accumulation'],
   ceoLevel: ['insider confidence', 'management conviction', 'leadership buying', 'C-suite loading'],
+  rally: ['rare bullish tell', 'insiders buying strength', 'high-conviction entry', 'buying into momentum'],
 };
 
 // Varied cluster labels for buys
@@ -448,9 +443,10 @@ function generateFallbackReason(t) {
   const priceFormatter = PRICE_CONTEXTS[fallbackIndex % PRICE_CONTEXTS.length];
   parts.push(whoContext + priceFormatter(t.priceChange30d));
   
-  // Meaning clause - based on metrics
+  // Meaning clause - based on metrics (including rally cases)
   let meaningPool;
-  if (t.priceChange30d <= -15) meaningPool = MEANING_CLAUSES.majorDip;
+  if (t.priceChange30d > 10) meaningPool = MEANING_CLAUSES.rally; // Rally case = rare bullish tell
+  else if (t.priceChange30d <= -15) meaningPool = MEANING_CLAUSES.majorDip;
   else if (t.priceChange30d <= -5) meaningPool = MEANING_CLAUSES.dip;
   else if (t.hasCEO || t.hasCFO) meaningPool = MEANING_CLAUSES.ceoLevel;
   else meaningPool = MEANING_CLAUSES.flat;
@@ -595,16 +591,17 @@ Back next week.`;
   }
 
   const lines = leaderboardData.leaderboard.slice(0, 10).map(t => {
-    return `#${t.rank} $${t.ticker} — Score: ${t.score}/100\n→ ${t.reason}`;
+    return `#${t.rank} $${t.ticker} — Score: ${t.score}\n→ ${t.reason}`;
   });
   
   return `🟢 WEEKLY INSIDER BUYING RADAR
-Insiders buying when price is flat/down = conviction.
-Last 30 days · SEC Form 4 filings
+Insiders buy weakness — not stories. That's conviction.
+📅 Last 30 days · SEC Form 4 filings
 
 ${lines.join('\n\n')}
 
-Insiders sell for many reasons. They buy for one: they believe.`;
+💡 Insiders sell for many reasons — they buy for one: they believe.
+👀 Watch what they do — not what they say.`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════

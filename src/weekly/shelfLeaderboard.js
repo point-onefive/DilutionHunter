@@ -591,15 +591,15 @@ Back next week with fresh scans.`;
     `#${t.rank} $${t.ticker} — Risk: ${t.score}/100\n→ ${t.reason}`
   );
   
-  return `📋 WEEKLY SHELF OFFERING RADAR
+  return `🔶 WEEKLY SHELF OFFERING RADAR
 Shelf = legal paperwork to issue new shares later.
-Gun is loaded — now we watch for the trigger.
-Filings from ${leaderboardData.dateRange}
+🎯 Gun is loaded — now we watch for the trigger.
+📅 Filings from ${leaderboardData.dateRange}
 
 ${lines.join('\n\n')}
 
 Companies file shelves quietly. Most investors never read them.
-We do.`;
+👁️ We do.`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════

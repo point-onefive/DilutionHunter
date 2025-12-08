@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-12-08T17:24:36.381Z",
+  "generatedAt": "2025-12-08T17:40:17.349Z",
   "scanner": "insider-buying-radar",
   "leaderboard": [
     {
@@ -7,13 +7,13 @@
       "ticker": "BH",
       "companyName": "Biglari Holdings Inc.",
       "score": 73,
-      "reason": "$1.6M bought · CEO · -11% pullback → conviction buy",
+      "reason": "$1.6M bought · CEO · pullback → dip buyer detected",
       "metrics": {
         "totalValueBought": 1648102.09,
-        "pctMarketCapBought": 0.16494995493171807,
+        "pctMarketCapBought": 0.16501144986876762,
         "insiderCount": 1,
         "purchaseCount": 3,
-        "priceChange30d": -11.431158919337447,
+        "priceChange30d": -10.958714708403615,
         "priceContext": "pullback",
         "hasCEO": true,
         "hasCFO": false
@@ -31,10 +31,10 @@
       "ticker": "UTI",
       "companyName": "Universal Technical Institute, Inc.",
       "score": 63,
-      "reason": "$13.7M bought · cluster · 12% pullback → dip buyer detected",
+      "reason": "$13.7M bought · cluster · pullback → smart money entry",
       "metrics": {
         "totalValueBought": 13682697.989999998,
-        "pctMarketCapBought": 1.0200128181383634,
+        "pctMarketCapBought": 1.018979161597165,
         "insiderCount": 1,
         "purchaseCount": 3,
         "priceChange30d": -12.44239631336406,
@@ -61,7 +61,7 @@
         "pctMarketCapBought": 0.14624744051219565,
         "insiderCount": 1,
         "purchaseCount": 4,
-        "priceChange30d": 3.367346938775511,
+        "priceChange30d": 2.8571428571428505,
         "priceContext": "flat base",
         "hasCEO": true,
         "hasCFO": false
@@ -76,37 +76,13 @@
     },
     {
       "rank": 4,
-      "ticker": "UFI",
-      "companyName": "Unifi, Inc.",
-      "score": 56,
-      "reason": "$230K bought · 10% owner · pullback → smart money entry",
-      "metrics": {
-        "totalValueBought": 229852.12,
-        "pctMarketCapBought": 0.3496753305530965,
-        "insiderCount": 1,
-        "purchaseCount": 2,
-        "priceChange30d": -10.696517412935318,
-        "priceContext": "pullback",
-        "hasCEO": false,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 10,
-        "priceContext": 20,
-        "seniority": 13,
-        "cluster": 5,
-        "recency": 8
-      }
-    },
-    {
-      "rank": 5,
       "ticker": "NRDY",
       "companyName": "Nerdy, Inc.",
       "score": 51,
-      "reason": "$495K bought · CEO · rally → stealth positioning",
+      "reason": "$495K bought · CEO + 10% owner · rally → insiders buying strength",
       "metrics": {
         "totalValueBought": 494950.98,
-        "pctMarketCapBought": 0.30157306768894176,
+        "pctMarketCapBought": 0.3038490902824133,
         "insiderCount": 1,
         "purchaseCount": 3,
         "priceChange30d": 42.76547962784728,
@@ -123,17 +99,17 @@
       }
     },
     {
-      "rank": 6,
+      "rank": 5,
       "ticker": "GRND",
       "companyName": "Grindr Inc.",
       "score": 51,
-      "reason": "$4.7M bought · multiple insiders · flat base → confidence buy",
+      "reason": "$4.7M bought · 10% owner · flat base → confidence buy",
       "metrics": {
         "totalValueBought": 4742000,
-        "pctMarketCapBought": 0.18451066571665697,
+        "pctMarketCapBought": 0.18383825073619778,
         "insiderCount": 1,
         "purchaseCount": 4,
-        "priceChange30d": 0.441501103752763,
+        "priceChange30d": 0.7726269315673321,
         "priceContext": "flat base",
         "hasCEO": false,
         "hasCFO": false
@@ -147,11 +123,35 @@
       }
     },
     {
+      "rank": 6,
+      "ticker": "UFI",
+      "companyName": "Unifi, Inc.",
+      "score": 51,
+      "reason": "$230K bought · 10% owner · dip → conviction buy",
+      "metrics": {
+        "totalValueBought": 229852.12,
+        "pctMarketCapBought": 0.3447450362122185,
+        "insiderCount": 1,
+        "purchaseCount": 2,
+        "priceChange30d": -9.950248756218894,
+        "priceContext": "dip",
+        "hasCEO": false,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 10,
+        "priceContext": 15,
+        "seniority": 13,
+        "cluster": 5,
+        "recency": 8
+      }
+    },
+    {
       "rank": 7,
       "ticker": "TBTC",
       "companyName": "Table Trac, Inc.",
       "score": 51,
-      "reason": "$166K bought · cluster · dip → accumulation signal",
+      "reason": "$166K bought · multiple insiders · dip → loading before move",
       "metrics": {
         "totalValueBought": 165516.35,
         "pctMarketCapBought": 0.8830518436807983,
@@ -175,10 +175,10 @@
       "ticker": "TPVG",
       "companyName": "TriplePoint Venture Growth BDC Corp.",
       "score": 50,
-      "reason": "$947K bought · CEO + Director · rally → pre-breakout setup",
+      "reason": "$947K bought · CEO + insider · rally → rare bullish tell",
       "metrics": {
         "totalValueBought": 947485.4221999999,
-        "pctMarketCapBought": 0.35170812237063737,
+        "pctMarketCapBought": 0.350992455494648,
         "insiderCount": 2,
         "purchaseCount": 4,
         "priceChange30d": 16.579406631762637,
@@ -199,13 +199,13 @@
       "ticker": "MXF",
       "companyName": "The Mexico Fund, Inc.",
       "score": 48,
-      "reason": "$323K bought · multiple insiders · flat base → loading before move",
+      "reason": "$323K bought · multiple insiders · flat base → accumulation signal",
       "metrics": {
         "totalValueBought": 322967.68,
         "pctMarketCapBought": 0.11357672165824681,
         "insiderCount": 1,
         "purchaseCount": 3,
-        "priceChange30d": 2.347417840375583,
+        "priceChange30d": 2.477829942618664,
         "priceContext": "flat base",
         "hasCEO": false,
         "hasCFO": false
@@ -223,10 +223,10 @@
       "ticker": "SINT",
       "companyName": "Sintx Technologies, Inc.",
       "score": 48,
-      "reason": "$255K bought · management · rally → stealth positioning",
+      "reason": "$255K bought · management · rally → high-conviction momentum buy",
       "metrics": {
         "totalValueBought": 255350,
-        "pctMarketCapBought": 2.3228204671275194,
+        "pctMarketCapBought": 2.285540694841964,
         "insiderCount": 1,
         "purchaseCount": 13,
         "priceChange30d": 17.55162241887905,
@@ -245,7 +245,7 @@
   ],
   "stats": {
     "totalTransactions": 2000,
-    "tickersWithPurchases": 63,
+    "tickersWithPurchases": 64,
     "analyzed": 31,
     "qualified": 10
   }

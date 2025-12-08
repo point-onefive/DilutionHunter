@@ -1,172 +1,92 @@
 {
-  "generatedAt": "2025-12-03T17:40:03.195Z",
-  "dateRange": "11/26–12/3",
+  "generatedAt": "2025-12-08T17:48:09.521Z",
+  "dateRange": "12/1–12/8",
   "pipeline": {
-    "baseUniverse": 158,
-    "stage1Passed": 119,
-    "stage2Passed": 54,
-    "fullAnalyzed": 22,
-    "qualified": 10
+    "baseUniverse": 145,
+    "stage1Passed": 104,
+    "stage2Passed": 48,
+    "fullAnalyzed": 12,
+    "qualified": 5
   },
   "leaderboard": [
     {
       "rank": 1,
-      "ticker": "PLUG",
-      "companyName": "Plug Power Inc.",
-      "vis": 74,
-      "bankruptcyScore": 62,
-      "viralityScore": 93,
-      "reason": "5.5mo runway · debt 6.0x cash → solvency risk building",
+      "ticker": "SMX",
+      "companyName": "SMX (Security Matters) Public Limited Company",
+      "vis": 57,
+      "bankruptcyScore": 52,
+      "viralityScore": 65,
+      "reason": "5.4mo runway · debt 10.9x cash → liquidity tightening",
       "metrics": {
-        "runway": "5.5",
-        "debtCashRatio": "6.0",
-        "monthlyBurn": 29938000,
-        "marketCap": 2263305214,
-        "avgVolume": 50922526
+        "runway": "5.4",
+        "debtCashRatio": "10.9",
+        "monthlyBurn": 138517,
+        "marketCap": 190500000,
+        "avgVolume": 741430
       }
     },
     {
       "rank": 2,
-      "ticker": "BYND",
-      "companyName": "Beyond Meat, Inc.",
-      "vis": 71,
-      "bankruptcyScore": 57,
-      "viralityScore": 93,
-      "reason": "9.1mo runway · debt 11.2x cash → pressure rising",
+      "ticker": "WKHS",
+      "companyName": "Workhorse Group Inc.",
+      "vis": 53,
+      "bankruptcyScore": 65,
+      "viralityScore": 35,
+      "reason": "3.5mo runway · debt 3.8x cash → solvency risk growing",
       "metrics": {
-        "runway": "9.1",
-        "debtCashRatio": "11.2",
-        "monthlyBurn": 12927666.666666666,
-        "marketCap": 560159174,
-        "avgVolume": 48907729
+        "runway": "3.5",
+        "debtCashRatio": "3.8",
+        "monthlyBurn": 3662383,
+        "marketCap": 55116947,
+        "avgVolume": 2814216
       }
     },
     {
       "rank": 3,
-      "ticker": "BITF",
-      "companyName": "Bitfarms Ltd.",
-      "vis": 62,
-      "bankruptcyScore": 45,
-      "viralityScore": 88,
-      "reason": "4.4mo runway · $19.9M/mo burn → burn rate unsustainable",
+      "ticker": "UPST",
+      "companyName": "UPST",
+      "vis": 51,
+      "bankruptcyScore": 30,
+      "viralityScore": 83,
+      "reason": "12.1mo runway · debt 3.8x cash → long-term burn unsustainable",
       "metrics": {
-        "runway": "4.4",
-        "debtCashRatio": "0.8",
-        "monthlyBurn": 19946000,
-        "marketCap": 1577196996,
-        "avgVolume": 43770438
+        "runway": "12.1",
+        "debtCashRatio": "3.8",
+        "monthlyBurn": 40876333.333333336,
+        "marketCap": 4604569288,
+        "avgVolume": 1852279
       }
     },
     {
       "rank": 4,
-      "ticker": "ONDS",
-      "companyName": "Ondas Holdings Inc.",
-      "vis": 58,
-      "bankruptcyScore": 35,
-      "viralityScore": 93,
-      "reason": "24.0mo runway · debt 0.0x cash → attention-driven distress signal",
+      "ticker": "SPCE",
+      "companyName": "SPCE",
+      "vis": 50,
+      "bankruptcyScore": 47,
+      "viralityScore": 55,
+      "reason": "8.5mo runway · debt 3.0x cash → solvency risk building",
       "metrics": {
-        "runway": "24.0",
-        "debtCashRatio": "0.0",
-        "monthlyBurn": 3651567.3333333335,
-        "marketCap": 2811276108,
-        "avgVolume": 72770724
+        "runway": "8.5",
+        "debtCashRatio": "3.0",
+        "monthlyBurn": 18767666.666666668,
+        "marketCap": 280292887,
+        "avgVolume": 1041004
       }
     },
     {
       "rank": 5,
-      "ticker": "ADCT",
-      "companyName": "ADC Therapeutics S.A.",
-      "vis": 56,
-      "bankruptcyScore": 37,
-      "viralityScore": 85,
-      "reason": "23.8mo runway · debt 0.5x cash → structural cash flow issues",
-      "metrics": {
-        "runway": "23.8",
-        "debtCashRatio": "0.5",
-        "monthlyBurn": 9876666.666666666,
-        "marketCap": 355796420,
-        "avgVolume": 5250043
-      }
-    },
-    {
-      "rank": 6,
-      "ticker": "IRBT",
-      "companyName": "iRobot Corporation",
-      "vis": 55,
-      "bankruptcyScore": 62,
-      "viralityScore": 45,
-      "reason": "1.6mo runway · debt 9.0x cash → cash nearly exhausted",
-      "metrics": {
-        "runway": "1.6",
-        "debtCashRatio": "9.0",
-        "monthlyBurn": 15862000,
-        "marketCap": 99138622,
-        "avgVolume": 144867382
-      }
-    },
-    {
-      "rank": 7,
-      "ticker": "CLNN",
-      "companyName": "Clene Inc.",
-      "vis": 51,
-      "bankruptcyScore": 55,
-      "viralityScore": 45,
-      "reason": "6.0mo runway · debt 2.7x cash → liquidity tightening",
-      "metrics": {
-        "runway": "6.0",
-        "debtCashRatio": "2.7",
-        "monthlyBurn": 1325046.6666666667,
-        "marketCap": 76170967,
-        "avgVolume": 3070010
-      }
-    },
-    {
-      "rank": 8,
-      "ticker": "RR",
-      "companyName": "Richtech Robotics Inc. Class B Common Stock",
-      "vis": 49,
-      "bankruptcyScore": 30,
-      "viralityScore": 78,
-      "reason": "24.0mo runway · debt 0.0x cash → deteriorating fundamentals",
+      "ticker": "TLRY",
+      "companyName": "TLRY",
+      "vis": 43,
+      "bankruptcyScore": 17,
+      "viralityScore": 83,
+      "reason": "24.0mo runway · debt 0.9x cash → liquidity deteriorating",
       "metrics": {
         "runway": "24.0",
-        "debtCashRatio": "0.0",
-        "monthlyBurn": 1040333.3333333334,
-        "marketCap": 557308656,
-        "avgVolume": 43675291
-      }
-    },
-    {
-      "rank": 9,
-      "ticker": "CAPR",
-      "companyName": "Capricor Therapeutics, Inc.",
-      "vis": 47,
-      "bankruptcyScore": 20,
-      "viralityScore": 88,
-      "reason": "24.0mo runway · debt 0.7x cash → long-term burn unsustainable",
-      "metrics": {
-        "runway": "24.0",
-        "debtCashRatio": "0.7",
-        "monthlyBurn": 0,
-        "marketCap": 1288346626,
-        "avgVolume": 39991164
-      }
-    },
-    {
-      "rank": 10,
-      "ticker": "ACHC",
-      "companyName": "Acadia Healthcare Company, Inc.",
-      "vis": 46,
-      "bankruptcyScore": 15,
-      "viralityScore": 93,
-      "reason": "24.0mo runway · debt 20.4x cash → structural cash flow issues",
-      "metrics": {
-        "runway": "24.0",
-        "debtCashRatio": "20.4",
-        "monthlyBurn": 0,
-        "marketCap": 1322038967,
-        "avgVolume": 7230433
+        "debtCashRatio": "0.9",
+        "monthlyBurn": 447000,
+        "marketCap": 816510070,
+        "avgVolume": 2369791
       }
     }
   ]

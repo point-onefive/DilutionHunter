@@ -593,7 +593,7 @@ export async function generateInsiderLeaderboard(options = {}) {
 
 async function generateTweet(leaderboardData) {
   if (!leaderboardData?.leaderboard?.length) {
-    return `🕵️ Weekly Insider Selling Watch
+    return `🔻 Weekly Insider Selling Watch
 
 No significant insider disconnect this week.
 Insiders holding steady.
@@ -605,13 +605,13 @@ Back next week.`;
     return `#${t.rank} $${t.ticker} — Risk: ${t.score}/100\n→ ${t.reason}`;
   });
   
-  return `🕵️ WEEKLY INSIDER SELLING WATCH
+  return `🔻 WEEKLY INSIDER SELLING WATCH
 Price rising + insiders selling = someone's leaving early.
-Last 30 days · SEC Form 4 filings
+📅 Last 30 days · SEC Form 4 filings
 
 ${lines.join('\n\n')}
 
-Insiders give interviews. Their trades tell the truth — every time.`;
+💬 Insiders give interviews. Their trades tell the truth — every time.`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════

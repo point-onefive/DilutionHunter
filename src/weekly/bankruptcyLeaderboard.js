@@ -537,7 +537,7 @@ export async function generateBankruptcyLeaderboard(options = {}) {
 
 async function generateTweet(leaderboardData) {
   if (!leaderboardData?.leaderboard?.length) {
-    return `⚠️ Weekly Bankruptcy Watchlist
+    return `💀 Weekly Bankruptcy Watchlist
 
 No significant distress signals this week.
 Markets stable. Keep watching.
@@ -550,13 +550,13 @@ Back next week.`;
     `#${t.rank} $${t.ticker} — Risk: ${t.vis}/100\n→ ${t.reason}`
   );
   
-  return `⚠️ WEEKLY BANKRUPTCY WATCHLIST
+  return `💀 WEEKLY BANKRUPTCY WATCHLIST
 Companies showing distress signals worth monitoring.
-Week of ${leaderboardData.dateRange}
+📅 Week of ${leaderboardData.dateRange}
 
 ${lines.join('\n\n')}
 
-Not advice — pattern recognition only.`;
+⚠️ Not advice — pattern recognition only. 💀 Distress doesn't announce itself.`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════

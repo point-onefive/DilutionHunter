@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2025-12-08T17:08:39.944Z",
+  "generatedAt": "2025-12-08T17:41:53.391Z",
   "period": "30d",
   "dateRange": "11/8–12/8",
   "totalTransactions": 1000,
-  "tickersWithSales": 102,
-  "analyzed": 74,
+  "tickersWithSales": 100,
+  "analyzed": 72,
   "qualified": 10,
   "leaderboard": [
     {
@@ -12,13 +12,13 @@
       "ticker": "APGE",
       "companyName": "Apogee Therapeutics, Inc.",
       "score": 71,
-      "reason": "$3.9M sold · CEO + CFO · +38% rally → dumping into strength",
+      "reason": "$3.9M sold · CEO + CFO · +37% rally → dumping into strength",
       "metrics": {
         "totalValueSold": 3930400,
-        "pctMarketCapSold": "0.09",
+        "pctMarketCapSold": "0.10",
         "insiderCount": 3,
         "salesCount": 3,
-        "priceChange30d": "37.6",
+        "priceChange30d": "37.3",
         "hasCEO": true,
         "hasCFO": true,
         "isClusterSale": true
@@ -29,13 +29,13 @@
       "ticker": "LASR",
       "companyName": "nLIGHT, Inc.",
       "score": 66,
-      "reason": "$1M sold · management · new highs → distribution at peak",
+      "reason": "$1M sold · multiple execs · new highs → distribution at peak",
       "metrics": {
         "totalValueSold": 1031444.0899999999,
         "pctMarketCapSold": "0.06",
         "insiderCount": 3,
         "salesCount": 6,
-        "priceChange30d": "23.3",
+        "priceChange30d": "22.8",
         "hasCEO": true,
         "hasCFO": true,
         "isClusterSale": true
@@ -46,13 +46,13 @@
       "ticker": "ENTA",
       "companyName": "Enanta Pharmaceuticals, Inc.",
       "score": 64,
-      "reason": "$175K sold · CEO · +30% spike → quiet profit-taking",
+      "reason": "$175K sold · cluster · +31% spike → smart money exiting",
       "metrics": {
         "totalValueSold": 174972.08000000002,
         "pctMarketCapSold": "0.06",
         "insiderCount": 7,
         "salesCount": 7,
-        "priceChange30d": "30.3",
+        "priceChange30d": "30.6",
         "hasCEO": true,
         "hasCFO": false,
         "isClusterSale": true
@@ -63,7 +63,7 @@
       "ticker": "MP",
       "companyName": "MP Materials Corp.",
       "score": 58,
-      "reason": "$24.2M sold · cluster · extended rally → smart money exiting",
+      "reason": "$24.2M sold · management · extended rally → top-ticking the move",
       "metrics": {
         "totalValueSold": 24232308.26,
         "pctMarketCapSold": "0.23",
@@ -80,13 +80,13 @@
       "ticker": "KRYS",
       "companyName": "Krystal Biotech, Inc.",
       "score": 58,
-      "reason": "$22M sold · 2 insiders · peak breakout → confidence fading",
+      "reason": "$22M sold · CEO · YTD highs → confidence fading",
       "metrics": {
         "totalValueSold": 22014779.584,
         "pctMarketCapSold": "0.33",
         "insiderCount": 2,
         "salesCount": 32,
-        "priceChange30d": "16.9",
+        "priceChange30d": "15.5",
         "hasCEO": true,
         "hasCFO": false,
         "isClusterSale": true
@@ -97,13 +97,13 @@
       "ticker": "NRDS",
       "companyName": "NerdWallet, Inc.",
       "score": 57,
-      "reason": "$359K sold · senior leadership · YTD highs → exit wave forming",
+      "reason": "$359K sold · 3 insiders · +27% spike → quiet profit-taking",
       "metrics": {
         "totalValueSold": 359023.89999999997,
         "pctMarketCapSold": "0.03",
         "insiderCount": 3,
         "salesCount": 4,
-        "priceChange30d": "26.6",
+        "priceChange30d": "27.0",
         "hasCEO": true,
         "hasCFO": false,
         "isClusterSale": true
@@ -114,13 +114,13 @@
       "ticker": "ROK",
       "companyName": "Rockwell Automation, Inc.",
       "score": 56,
-      "reason": "$3.9M sold · multiple execs · +8% bounce → insider exit signal",
+      "reason": "$3.9M sold · senior leadership · +8% bounce → exit wave forming",
       "metrics": {
         "totalValueSold": 3906174.6964000002,
         "pctMarketCapSold": "0.01",
         "insiderCount": 12,
         "salesCount": 31,
-        "priceChange30d": "7.9",
+        "priceChange30d": "7.6",
         "hasCEO": true,
         "hasCFO": false,
         "isClusterSale": true
@@ -131,13 +131,13 @@
       "ticker": "STOK",
       "companyName": "Stoke Therapeutics, Inc.",
       "score": 54,
-      "reason": "$940K sold · 3 insiders · momentum stretch → risk of snapback",
+      "reason": "$940K sold · cluster · momentum stretch → insider exit signal",
       "metrics": {
         "totalValueSold": 940396.1041999998,
         "pctMarketCapSold": "0.05",
         "insiderCount": 3,
         "salesCount": 14,
-        "priceChange30d": "44.0",
+        "priceChange30d": "44.7",
         "hasCEO": false,
         "hasCFO": false,
         "isClusterSale": true
@@ -148,13 +148,13 @@
       "ticker": "HYMC",
       "companyName": "Hycroft Mining Holding Corporation",
       "score": 53,
-      "reason": "$14.3M sold · 1 insider · parabolic → top-ticking the move",
+      "reason": "$14.3M sold · 1 insider · parabolic → risk of snapback",
       "metrics": {
         "totalValueSold": 14311200,
         "pctMarketCapSold": "1.57",
         "insiderCount": 1,
         "salesCount": 1,
-        "priceChange30d": "56.6",
+        "priceChange30d": "55.9",
         "hasCEO": false,
         "hasCFO": false,
         "isClusterSale": false
@@ -165,13 +165,13 @@
       "ticker": "SRRK",
       "companyName": "Scholar Rock Holding Corporation",
       "score": 52,
-      "reason": "$9.1M sold · 1 insider · +59% spike → exit into strength",
+      "reason": "$9.1M sold · 1 insider · peak breakout → exit into strength",
       "metrics": {
         "totalValueSold": 9063865.605,
         "pctMarketCapSold": "0.19",
         "insiderCount": 1,
         "salesCount": 8,
-        "priceChange30d": "59.3",
+        "priceChange30d": "58.9",
         "hasCEO": false,
         "hasCFO": false,
         "isClusterSale": true
