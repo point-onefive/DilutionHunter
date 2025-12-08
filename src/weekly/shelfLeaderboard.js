@@ -588,13 +588,13 @@ Back next week with fresh scans.`;
 
   // The AI one-liners are already in the data, just format the tweet
   const lines = leaderboardData.leaderboard.slice(0, 10).map(t => 
-    `#${t.rank} $${t.ticker} — SDR: ${t.score}\n→ ${t.reason}`
+    `#${t.rank} $${t.ticker} — Risk: ${t.score}/100\n→ ${t.reason}`
   );
   
   return `📋 WEEKLY SHELF OFFERING RADAR
 Shelf = legal paperwork to issue new shares later.
 Gun is loaded — now we watch for the trigger.
-Filings from ${leaderboardData.dateRange} · SDR (0–100) = shelf dilution risk × urgency
+Filings from ${leaderboardData.dateRange}
 
 ${lines.join('\n\n')}
 

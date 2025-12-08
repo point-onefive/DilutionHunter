@@ -547,12 +547,12 @@ Back next week.`;
 
   // The AI one-liners are already in the data, just format the tweet
   const lines = leaderboardData.leaderboard.slice(0, 10).map(t => 
-    `#${t.rank} $${t.ticker} — VIS: ${t.vis}\n→ ${t.reason}`
+    `#${t.rank} $${t.ticker} — Risk: ${t.vis}/100\n→ ${t.reason}`
   );
   
   return `⚠️ WEEKLY BANKRUPTCY WATCHLIST
 Companies showing distress signals worth monitoring.
-Week of ${leaderboardData.dateRange} · VIS = bankruptcy risk × attention
+Week of ${leaderboardData.dateRange}
 
 ${lines.join('\n\n')}
 

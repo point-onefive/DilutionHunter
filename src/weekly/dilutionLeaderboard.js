@@ -510,13 +510,13 @@ Back next week with fresh scans.`;
 
   // The AI one-liners are already in the data, just format the tweet
   const lines = leaderboardData.leaderboard.slice(0, 10).map(t => 
-    `#${t.rank} $${t.ticker} — DSS: ${t.score}\n→ ${t.reason}`
+    `#${t.rank} $${t.ticker} — Risk: ${t.score}/100\n→ ${t.reason}`
   );
   
   return `🔎 WEEKLY ATM DILUTION LEADERBOARD
 ATMs let companies sell shares anytime — diluting you.
 These aren't announced. We dig through SEC filings.
-Filings from ${leaderboardData.dateRange} · DSS = dilution pressure × distress
+Filings from ${leaderboardData.dateRange}
 
 ${lines.join('\n\n')}
 

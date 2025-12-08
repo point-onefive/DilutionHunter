@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-12-08T16:26:46.126Z",
+  "generatedAt": "2025-12-08T16:35:26.030Z",
   "period": "7d",
   "dateRange": "12/1–12/8",
   "totalFilings": 58,
@@ -27,11 +27,11 @@
       "companyName": "Inspire Veterinary Partners, Inc.",
       "score": 88,
       "formType": "S-1/A",
-      "reason": "0.6mo runway · $0.2M cap → ultra-microcap funding likely",
+      "reason": "0.6mo runway · $0.19M cap → ultra-microcap funding likely",
       "metrics": {
         "runway": "0.6",
         "daysSinceFiling": 3,
-        "marketCap": 195127,
+        "marketCap": 193865,
         "debtCashRatio": "31.3",
         "monthlyBurn": 833822.1666666666
       }
@@ -42,11 +42,11 @@
       "companyName": "Cycurion, Inc. Common Stock",
       "score": 88,
       "formType": "S-1/A",
-      "reason": "0.3mo runway · debt 263.7x cash → watch for offerings",
+      "reason": "0.3mo runway · debt 263.7x cash → emergency capital needed",
       "metrics": {
         "runway": "0.3",
         "daysSinceFiling": 5,
-        "marketCap": 9763523,
+        "marketCap": 9657398,
         "debtCashRatio": "263.7",
         "monthlyBurn": 114273.41666666667
       }
@@ -57,11 +57,11 @@
       "companyName": "Hyperion DeFi, Inc.",
       "score": 85,
       "formType": "S-3/A",
-      "reason": "0.8mo runway · debt 5.3x cash → filing suggests raise incoming",
+      "reason": "0.8mo runway · $25.1M/mo burn → watch for offerings",
       "metrics": {
         "runway": "0.8",
         "daysSinceFiling": 3,
-        "marketCap": 21520829,
+        "marketCap": 22033230,
         "debtCashRatio": "5.3",
         "monthlyBurn": 2510081.75
       }
@@ -72,11 +72,11 @@
       "companyName": "Beneficient",
       "score": 85,
       "formType": "S-8",
-      "reason": "1.6mo runway · $6.9M cap → high re-pricing risk",
+      "reason": "1.6mo runway · debt 16.5x cash → high re-pricing risk",
       "metrics": {
         "runway": "1.6",
         "daysSinceFiling": 3,
-        "marketCap": 6870113,
+        "marketCap": 6902319,
         "debtCashRatio": "16.5",
         "monthlyBurn": 4851333.333333333
       }
@@ -87,11 +87,11 @@
       "companyName": "Nuvve Holding Corp.",
       "score": 85,
       "formType": "S-8",
-      "reason": "0.3mo runway · debt 28.7x cash → emergency capital needed",
+      "reason": "0.3mo runway · $1.8M cap → filing suggests raise incoming",
       "metrics": {
         "runway": "0.3",
         "daysSinceFiling": 5,
-        "marketCap": 1854091,
+        "marketCap": 1840294,
         "debtCashRatio": "28.7",
         "monthlyBurn": 1311194.5
       }
@@ -102,11 +102,11 @@
       "companyName": "Beeline Holdings, Inc.",
       "score": 78,
       "formType": "S-8",
-      "reason": "1.5mo runway · debt 36.3x cash → shelf prepped for use",
+      "reason": "1.5mo runway · debt 36.3x cash → funding likely soon",
       "metrics": {
         "runway": "1.5",
         "daysSinceFiling": 6,
-        "marketCap": 18230384,
+        "marketCap": 18320857,
         "debtCashRatio": "36.3",
         "monthlyBurn": 269083.3333333333
       }
@@ -117,7 +117,7 @@
       "companyName": "Envoy Medical, Inc.",
       "score": 70,
       "formType": "S-1/A",
-      "reason": "3.7mo runway · debt 3.6x cash → early shelf positioning",
+      "reason": "3.7mo runway · debt 3.6x cash → preemptive shelf filing",
       "metrics": {
         "runway": "3.7",
         "daysSinceFiling": 7,
@@ -132,11 +132,11 @@
       "companyName": "Lexaria Bioscience Corp.",
       "score": 68,
       "formType": "S-1/A",
-      "reason": "2.1mo runway · debt 0.1x cash → preemptive shelf filing",
+      "reason": "2.1mo runway · debt 0.1x cash → early shelf positioning",
       "metrics": {
         "runway": "2.1",
         "daysSinceFiling": 3,
-        "marketCap": 19367630,
+        "marketCap": 19983050,
         "debtCashRatio": "0.1",
         "monthlyBurn": 870865.5833333334
       }
@@ -147,11 +147,11 @@
       "companyName": "IGC Pharma, Inc.",
       "score": 68,
       "formType": "S-3/A",
-      "reason": "1.0mo runway · debt 0.6x cash → funding likely soon",
+      "reason": "1.0mo runway · debt 0.6x cash → shelf prepped for use",
       "metrics": {
         "runway": "1.0",
         "daysSinceFiling": 5,
-        "marketCap": 24876492,
+        "marketCap": 25114708,
         "debtCashRatio": "0.6",
         "monthlyBurn": 399583.3333333333
       }
