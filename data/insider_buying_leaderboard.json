@@ -1,0 +1,252 @@
+{
+  "generatedAt": "2025-12-08T17:24:36.381Z",
+  "scanner": "insider-buying-radar",
+  "leaderboard": [
+    {
+      "rank": 1,
+      "ticker": "BH",
+      "companyName": "Biglari Holdings Inc.",
+      "score": 73,
+      "reason": "$1.6M bought · CEO · -11% pullback → conviction buy",
+      "metrics": {
+        "totalValueBought": 1648102.09,
+        "pctMarketCapBought": 0.16494995493171807,
+        "insiderCount": 1,
+        "purchaseCount": 3,
+        "priceChange30d": -11.431158919337447,
+        "priceContext": "pullback",
+        "hasCEO": true,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 10,
+        "priceContext": 20,
+        "seniority": 25,
+        "cluster": 8,
+        "recency": 10
+      }
+    },
+    {
+      "rank": 2,
+      "ticker": "UTI",
+      "companyName": "Universal Technical Institute, Inc.",
+      "score": 63,
+      "reason": "$13.7M bought · cluster · 12% pullback → dip buyer detected",
+      "metrics": {
+        "totalValueBought": 13682697.989999998,
+        "pctMarketCapBought": 1.0200128181383634,
+        "insiderCount": 1,
+        "purchaseCount": 3,
+        "priceChange30d": -12.44239631336406,
+        "priceContext": "pullback",
+        "hasCEO": false,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 20,
+        "priceContext": 20,
+        "seniority": 5,
+        "cluster": 8,
+        "recency": 10
+      }
+    },
+    {
+      "rank": 3,
+      "ticker": "SELF",
+      "companyName": "Global Self Storage, Inc.",
+      "score": 60,
+      "reason": "$84K bought · CEO · flat base → quiet accumulation",
+      "metrics": {
+        "totalValueBought": 83983.4,
+        "pctMarketCapBought": 0.14624744051219565,
+        "insiderCount": 1,
+        "purchaseCount": 4,
+        "priceChange30d": 3.367346938775511,
+        "priceContext": "flat base",
+        "hasCEO": true,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 10,
+        "priceContext": 12,
+        "seniority": 20,
+        "cluster": 8,
+        "recency": 10
+      }
+    },
+    {
+      "rank": 4,
+      "ticker": "UFI",
+      "companyName": "Unifi, Inc.",
+      "score": 56,
+      "reason": "$230K bought · 10% owner · pullback → smart money entry",
+      "metrics": {
+        "totalValueBought": 229852.12,
+        "pctMarketCapBought": 0.3496753305530965,
+        "insiderCount": 1,
+        "purchaseCount": 2,
+        "priceChange30d": -10.696517412935318,
+        "priceContext": "pullback",
+        "hasCEO": false,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 10,
+        "priceContext": 20,
+        "seniority": 13,
+        "cluster": 5,
+        "recency": 8
+      }
+    },
+    {
+      "rank": 5,
+      "ticker": "NRDY",
+      "companyName": "Nerdy, Inc.",
+      "score": 51,
+      "reason": "$495K bought · CEO · rally → stealth positioning",
+      "metrics": {
+        "totalValueBought": 494950.98,
+        "pctMarketCapBought": 0.30157306768894176,
+        "insiderCount": 1,
+        "purchaseCount": 3,
+        "priceChange30d": 42.76547962784728,
+        "priceContext": "rally",
+        "hasCEO": true,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 10,
+        "priceContext": 0,
+        "seniority": 25,
+        "cluster": 8,
+        "recency": 8
+      }
+    },
+    {
+      "rank": 6,
+      "ticker": "GRND",
+      "companyName": "Grindr Inc.",
+      "score": 51,
+      "reason": "$4.7M bought · multiple insiders · flat base → confidence buy",
+      "metrics": {
+        "totalValueBought": 4742000,
+        "pctMarketCapBought": 0.18451066571665697,
+        "insiderCount": 1,
+        "purchaseCount": 4,
+        "priceChange30d": 0.441501103752763,
+        "priceContext": "flat base",
+        "hasCEO": false,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 10,
+        "priceContext": 12,
+        "seniority": 13,
+        "cluster": 8,
+        "recency": 8
+      }
+    },
+    {
+      "rank": 7,
+      "ticker": "TBTC",
+      "companyName": "Table Trac, Inc.",
+      "score": 51,
+      "reason": "$166K bought · cluster · dip → accumulation signal",
+      "metrics": {
+        "totalValueBought": 165516.35,
+        "pctMarketCapBought": 0.8830518436807983,
+        "insiderCount": 1,
+        "purchaseCount": 3,
+        "priceChange30d": -5.386416861826688,
+        "priceContext": "dip",
+        "hasCEO": false,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 15,
+        "priceContext": 15,
+        "seniority": 5,
+        "cluster": 8,
+        "recency": 8
+      }
+    },
+    {
+      "rank": 8,
+      "ticker": "TPVG",
+      "companyName": "TriplePoint Venture Growth BDC Corp.",
+      "score": 50,
+      "reason": "$947K bought · CEO + Director · rally → pre-breakout setup",
+      "metrics": {
+        "totalValueBought": 947485.4221999999,
+        "pctMarketCapBought": 0.35170812237063737,
+        "insiderCount": 2,
+        "purchaseCount": 4,
+        "priceChange30d": 16.579406631762637,
+        "priceContext": "rally",
+        "hasCEO": true,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 10,
+        "priceContext": 0,
+        "seniority": 20,
+        "cluster": 12,
+        "recency": 8
+      }
+    },
+    {
+      "rank": 9,
+      "ticker": "MXF",
+      "companyName": "The Mexico Fund, Inc.",
+      "score": 48,
+      "reason": "$323K bought · multiple insiders · flat base → loading before move",
+      "metrics": {
+        "totalValueBought": 322967.68,
+        "pctMarketCapBought": 0.11357672165824681,
+        "insiderCount": 1,
+        "purchaseCount": 3,
+        "priceChange30d": 2.347417840375583,
+        "priceContext": "flat base",
+        "hasCEO": false,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 10,
+        "priceContext": 12,
+        "seniority": 8,
+        "cluster": 8,
+        "recency": 10
+      }
+    },
+    {
+      "rank": 10,
+      "ticker": "SINT",
+      "companyName": "Sintx Technologies, Inc.",
+      "score": 48,
+      "reason": "$255K bought · management · rally → stealth positioning",
+      "metrics": {
+        "totalValueBought": 255350,
+        "pctMarketCapBought": 2.3228204671275194,
+        "insiderCount": 1,
+        "purchaseCount": 13,
+        "priceChange30d": 17.55162241887905,
+        "priceContext": "rally",
+        "hasCEO": false,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 25,
+        "priceContext": 0,
+        "seniority": 5,
+        "cluster": 8,
+        "recency": 10
+      }
+    }
+  ],
+  "stats": {
+    "totalTransactions": 2000,
+    "tickersWithPurchases": 63,
+    "analyzed": 31,
+    "qualified": 10
+  }
+}

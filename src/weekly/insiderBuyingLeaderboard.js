@@ -1,16 +1,22 @@
 /**
- * INSIDER SELLING DISCONNECT WATCH — Weekly Scanner
+ * INSIDER BUYING RADAR — Weekly Scanner (Friday)
  * 
- * Detects insiders selling while stock price is rising.
- * "When insiders sell while price goes up, something doesn't add up."
+ * Detects insiders BUYING while stock price is flat/down.
+ * "Insiders buy for one reason: they believe."
  * 
- * Scoring: IDS (0-100) = insider selling × optimism disconnect
+ * The BULLISH counterpart to Thursday's Insider Selling Watch.
+ * 
+ * Scoring: 0-100 = conviction score based on:
+ *   - $ amount bought
+ *   - C-suite involvement (CEO/CFO > Director)
+ *   - Price context (buying dips = more conviction)
+ *   - Cluster buying (multiple insiders)
  * 
  * Output: ONE tweet with ranked tickers + one-line reason each
  * 
  * Usage:
- *   node src/weekly/insiderLeaderboard.js           # Preview
- *   node src/weekly/insiderLeaderboard.js --post    # Post tweet
+ *   node src/weekly/insiderBuyingLeaderboard.js           # Preview
+ *   node src/weekly/insiderBuyingLeaderboard.js --post    # Post tweet
  */
 
 import 'dotenv/config';
@@ -30,8 +36,8 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const DRY_RUN = process.env.DRY_RUN !== 'false';
 
 // Cooldown settings (30 days for weekly leaderboard)
-const COOLDOWN_DAYS = parseInt(process.env.INSIDER_COOLDOWN_DAYS || '30');
-const POSTED_FILE = path.join(DATA_DIR, 'insider_posted.json');
+const COOLDOWN_DAYS = parseInt(process.env.INSIDER_BUY_COOLDOWN_DAYS || '30');
+const POSTED_FILE = path.join(DATA_DIR, 'insider_buying_posted.json');
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // COOLDOWN / DEDUPE HELPERS
@@ -89,7 +95,7 @@ async function fmpGet(endpoint) {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 // Get latest insider transactions across all companies
-async function getLatestInsiderTransactions(pages = 5) {
+async function getLatestInsiderTransactions(pages = 10) {
   console.log(`   Fetching ${pages} pages of insider transactions...`);
   
   const allTransactions = [];
@@ -105,18 +111,19 @@ async function getLatestInsiderTransactions(pages = 5) {
   return allTransactions;
 }
 
-// Group transactions by ticker and filter to SALES only
-function groupTransactionsByTicker(transactions, days = 30) {
+// Group transactions by ticker and filter to PURCHASES only (P-Purchase)
+function groupPurchasesByTicker(transactions, days = 30) {
   const cutoffDate = new Date();
   cutoffDate.setDate(cutoffDate.getDate() - days);
   
   const byTicker = {};
   
   for (const tx of transactions) {
-    // Filter to sales only (S-Sale or Disposition)
-    if (tx.transactionType !== 'S-Sale' && tx.acquisitionOrDisposition !== 'D') continue;
-    // Skip gifts (no price = no real sale)
-    if (tx.transactionType === 'G-Gift') continue;
+    // Filter to OPEN MARKET PURCHASES only (P-Purchase)
+    // This excludes awards, options exercises, etc.
+    if (tx.transactionType !== 'P-Purchase') continue;
+    
+    // Must have a price (real market transaction)
     if (!tx.price || tx.price === 0) continue;
     
     // Check date
@@ -135,7 +142,7 @@ function groupTransactionsByTicker(transactions, days = 30) {
   return byTicker;
 }
 
-async function analyzeTickerFromTransactions(ticker, sales) {
+async function analyzeTickerFromPurchases(ticker, purchases) {
   // Get quote and historical for price context
   const [quote, historical] = await Promise.all([
     fmpGet(`/quote?symbol=${ticker}`),
@@ -146,41 +153,56 @@ async function analyzeTickerFromTransactions(ticker, sales) {
   if (!q || !q.marketCap || q.marketCap < 10000000) return null; // Min $10M market cap
   if (q.price < 1) return null; // Skip penny stocks
 
-  // Calculate total value sold
-  const totalValueSold = sales.reduce((sum, t) => {
+  // Calculate total value bought
+  const totalValueBought = purchases.reduce((sum, t) => {
     const value = (t.securitiesTransacted || 0) * (t.price || 0);
     return sum + value;
   }, 0);
 
-  if (totalValueSold < 100000) return null; // Min $100k in sales
+  if (totalValueBought < 50000) return null; // Min $50k in purchases (lower threshold for buys)
 
-  // Calculate shares sold
-  const totalSharesSold = sales.reduce((sum, t) => sum + (t.securitiesTransacted || 0), 0);
+  // Calculate shares bought
+  const totalSharesBought = purchases.reduce((sum, t) => sum + (t.securitiesTransacted || 0), 0);
 
-  // Get unique insiders selling
-  const uniqueInsiders = new Set(sales.map(t => t.reportingName || t.reportingCik));
+  // Get unique insiders buying
+  const uniqueInsiders = new Set(purchases.map(t => t.reportingName || t.reportingCik));
   const insiderCount = uniqueInsiders.size;
 
-  // Get roles of sellers
-  const hasCEO = sales.some(t => /ceo|chief executive/i.test(t.typeOfOwner || ''));
-  const hasCFO = sales.some(t => /cfo|chief financial/i.test(t.typeOfOwner || ''));
-  const hasDirector = sales.some(t => /director/i.test(t.typeOfOwner || ''));
+  // Get roles of buyers
+  const hasCEO = purchases.some(t => /ceo|chief executive/i.test(t.typeOfOwner || ''));
+  const hasCFO = purchases.some(t => /cfo|chief financial/i.test(t.typeOfOwner || ''));
+  const hasDirector = purchases.some(t => /director/i.test(t.typeOfOwner || ''));
+  const has10PctOwner = purchases.some(t => /10 percent|10%/i.test(t.typeOfOwner || ''));
 
-  // Calculate % of market cap sold
-  const pctMarketCapSold = (totalValueSold / q.marketCap) * 100;
+  // Calculate % of market cap bought
+  const pctMarketCapBought = (totalValueBought / q.marketCap) * 100;
 
-  // Calculate price performance (30 day)
+  // Calculate price performance (30 day) - for BUYS, we want to see flat/down prices
   let priceChange30d = 0;
   let priceChangeYTD = 0;
+  let volatility30d = 0;
   
   if (Array.isArray(historical) && historical.length >= 2) {
     const sortedPrices = historical.slice(0, 252).reverse(); // oldest to newest
     
     // 30-day change
     if (sortedPrices.length >= 22) {
-      const price30dAgo = sortedPrices[sortedPrices.length - 22]?.close || sortedPrices[0].close;
-      const currentPrice = sortedPrices[sortedPrices.length - 1]?.close || q.price;
+      const recentPrices = sortedPrices.slice(-22);
+      const price30dAgo = recentPrices[0]?.close || sortedPrices[0].close;
+      const currentPrice = recentPrices[recentPrices.length - 1]?.close || q.price;
       priceChange30d = ((currentPrice - price30dAgo) / price30dAgo) * 100;
+      
+      // Calculate volatility (std dev of daily returns)
+      const returns = [];
+      for (let i = 1; i < recentPrices.length; i++) {
+        const ret = (recentPrices[i].close - recentPrices[i-1].close) / recentPrices[i-1].close;
+        returns.push(ret);
+      }
+      if (returns.length > 0) {
+        const mean = returns.reduce((a, b) => a + b, 0) / returns.length;
+        const variance = returns.reduce((sum, r) => sum + Math.pow(r - mean, 2), 0) / returns.length;
+        volatility30d = Math.sqrt(variance) * 100; // Daily volatility in %
+      }
     }
     
     // YTD change
@@ -193,97 +215,103 @@ async function analyzeTickerFromTransactions(ticker, sales) {
     }
   }
 
-  // Largest single sale
-  const largestSale = Math.max(...sales.map(t => 
+  // Largest single purchase
+  const largestPurchase = Math.max(...purchases.map(t => 
     (t.securitiesTransacted || 0) * (t.price || 0)
   ));
 
-  // Most recent sale date
-  const mostRecentSale = sales.reduce((latest, t) => {
+  // Most recent purchase date
+  const mostRecentPurchase = purchases.reduce((latest, t) => {
     const d = new Date(t.transactionDate);
     return d > latest ? d : latest;
   }, new Date(0));
   
-  const daysSinceLastSale = Math.floor((Date.now() - mostRecentSale.getTime()) / (1000 * 60 * 60 * 24));
+  const daysSinceLastPurchase = Math.floor((Date.now() - mostRecentPurchase.getTime()) / (1000 * 60 * 60 * 24));
+
+  // Determine price context (flat, dip, or rising)
+  let priceContext = 'flat base';
+  if (priceChange30d <= -20) priceContext = 'major dip';
+  else if (priceChange30d <= -10) priceContext = 'pullback';
+  else if (priceChange30d <= -5) priceContext = 'dip';
+  else if (priceChange30d <= 5) priceContext = 'flat base';
+  else if (priceChange30d <= 15) priceContext = 'slight uptick';
+  else priceContext = 'rally'; // Less attractive for "conviction buy" narrative
 
   return {
     ticker,
     companyName: q.name || ticker,
     price: q.price,
     marketCap: q.marketCap,
-    totalValueSold,
-    totalSharesSold,
-    pctMarketCapSold,
+    totalValueBought,
+    totalSharesBought,
+    pctMarketCapBought,
     insiderCount,
-    salesCount: sales.length,
+    purchaseCount: purchases.length,
     hasCEO,
     hasCFO,
     hasDirector,
+    has10PctOwner,
     priceChange30d,
     priceChangeYTD,
-    largestSale,
-    daysSinceLastSale,
-    isClusterSale: insiderCount >= 2 || sales.length >= 3
+    volatility30d,
+    largestPurchase,
+    daysSinceLastPurchase,
+    priceContext,
+    isClusterBuy: insiderCount >= 2 || purchases.length >= 3
   };
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// IDS SCORING (Insider Disconnect Score)
+// CONVICTION SCORING (Buy Signal Score)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function calculateIDS(ticker) {
+function calculateConvictionScore(ticker) {
   let score = 0;
   const breakdown = {};
 
-  // 1. Selling Value Impact (0-25 pts) - % of market cap sold
-  const pctSold = ticker.pctMarketCapSold;
-  if (pctSold > 5) { breakdown.valueImpact = 25; }
-  else if (pctSold > 2) { breakdown.valueImpact = 20; }
-  else if (pctSold > 1) { breakdown.valueImpact = 15; }
-  else if (pctSold > 0.5) { breakdown.valueImpact = 10; }
+  // 1. Purchase Value Impact (0-25 pts) - % of market cap bought
+  const pctBought = ticker.pctMarketCapBought;
+  if (pctBought > 2) { breakdown.valueImpact = 25; }
+  else if (pctBought > 1) { breakdown.valueImpact = 20; }
+  else if (pctBought > 0.5) { breakdown.valueImpact = 15; }
+  else if (pctBought > 0.1) { breakdown.valueImpact = 10; }
   else { breakdown.valueImpact = 5; }
   score += breakdown.valueImpact;
 
-  // 2. Price Disconnect (0-25 pts) - selling while stock is UP
-  const priceUp = Math.max(ticker.priceChange30d, 0);
-  if (priceUp > 50) { breakdown.priceDisconnect = 25; }
-  else if (priceUp > 30) { breakdown.priceDisconnect = 20; }
-  else if (priceUp > 15) { breakdown.priceDisconnect = 15; }
-  else if (priceUp > 5) { breakdown.priceDisconnect = 10; }
-  else { breakdown.priceDisconnect = 0; } // No disconnect if price flat/down
-  score += breakdown.priceDisconnect;
+  // 2. Price Context (0-25 pts) - buying dips/flat = MORE conviction
+  const priceDown = Math.min(0, ticker.priceChange30d); // Negative = good for conviction
+  if (priceDown <= -20) { breakdown.priceContext = 25; } // Major dip buy
+  else if (priceDown <= -10) { breakdown.priceContext = 20; } // Pullback buy
+  else if (priceDown <= -5) { breakdown.priceContext = 15; } // Dip buy
+  else if (ticker.priceChange30d <= 5) { breakdown.priceContext = 12; } // Flat base
+  else if (ticker.priceChange30d <= 15) { breakdown.priceContext = 5; } // Slight up
+  else { breakdown.priceContext = 0; } // Chasing = less interesting
+  score += breakdown.priceContext;
 
-  // 3. Insider Seniority (0-20 pts)
+  // 3. Insider Seniority (0-25 pts) - CEO/CFO buying = strongest signal
   breakdown.seniority = 0;
-  if (ticker.hasCEO) breakdown.seniority += 10;
-  if (ticker.hasCFO) breakdown.seniority += 7;
-  if (ticker.hasDirector) breakdown.seniority += 3;
-  breakdown.seniority = Math.min(20, breakdown.seniority);
+  if (ticker.hasCEO) breakdown.seniority += 15;
+  if (ticker.hasCFO) breakdown.seniority += 10;
+  if (ticker.has10PctOwner) breakdown.seniority += 8;
+  if (ticker.hasDirector) breakdown.seniority += 5;
+  breakdown.seniority = Math.min(25, breakdown.seniority);
   score += breakdown.seniority;
 
-  // 4. Cluster Signal (0-15 pts) - multiple insiders or multiple sales
+  // 4. Cluster Signal (0-15 pts) - multiple insiders buying = coordinated conviction
   if (ticker.insiderCount >= 3) { breakdown.cluster = 15; }
   else if (ticker.insiderCount >= 2) { breakdown.cluster = 12; }
-  else if (ticker.salesCount >= 3) { breakdown.cluster = 10; }
-  else if (ticker.salesCount >= 2) { breakdown.cluster = 5; }
+  else if (ticker.purchaseCount >= 3) { breakdown.cluster = 8; }
+  else if (ticker.purchaseCount >= 2) { breakdown.cluster = 5; }
   else { breakdown.cluster = 0; }
   score += breakdown.cluster;
 
   // 5. Recency (0-10 pts)
-  const days = ticker.daysSinceLastSale;
+  const days = ticker.daysSinceLastPurchase;
   if (days <= 3) { breakdown.recency = 10; }
   else if (days <= 7) { breakdown.recency = 8; }
   else if (days <= 14) { breakdown.recency = 5; }
   else { breakdown.recency = 2; }
   score += breakdown.recency;
-
-  // 6. Dollar Amount (0-5 pts) - absolute size matters for attention
-  const valueSold = ticker.totalValueSold;
-  if (valueSold > 10e6) { breakdown.dollarSize = 5; }
-  else if (valueSold > 5e6) { breakdown.dollarSize = 4; }
-  else if (valueSold > 1e6) { breakdown.dollarSize = 3; }
-  else { breakdown.dollarSize = 1; }
-  score += breakdown.dollarSize;
 
   return {
     score: Math.min(100, Math.round(score)),
@@ -300,55 +328,55 @@ async function generateAIOneLiners(tickers) {
 
   const tickerData = tickers.map(t => ({
     ticker: t.ticker,
-    ids: t.scoring.score,
-    totalValueSold: t.totalValueSold,
-    pctMarketCapSold: t.pctMarketCapSold?.toFixed(2),
+    score: t.scoring.score,
+    totalValueBought: t.totalValueBought,
+    pctMarketCapBought: t.pctMarketCapBought?.toFixed(2),
     insiderCount: t.insiderCount,
-    salesCount: t.salesCount,
+    purchaseCount: t.purchaseCount,
     hasCEO: t.hasCEO,
     hasCFO: t.hasCFO,
+    has10PctOwner: t.has10PctOwner,
     priceChange30d: t.priceChange30d?.toFixed(1),
-    isClusterSale: t.isClusterSale,
+    priceContext: t.priceContext,
+    isClusterBuy: t.isClusterBuy,
     marketCap: t.marketCap
   }));
 
-  const prompt = `Generate exactly one short reason line for each ticker explaining why this insider selling pattern is concerning.
+  const prompt = `Generate exactly one short reason line for each ticker explaining why this insider BUYING pattern shows conviction.
 
-Format MUST be: "$Xm sold · context → meaning clause"
+Format MUST be: "$Xm bought · context → meaning clause"
 
 RULES:
-1. ALWAYS start with dollar amount sold (e.g. "$3.9M sold", "$22M sold", "$175K sold")
-2. ONE context metric combining WHO + PRICE using VARIED language (NEVER use same price word twice):
-   - "CEO + CFO · +38% rally"
-   - "multiple execs · new highs"  
-   - "CEO · peak breakout"
-   - "3 insiders · +29% spike"
-   - "management · extended rally"
-   - "cluster · momentum stretch"
-   - "CEO · YTD highs"
-   - "1 insider · parabolic"
-   - "senior leadership · +8% bounce"
-3. End with a SHORT trader-native meaning clause with HERO WORDS (2-4 words):
-   - "dumping into strength"
-   - "distribution at peak"
-   - "smart money exiting"
-   - "top-ticking the move"
-   - "confidence fading"
-   - "quiet profit-taking"
-   - "exit wave forming"
-   - "insider exit signal"
-   - "exit into strength"
-   - "risk of snapback"
-4. NEVER repeat the same meaning clause OR price word (rally/breakout/spike/bounce) OR cluster label twice in the list
+1. ALWAYS start with dollar amount bought (e.g. "$3.9M bought", "$500K bought")
+2. ONE context metric combining WHO + PRICE using VARIED language (NEVER repeat):
+   - "CEO · -14% dip"
+   - "CFO · flat base"
+   - "cluster · pullback"
+   - "3 insiders · year lows"
+   - "CEO + Director · 2-week base"
+   - "management · post-earnings dip"
+   - "10% owner · consolidation"
+3. End with a SHORT bullish meaning clause (2-4 words):
+   - "loading the dip"
+   - "conviction buy"
+   - "quiet accumulation"
+   - "stealth positioning"
+   - "smart money entry"
+   - "dip buyer detected"
+   - "accumulation signal"
+   - "loading before move"
+   - "confidence buy"
+   - "pre-breakout setup"
+4. NEVER repeat the same meaning clause OR price phrasing twice in the list
 5. If hasCEO=true, mention "CEO". If hasCFO=true, mention "CFO". If both, use "CEO + CFO"
-6. If isClusterSale=true (3+ insiders), VARY the label: "cluster", "multiple execs", "management", "X insiders", "senior leadership"
+6. If isClusterBuy=true (2+ insiders), VARY the label: "cluster", "multiple insiders", "management", "X insiders"
 7. Keep total length under 55 characters
 
 Tickers to analyze:
 ${JSON.stringify(tickerData, null, 2)}
 
 Return ONLY valid JSON object mapping ticker to reason string. Example:
-{"TICK1": "$3.9M sold · CEO + CFO · +38% rally → dumping into strength", "TICK2": "$22M sold · multiple execs · new highs → exit into strength"}`;
+{"TICK1": "$1.2M bought · CEO · -14% dip → loading the dip", "TICK2": "$500K bought · cluster · flat base → quiet accumulation"}`;
 
   try {
     const response = await openai.chat.completions.create({
@@ -369,41 +397,40 @@ Return ONLY valid JSON object mapping ticker to reason string. Example:
   return {};
 }
 
-// Varied price context phrases (no repeats - rally/breakout/spike/parabolic)
+// Varied price context phrases for buys (emphasize dips/flat)
 const PRICE_CONTEXTS = [
-  (pct) => `+${Math.round(pct)}% rally`,
-  (pct) => `+${Math.round(pct)}% breakout`,
-  (pct) => `new highs`,
-  (pct) => `+${Math.round(pct)}% spike`,
-  (pct) => `momentum stretch`,
-  (pct) => pct > 40 ? `parabolic` : `+${Math.round(pct)}% bounce`,
+  (pct) => pct <= -15 ? 'major dip' : pct <= -5 ? `${Math.abs(Math.round(pct))}% pullback` : 'flat base',
+  (pct) => pct <= -10 ? 'post-selloff' : pct <= 0 ? 'consolidation' : 'base building',
+  (pct) => pct <= -20 ? 'year lows' : pct <= -5 ? 'dip' : '2-week base',
+  (pct) => pct <= -10 ? 'drawdown' : pct <= 5 ? 'tight range' : 'slight uptick',
+  (pct) => pct <= -15 ? 'steep pullback' : pct <= 0 ? 'price compression' : 'quiet base',
 ];
 
-// Trader-native meaning clauses with hero words
+// Bullish meaning clauses
 const MEANING_CLAUSES = {
-  highMomentum: ['dumping into strength', 'distribution at peak', 'selling the top', 'top-ticking the move'],
-  ceoSale: ['confidence fading', 'insider exit signal', 'smart money exiting', 'exit wave forming'],
-  cluster: ['coordinated exit', 'smart money leaving', 'risk-off tell', 'insiders heading out'],
-  moderate: ['quiet profit-taking', 'risk of snapback', 'fading buyers', 'momentum could snap']
+  majorDip: ['loading the dip', 'conviction buy', 'smart money entry', 'bottom fishing'],
+  dip: ['dip buyer detected', 'accumulation signal', 'quiet accumulation', 'stealth positioning'],
+  flat: ['loading before move', 'pre-breakout setup', 'confidence buy', 'patient accumulation'],
+  ceoLevel: ['insider confidence', 'management conviction', 'leadership buying', 'C-suite loading'],
 };
 
-// Varied cluster labels
-const CLUSTER_LABELS = ['cluster', 'multiple execs', 'management', 'senior leadership'];
+// Varied cluster labels for buys
+const CLUSTER_LABELS = ['cluster', 'multiple insiders', 'management', 'leadership team'];
 
-let fallbackIndex = 0; // Track to avoid repeats
+let fallbackIndex = 0;
 
 function generateFallbackReason(t) {
   const parts = [];
   
   // First: Always lead with $ amount
-  const valueMil = t.totalValueSold / 1e6;
+  const valueMil = t.totalValueBought / 1e6;
   if (valueMil >= 1) {
-    parts.push(`$${valueMil.toFixed(1)}M sold`);
+    parts.push(`$${valueMil.toFixed(1)}M bought`);
   } else {
-    parts.push(`$${Math.round(t.totalValueSold / 1000)}K sold`);
+    parts.push(`$${Math.round(t.totalValueBought / 1000)}K bought`);
   }
   
-  // Second: WHO sold (CEO/CFO/cluster) + price context
+  // Second: WHO bought + price context
   let whoContext = '';
   if (t.hasCEO && t.hasCFO) {
     whoContext = 'CEO + CFO · ';
@@ -411,7 +438,9 @@ function generateFallbackReason(t) {
     whoContext = 'CEO · ';
   } else if (t.hasCFO) {
     whoContext = 'CFO · ';
-  } else if (t.isClusterSale && t.insiderCount >= 3) {
+  } else if (t.has10PctOwner) {
+    whoContext = '10% owner · ';
+  } else if (t.isClusterBuy && t.insiderCount >= 2) {
     const clusterLabel = CLUSTER_LABELS[fallbackIndex % CLUSTER_LABELS.length];
     whoContext = `${clusterLabel} · `;
   }
@@ -419,12 +448,12 @@ function generateFallbackReason(t) {
   const priceFormatter = PRICE_CONTEXTS[fallbackIndex % PRICE_CONTEXTS.length];
   parts.push(whoContext + priceFormatter(t.priceChange30d));
   
-  // Meaning clause - based on metrics, varied
+  // Meaning clause - based on metrics
   let meaningPool;
-  if (t.priceChange30d > 30) meaningPool = MEANING_CLAUSES.highMomentum;
-  else if (t.hasCEO || t.hasCFO) meaningPool = MEANING_CLAUSES.ceoSale;
-  else if (t.isClusterSale) meaningPool = MEANING_CLAUSES.cluster;
-  else meaningPool = MEANING_CLAUSES.moderate;
+  if (t.priceChange30d <= -15) meaningPool = MEANING_CLAUSES.majorDip;
+  else if (t.priceChange30d <= -5) meaningPool = MEANING_CLAUSES.dip;
+  else if (t.hasCEO || t.hasCFO) meaningPool = MEANING_CLAUSES.ceoLevel;
+  else meaningPool = MEANING_CLAUSES.flat;
   
   const meaning = meaningPool[fallbackIndex % meaningPool.length];
   fallbackIndex++;
@@ -436,148 +465,112 @@ function generateFallbackReason(t) {
 // MAIN GENERATOR
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export async function generateInsiderLeaderboard(options = {}) {
+export async function generateInsiderBuyingLeaderboard(options = {}) {
   const { maxTickers = 10, minScore = 40 } = options;
-
-  // Calculate date range for display
-  const endDate = new Date();
-  const startDate = new Date();
-  startDate.setDate(startDate.getDate() - 30);
-  const formatDate = (d) => `${d.getMonth() + 1}/${d.getDate()}`;
-  const dateRange = `${formatDate(startDate)}–${formatDate(endDate)}`;
 
   console.log(`
 ╔═══════════════════════════════════════════════════════════════════════════════╗
-║  INSIDER SELLING DISCONNECT WATCH — Weekly Scan                               ║
+║  INSIDER BUYING RADAR — Weekly Scan (Friday)                                  ║
 ║  ${new Date().toISOString()}                                          ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
 `);
 
   // Step 1: Get latest insider transactions from FMP
   console.log(`📡 Step 1: Fetching insider transactions from FMP...\n`);
-  const allTransactions = await getLatestInsiderTransactions(10); // 10 pages = ~1000 transactions
+  const allTransactions = await getLatestInsiderTransactions(20); // More pages to find buys
   console.log(`\n   Total transactions fetched: ${allTransactions.length}\n`);
 
-  // Step 2: Group by ticker and filter to sales
-  console.log(`🔍 Step 2: Grouping sales by ticker...\n`);
-  const salesByTicker = groupTransactionsByTicker(allTransactions, 30);
-  const tickersWithSales = Object.keys(salesByTicker);
-  console.log(`   Found ${tickersWithSales.length} tickers with insider SALES\n`);
+  // Step 2: Group by ticker and filter to PURCHASES only
+  console.log(`🔍 Step 2: Filtering to open market PURCHASES (P-Purchase)...\n`);
+  const purchasesByTicker = groupPurchasesByTicker(allTransactions, 30);
+  const tickersWithPurchases = Object.keys(purchasesByTicker);
+  console.log(`   Found ${tickersWithPurchases.length} tickers with insider PURCHASES\n`);
 
-  if (tickersWithSales.length === 0) {
-    return { leaderboard: [], dateRange };
+  if (tickersWithPurchases.length === 0) {
+    return { leaderboard: [], dateRange: '' };
   }
 
-  // Step 3: Analyze each ticker with sales
+  // Step 3: Analyze each ticker with purchases
   console.log(`📊 Step 3: Analyzing tickers with price data...\n`);
   const analyzed = [];
   
-  for (const ticker of tickersWithSales) {
+  for (const ticker of tickersWithPurchases) {
     process.stdout.write(`   ${ticker}...`);
-    const sales = salesByTicker[ticker];
-    const data = await analyzeTickerFromTransactions(ticker, sales);
+    const purchases = purchasesByTicker[ticker];
+    const data = await analyzeTickerFromPurchases(ticker, purchases);
     if (data) {
       analyzed.push(data);
-      console.log(` ✓ $${(data.totalValueSold / 1e6).toFixed(1)}M sold, +${data.priceChange30d.toFixed(0)}%`);
+      const context = data.priceChange30d <= 0 ? '📉' : '📈';
+      console.log(` ✓ $${(data.totalValueBought / 1e6).toFixed(2)}M bought, ${data.priceChange30d.toFixed(0)}% ${context}`);
     } else {
       console.log(` skip`);
     }
     await new Promise(r => setTimeout(r, 200)); // Rate limit
   }
 
-  console.log(`\n   Analyzed ${analyzed.length} tickers with significant sales\n`);
+  console.log(`\n   Analyzed ${analyzed.length} tickers with significant purchases\n`);
 
   if (analyzed.length === 0) {
-    return { leaderboard: [], dateRange };
+    return { leaderboard: [], dateRange: '' };
   }
 
   // Step 4: Score and rank
-  console.log(`🧮 Step 4: Scoring (IDS) and ranking...\n`);
-  const scored = analyzed.map(t => {
-    const scoring = calculateIDS(t);
-    return { ...t, scoring };
-  });
+  console.log(`🎯 Step 4: Scoring and ranking...\n`);
+  const scored = analyzed.map(t => ({
+    ...t,
+    scoring: calculateConvictionScore(t)
+  }));
 
-  // Load cooldown history
+  // Filter by minimum score and cooldown
   const posted = loadPostedHistory();
-  const skippedCooldown = [];
-
-  // Filter by minimum score, require price UP (disconnect), exclude cooldown
-  const qualified = scored
-    .filter(t => {
-      if (t.scoring.score < minScore) return false;
-      if (t.priceChange30d < 5) return false; // Must be selling into STRENGTH
-      if (isOnCooldown(t.ticker, posted)) {
-        skippedCooldown.push(t.ticker);
-        return false;
-      }
-      return true;
-    })
+  const candidates = scored
+    .filter(t => t.scoring.score >= minScore)
+    .filter(t => !isOnCooldown(t.ticker, posted))
     .sort((a, b) => b.scoring.score - a.scoring.score)
     .slice(0, maxTickers);
 
-  // Add rank
-  qualified.forEach((t, i) => { t.rank = i + 1; });
+  console.log(`   Candidates after filtering: ${candidates.length}\n`);
 
-  if (skippedCooldown.length > 0) {
-    console.log(`   ⏳ Skipped ${skippedCooldown.length} on cooldown: ${skippedCooldown.slice(0, 5).join(', ')}${skippedCooldown.length > 5 ? '...' : ''}\n`);
+  if (candidates.length === 0) {
+    return { leaderboard: [], dateRange: '' };
   }
 
-  console.log(`   ${qualified.length} tickers qualify (score ≥ ${minScore}, price +5%+)\n`);
+  // Step 5: Generate AI one-liners
+  console.log(`🤖 Step 5: Generating one-liners...\n`);
+  const aiReasons = await generateAIOneLiners(candidates);
 
-  // Step 4: Generate AI one-liners
-  console.log(`🤖 Step 4: Generating AI one-liners...\n`);
-  const aiOneLiners = await generateAIOneLiners(qualified);
-  
-  qualified.forEach(t => {
-    if (aiOneLiners && aiOneLiners[t.ticker]) {
-      t.reason = aiOneLiners[t.ticker];
-    } else {
-      t.reason = generateFallbackReason(t);
-    }
-  });
-
-  // Step 5: Display leaderboard
-  console.log('═'.repeat(70));
-  console.log('🕵️ INSIDER SELLING WATCH (Ranked by Risk)');
-  console.log('═'.repeat(70));
-  
-  qualified.forEach((t, i) => {
-    console.log(`#${i + 1} $${t.ticker.padEnd(6)} — Risk: ${t.scoring.score.toString().padStart(2)}/100 → ${t.reason}`);
-  });
-  
-  console.log('═'.repeat(70));
-
-  // Build output
-  const leaderboard = qualified.map((t, i) => ({
+  // Build final leaderboard
+  const leaderboard = candidates.map((t, i) => ({
     rank: i + 1,
     ticker: t.ticker,
     companyName: t.companyName,
     score: t.scoring.score,
-    reason: t.reason,
+    reason: aiReasons[t.ticker] || generateFallbackReason(t),
     metrics: {
-      totalValueSold: t.totalValueSold,
-      pctMarketCapSold: t.pctMarketCapSold?.toFixed(2),
+      totalValueBought: t.totalValueBought,
+      pctMarketCapBought: t.pctMarketCapBought,
       insiderCount: t.insiderCount,
-      salesCount: t.salesCount,
-      priceChange30d: t.priceChange30d?.toFixed(1),
+      purchaseCount: t.purchaseCount,
+      priceChange30d: t.priceChange30d,
+      priceContext: t.priceContext,
       hasCEO: t.hasCEO,
-      hasCFO: t.hasCFO,
-      isClusterSale: t.isClusterSale
-    }
+      hasCFO: t.hasCFO
+    },
+    breakdown: t.scoring.breakdown
   }));
 
-  // Save to file
-  const outputPath = path.join(DATA_DIR, 'insider_leaderboard.json');
+  // Save output
+  const outputPath = path.join(DATA_DIR, 'insider_buying_leaderboard.json');
   const output = {
     generatedAt: new Date().toISOString(),
-    period: '30d',
-    dateRange,
-    totalTransactions: allTransactions.length,
-    tickersWithSales: tickersWithSales.length,
-    analyzed: analyzed.length,
-    qualified: qualified.length,
-    leaderboard
+    scanner: 'insider-buying-radar',
+    leaderboard,
+    stats: {
+      totalTransactions: allTransactions.length,
+      tickersWithPurchases: tickersWithPurchases.length,
+      analyzed: analyzed.length,
+      qualified: candidates.length
+    }
   };
   
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -593,35 +586,35 @@ export async function generateInsiderLeaderboard(options = {}) {
 
 async function generateTweet(leaderboardData) {
   if (!leaderboardData?.leaderboard?.length) {
-    return `🕵️ Weekly Insider Selling Watch
+    return `🟢 Weekly Insider Buying Radar
 
-No significant insider disconnect this week.
-Insiders holding steady.
+No significant insider buying this week.
+Smart money staying quiet.
 
 Back next week.`;
   }
 
   const lines = leaderboardData.leaderboard.slice(0, 10).map(t => {
-    return `#${t.rank} $${t.ticker} — Risk: ${t.score}/100\n→ ${t.reason}`;
+    return `#${t.rank} $${t.ticker} — Score: ${t.score}/100\n→ ${t.reason}`;
   });
   
-  return `🕵️ WEEKLY INSIDER SELLING WATCH
-Price rising + insiders selling = someone's leaving early.
+  return `🟢 WEEKLY INSIDER BUYING RADAR
+Insiders buying when price is flat/down = conviction.
 Last 30 days · SEC Form 4 filings
 
 ${lines.join('\n\n')}
 
-Insiders give interviews. Their trades tell the truth — every time.`;
+Insiders sell for many reasons. They buy for one: they believe.`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // MAIN
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export async function runInsiderLeaderboard(options = {}) {
+export async function runInsiderBuyingLeaderboard(options = {}) {
   const { post = false, greeting = null } = options;
 
-  const leaderboardData = await generateInsiderLeaderboard();
+  const leaderboardData = await generateInsiderBuyingLeaderboard();
   
   console.log('\n🤖 Generating tweet...\n');
   let tweet = await generateTweet(leaderboardData);
@@ -631,7 +624,7 @@ export async function runInsiderLeaderboard(options = {}) {
   }
 
   console.log('═'.repeat(70));
-  console.log('📝 INSIDER SELLING TWEET');
+  console.log('📝 INSIDER BUYING TWEET');
   console.log('═'.repeat(70));
   console.log(tweet);
   console.log('═'.repeat(70));
@@ -667,7 +660,7 @@ if (isMainModule) {
   const greetingArg = args.find(a => a.startsWith('--greeting='));
   const greeting = greetingArg ? greetingArg.split('=')[1] : null;
 
-  runInsiderLeaderboard({ post, greeting })
+  runInsiderBuyingLeaderboard({ post, greeting })
     .then(() => console.log('\n✅ Done!'))
     .catch(e => { console.error(e); process.exit(1); });
 }
