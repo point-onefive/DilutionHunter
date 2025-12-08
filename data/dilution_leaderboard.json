@@ -1,129 +1,159 @@
 {
-  "generatedAt": "2025-12-03T17:52:33.991Z",
+  "generatedAt": "2025-12-08T16:09:44.168Z",
   "period": "7d",
-  "dateRange": "11/26–12/3",
-  "totalFilings": 30,
-  "enriched": 30,
-  "qualified": 8,
+  "dateRange": "12/1–12/8",
+  "totalFilings": 37,
+  "enriched": 36,
+  "qualified": 10,
   "leaderboard": [
     {
       "rank": 1,
-      "ticker": "BTBD",
-      "companyName": "BT Brands, Inc.",
-      "score": 41,
-      "reason": "9.2mo runway · $9M cap → attention-driven risk",
+      "ticker": "EUDA",
+      "companyName": "EUDA Health Holdings Ltd",
+      "score": 64,
+      "reason": "1.1mo runway · -8% off peak → dilution overhang building",
       "metrics": {
-        "runway": "9.2",
-        "pullback": "10.1",
-        "peakGain": "5.0",
-        "daysSinceFiling": 2,
-        "marketCap": 9307789,
-        "debtCashRatio": "4.8"
+        "runway": "1.1",
+        "pullback": "8.1",
+        "peakGain": "13.4",
+        "daysSinceFiling": 4,
+        "marketCap": 109840243,
+        "debtCashRatio": "24.6"
       }
     },
     {
       "rank": 2,
-      "ticker": "GANX",
-      "companyName": "Gain Therapeutics, Inc.",
-      "score": 41,
-      "reason": "6.1mo runway · -11% off peak → spike losing momentum",
+      "ticker": "MIRA",
+      "companyName": "MIRA PHARMACEUTICALS, INC.",
+      "score": 49,
+      "reason": "5.9mo runway · $60M cap → likely raise into weakness",
       "metrics": {
-        "runway": "6.1",
-        "pullback": "11.1",
-        "peakGain": "14.1",
-        "daysSinceFiling": 5,
-        "marketCap": 118574404,
+        "runway": "5.9",
+        "pullback": "5.2",
+        "peakGain": "3.4",
+        "daysSinceFiling": 3,
+        "marketCap": 59659247,
         "debtCashRatio": "0.0"
       }
     },
     {
       "rank": 3,
-      "ticker": "ACTU",
-      "companyName": "ACTUATE THERAPEUTICS, INC.",
-      "score": 41,
-      "reason": "9.9mo runway · -8% off peak → attention-driven risk",
+      "ticker": "CAPR",
+      "companyName": "CAPRICOR THERAPEUTICS, INC.",
+      "score": 46,
+      "reason": "4.2mo runway · -1% off peak → fading after spike",
       "metrics": {
-        "runway": "9.9",
-        "pullback": "7.5",
-        "peakGain": "15.1",
-        "daysSinceFiling": 5,
-        "marketCap": 169211428,
-        "debtCashRatio": "0.0"
+        "runway": "4.2",
+        "pullback": "0.8",
+        "peakGain": "17.6",
+        "daysSinceFiling": 3,
+        "marketCap": 1377954837,
+        "debtCashRatio": "0.7"
       }
     },
     {
       "rank": 4,
-      "ticker": "ATON",
-      "companyName": "AlphaTON Capital Corp",
-      "score": 38,
-      "reason": "6.2mo runway · $4M cap → cash almost gone",
+      "ticker": "TARA",
+      "companyName": "Protara Therapeutics, Inc.",
+      "score": 45,
+      "reason": "3.1mo runway · -3% off peak → momentum reversed",
       "metrics": {
-        "runway": "6.2",
-        "pullback": "35.9",
-        "peakGain": "0.4",
-        "daysSinceFiling": 7,
-        "marketCap": 3720477,
-        "debtCashRatio": "0.0"
+        "runway": "3.1",
+        "pullback": "3.4",
+        "peakGain": "8.4",
+        "daysSinceFiling": 3,
+        "marketCap": 216860401,
+        "debtCashRatio": "0.3"
       }
     },
     {
       "rank": 5,
-      "ticker": "RDHL",
-      "companyName": "RedHill Biopharma Ltd.",
-      "score": 36,
-      "reason": "4.2mo runway · $4M cap → likely raise into weakness",
+      "ticker": "KALA",
+      "companyName": "KALA BIO, Inc.",
+      "score": 45,
+      "reason": "7.9mo runway · $6M cap → pressure to raise high",
       "metrics": {
-        "runway": "4.2",
-        "pullback": "5.5",
-        "peakGain": "13.6",
-        "daysSinceFiling": 7,
-        "marketCap": 3962529,
-        "debtCashRatio": "0.1"
+        "runway": "7.9",
+        "pullback": "23.5",
+        "peakGain": "2.0",
+        "daysSinceFiling": 3,
+        "marketCap": 5531175,
+        "debtCashRatio": "2.8"
       }
     },
     {
       "rank": 6,
-      "ticker": "CIK",
-      "companyName": "Western Midstream Operating, LP",
-      "score": 33,
-      "reason": "999.0mo runway · debt 2057.3x cash → volume-driven distress signal",
+      "ticker": "TOVX",
+      "companyName": "Theriva Biologics, Inc.",
+      "score": 44,
+      "reason": "4.9mo runway · +25% spike → spike losing momentum",
       "metrics": {
-        "runway": "999.0",
-        "pullback": "0.0",
-        "peakGain": "0.0",
-        "daysSinceFiling": 0,
-        "marketCap": 155111636,
-        "debtCashRatio": "2057.3"
+        "runway": "4.9",
+        "pullback": "13.9",
+        "peakGain": "25.0",
+        "daysSinceFiling": 5,
+        "marketCap": 7395730,
+        "debtCashRatio": "0.7"
       }
     },
     {
       "rank": 7,
-      "ticker": "DWTX",
-      "companyName": "Dogwood Therapeutics, Inc.",
-      "score": 32,
-      "reason": "6.7mo runway · $12M cap → pressure to raise high",
+      "ticker": "INTS",
+      "companyName": "INTENSITY THERAPEUTICS, INC.",
+      "score": 36,
+      "reason": "8.9mo runway · $23M cap → setup despite runway",
       "metrics": {
-        "runway": "6.7",
-        "pullback": "8.0",
-        "peakGain": "3.4",
-        "daysSinceFiling": 5,
-        "marketCap": 11849049,
+        "runway": "8.9",
+        "pullback": "9.7",
+        "peakGain": "22.0",
+        "daysSinceFiling": 4,
+        "marketCap": 23234996,
         "debtCashRatio": "0.0"
       }
     },
     {
       "rank": 8,
-      "ticker": "PSNL",
-      "companyName": "Personalis, Inc.",
-      "score": 30,
-      "reason": "9.9mo runway · -5% off peak → setup despite runway",
+      "ticker": "CMND",
+      "companyName": "Clearmind Medicine Inc.",
+      "score": 35,
+      "reason": "11.7mo runway · $1M cap → attention-driven risk",
       "metrics": {
-        "runway": "9.9",
-        "pullback": "4.6",
-        "peakGain": "0.0",
+        "runway": "11.7",
+        "pullback": "11.6",
+        "peakGain": "22.4",
         "daysSinceFiling": 5,
-        "marketCap": 914189967,
-        "debtCashRatio": "0.9"
+        "marketCap": 637004,
+        "debtCashRatio": "0.0"
+      }
+    },
+    {
+      "rank": 9,
+      "ticker": "BTBD",
+      "companyName": "BT Brands, Inc.",
+      "score": 34,
+      "reason": "9.2mo runway · $10M cap → volume-driven distress signal",
+      "metrics": {
+        "runway": "9.2",
+        "pullback": "5.3",
+        "peakGain": "5.0",
+        "daysSinceFiling": 7,
+        "marketCap": 9847558,
+        "debtCashRatio": "4.8"
+      }
+    },
+    {
+      "rank": 10,
+      "ticker": "PINE",
+      "companyName": "Alpine Income Property Trust, Inc.",
+      "score": 33,
+      "reason": "999.0mo runway · debt 611.4x cash → distressed setup",
+      "metrics": {
+        "runway": "999.0",
+        "pullback": "2.1",
+        "peakGain": "1.4",
+        "daysSinceFiling": 3,
+        "marketCap": 243348893,
+        "debtCashRatio": "611.4"
       }
     }
   ]

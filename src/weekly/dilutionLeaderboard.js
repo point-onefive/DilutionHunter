@@ -515,6 +515,7 @@ Back next week with fresh scans.`;
   
   return `🔎 WEEKLY ATM DILUTION LEADERBOARD
 ATMs let companies sell shares anytime — diluting you.
+These aren't announced. We dig through SEC filings.
 Filings from ${leaderboardData.dateRange} · DSS = dilution pressure × distress
 
 ${lines.join('\n\n')}
