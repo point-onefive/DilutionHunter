@@ -1,0 +1,181 @@
+{
+  "generatedAt": "2025-12-08T16:51:37.358Z",
+  "period": "30d",
+  "dateRange": "11/8–12/8",
+  "totalTransactions": 1000,
+  "tickersWithSales": 103,
+  "analyzed": 75,
+  "qualified": 10,
+  "leaderboard": [
+    {
+      "rank": 1,
+      "ticker": "APGE",
+      "companyName": "Apogee Therapeutics, Inc.",
+      "score": 71,
+      "reason": "CEO/CFO sold · stock +38% → attention risk",
+      "metrics": {
+        "totalValueSold": 3930400,
+        "pctMarketCapSold": "0.09",
+        "insiderCount": 3,
+        "salesCount": 3,
+        "priceChange30d": "37.7",
+        "hasCEO": true,
+        "hasCFO": true,
+        "isClusterSale": true
+      }
+    },
+    {
+      "rank": 2,
+      "ticker": "LASR",
+      "companyName": "nLIGHT, Inc.",
+      "score": 66,
+      "reason": "cluster sale · stock +23% → quiet profit-taking",
+      "metrics": {
+        "totalValueSold": 1031444.0899999999,
+        "pctMarketCapSold": "0.06",
+        "insiderCount": 3,
+        "salesCount": 6,
+        "priceChange30d": "23.2",
+        "hasCEO": true,
+        "hasCFO": true,
+        "isClusterSale": true
+      }
+    },
+    {
+      "rank": 3,
+      "ticker": "ENTA",
+      "companyName": "Enanta Pharmaceuticals, Inc.",
+      "score": 59,
+      "reason": "cluster sale · stock +29% → early warning sign",
+      "metrics": {
+        "totalValueSold": 174972.08000000002,
+        "pctMarketCapSold": "0.06",
+        "insiderCount": 7,
+        "salesCount": 7,
+        "priceChange30d": "29.3",
+        "hasCEO": true,
+        "hasCFO": false,
+        "isClusterSale": true
+      }
+    },
+    {
+      "rank": 4,
+      "ticker": "MP",
+      "companyName": "MP Materials Corp.",
+      "score": 58,
+      "reason": "CEO sold · stock +17% → silent exit signal",
+      "metrics": {
+        "totalValueSold": 24232308.26,
+        "pctMarketCapSold": "0.23",
+        "insiderCount": 1,
+        "salesCount": 3,
+        "priceChange30d": "16.8",
+        "hasCEO": true,
+        "hasCFO": false,
+        "isClusterSale": true
+      }
+    },
+    {
+      "rank": 5,
+      "ticker": "KRYS",
+      "companyName": "Krystal Biotech, Inc.",
+      "score": 58,
+      "reason": "cluster sale · stock +17% → confidence questionable",
+      "metrics": {
+        "totalValueSold": 22014779.584,
+        "pctMarketCapSold": "0.33",
+        "insiderCount": 2,
+        "salesCount": 32,
+        "priceChange30d": "17.2",
+        "hasCEO": true,
+        "hasCFO": false,
+        "isClusterSale": true
+      }
+    },
+    {
+      "rank": 6,
+      "ticker": "NRDS",
+      "companyName": "NerdWallet, Inc.",
+      "score": 57,
+      "reason": "cluster sale · stock +27% → momentum could snap",
+      "metrics": {
+        "totalValueSold": 359023.89999999997,
+        "pctMarketCapSold": "0.03",
+        "insiderCount": 3,
+        "salesCount": 4,
+        "priceChange30d": "27.2",
+        "hasCEO": true,
+        "hasCFO": false,
+        "isClusterSale": true
+      }
+    },
+    {
+      "rank": 7,
+      "ticker": "ROK",
+      "companyName": "Rockwell Automation, Inc.",
+      "score": 56,
+      "reason": "cluster sale · stock +8% → smart money leaving",
+      "metrics": {
+        "totalValueSold": 3906174.6964000002,
+        "pctMarketCapSold": "0.01",
+        "insiderCount": 12,
+        "salesCount": 31,
+        "priceChange30d": "8.2",
+        "hasCEO": true,
+        "hasCFO": false,
+        "isClusterSale": true
+      }
+    },
+    {
+      "rank": 8,
+      "ticker": "STOK",
+      "companyName": "Stoke Therapeutics, Inc.",
+      "score": 54,
+      "reason": "cluster sale · stock +44% → dumping into strength",
+      "metrics": {
+        "totalValueSold": 940396.1041999998,
+        "pctMarketCapSold": "0.05",
+        "insiderCount": 3,
+        "salesCount": 14,
+        "priceChange30d": "43.5",
+        "hasCEO": false,
+        "hasCFO": false,
+        "isClusterSale": true
+      }
+    },
+    {
+      "rank": 9,
+      "ticker": "HYMC",
+      "companyName": "Hycroft Mining Holding Corporation",
+      "score": 53,
+      "reason": "$14.3M sold · stock +56% → selling into rally",
+      "metrics": {
+        "totalValueSold": 14311200,
+        "pctMarketCapSold": "1.56",
+        "insiderCount": 1,
+        "salesCount": 1,
+        "priceChange30d": "56.1",
+        "hasCEO": false,
+        "hasCFO": false,
+        "isClusterSale": false
+      }
+    },
+    {
+      "rank": 10,
+      "ticker": "SRRK",
+      "companyName": "Scholar Rock Holding Corporation",
+      "score": 52,
+      "reason": "$9.1M sold · stock +59% → insiders exiting at highs",
+      "metrics": {
+        "totalValueSold": 9063865.605,
+        "pctMarketCapSold": "0.19",
+        "insiderCount": 1,
+        "salesCount": 8,
+        "priceChange30d": "59.4",
+        "hasCEO": false,
+        "hasCFO": false,
+        "isClusterSale": true
+      }
+    }
+  ]
+}

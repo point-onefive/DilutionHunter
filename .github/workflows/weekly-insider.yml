@@ -1,0 +1,73 @@
+name: Weekly Insider Selling Watch
+
+on:
+  # Every Thursday at 9:30am ET = 14:30 UTC (13:30 UTC during DST)
+  # Using 14:30 UTC to hit 9:30 ET during EST (winter)
+  schedule:
+    - cron: "30 14 * * 4"  # 4 = Thursday
+  
+  # Manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run in DRY_RUN mode (no tweets)'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+env:
+  # Scheduled runs post for real, manual defaults to dry run
+  DRY_RUN: ${{ github.event_name == 'schedule' && 'false' || github.event.inputs.dry_run || 'true' }}
+
+jobs:
+  insider-leaderboard:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Allow pushing commits (to update cooldown file)
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Debug DRY_RUN value
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "DRY_RUN env: ${{ env.DRY_RUN }}"
+          echo "Is schedule: ${{ github.event_name == 'schedule' }}"
+      
+      - name: Run Insider Selling Watch
+        id: leaderboard
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+          DRY_RUN: ${{ github.event_name == 'schedule' && 'false' || github.event.inputs.dry_run || 'true' }}
+        run: |
+          echo "🕵️ Running Weekly Insider Selling Watch"
+          echo "DRY_RUN: $DRY_RUN"
+          node src/weekly/index.js insider --post --greeting="GM"
+      
+      - name: Commit updated cooldown file
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/insider_posted.json 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "Update insider cooldown [skip ci]"
+          git push || true

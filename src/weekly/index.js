@@ -1,10 +1,11 @@
 /**
  * WEEKLY LEADERBOARDS — Main Entry Point
  * 
- * Three independent leaderboard systems:
+ * Four independent leaderboard systems:
  *   1. Dilution Leaderboard (Mon) — ATM filings from SEC EDGAR
  *   2. Bankruptcy Leaderboard (Tue) — 3-stage filtered distress scan
  *   3. Shelf Offering Radar (Wed) — S-3/shelf registrations (dilution armed)
+ *   4. Insider Selling Watch (Thu) — Insiders selling into strength
  * 
  * Each produces ONE consolidated tweet.
  * 
@@ -15,6 +16,8 @@
  *   node src/weekly/index.js bankruptcy --post    # Post bankruptcy tweet
  *   node src/weekly/index.js shelf                # Preview shelf offering radar
  *   node src/weekly/index.js shelf --post         # Post shelf tweet
+ *   node src/weekly/index.js insider              # Preview insider selling watch
+ *   node src/weekly/index.js insider --post       # Post insider tweet
  *   node src/weekly/index.js all                  # Preview all
  *   node src/weekly/index.js all --post           # Post all (with delays)
  */
@@ -22,6 +25,7 @@
 import { runDilutionLeaderboard } from './dilutionLeaderboard.js';
 import { runBankruptcyLeaderboard } from './bankruptcyLeaderboard.js';
 import { runShelfLeaderboard } from './shelfLeaderboard.js';
+import { runInsiderLeaderboard } from './insiderLeaderboard.js';
 
 async function main() {
   const args = process.argv.slice(2);
@@ -32,7 +36,7 @@ async function main() {
   const daysArg = args.find(a => a.startsWith('--days='));
   const days = daysArg ? parseInt(daysArg.split('=')[1]) : 7;
 
-  if (!mode || !['dilution', 'bankruptcy', 'shelf', 'all', 'both'].includes(mode)) {
+  if (!mode || !['dilution', 'bankruptcy', 'shelf', 'insider', 'all', 'both'].includes(mode)) {
     console.log(`
 ╔═══════════════════════════════════════════════════════════════════════════════╗
 ║  WEEKLY LEADERBOARDS                                                          ║
@@ -42,10 +46,11 @@ Usage:
   node src/weekly/index.js <mode> [options]
 
 Modes:
-  dilution     SEC EDGAR ATM filings → DSS scoring → Tweet (Monday)
-  bankruptcy   3-stage distress filter → VIS scoring → Tweet (Tuesday)
-  shelf        S-3/shelf filings → SDR scoring → Tweet (Wednesday)
-  all          Run all three leaderboards
+  dilution     SEC EDGAR ATM filings → Risk scoring → Tweet (Monday)
+  bankruptcy   3-stage distress filter → Risk scoring → Tweet (Tuesday)
+  shelf        S-3/shelf filings → Risk scoring → Tweet (Wednesday)
+  insider      Insider selling disconnect → Risk scoring → Tweet (Thursday)
+  all          Run all four leaderboards
 
 Options:
   --post              Post to Twitter (otherwise preview only)
@@ -54,7 +59,7 @@ Options:
 
 Examples:
   node src/weekly/index.js dilution
-  node src/weekly/index.js shelf --post
+  node src/weekly/index.js insider --post
   node src/weekly/index.js all --post --greeting="GM"
 `);
     process.exit(0);
@@ -89,6 +94,18 @@ Examples:
   if (mode === 'shelf' || mode === 'all') {
     console.log('\n📋 Running SHELF OFFERING RADAR...\n');
     await runShelfLeaderboard(options);
+  }
+
+  if (mode === 'all') {
+    console.log('\n\n' + '═'.repeat(70));
+    console.log('Waiting 30s before next post...');
+    console.log('═'.repeat(70) + '\n');
+    await new Promise(r => setTimeout(r, 30000));
+  }
+
+  if (mode === 'insider' || mode === 'all') {
+    console.log('\n🕵️ Running INSIDER SELLING WATCH...\n');
+    await runInsiderLeaderboard(options);
   }
 
   console.log('\n✅ Done!');
