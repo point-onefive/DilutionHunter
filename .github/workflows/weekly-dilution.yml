@@ -62,7 +62,7 @@ jobs:
         run: |
           echo "🔎 Running Weekly Dilution Leaderboard"
           echo "DRY_RUN: $DRY_RUN"
-          node src/weekly/index.js dilution --post --greeting="GM"
+          node src/weekly/index.js dilution --post
       
       - name: Commit updated cooldown file
         run: |

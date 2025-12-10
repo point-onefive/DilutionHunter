@@ -62,7 +62,7 @@ jobs:
         run: |
           echo "⚠️ Running Weekly Bankruptcy Leaderboard"
           echo "DRY_RUN: $DRY_RUN"
-          node src/weekly/index.js bankruptcy --post --greeting="GM"
+          node src/weekly/index.js bankruptcy --post
       
       - name: Commit updated cooldown file
         run: |
