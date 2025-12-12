@@ -1,235 +1,187 @@
 {
-  "generatedAt": "2025-12-08T17:40:17.349Z",
+  "generatedAt": "2025-12-12T14:45:29.438Z",
   "scanner": "insider-buying-radar",
   "leaderboard": [
     {
       "rank": 1,
-      "ticker": "BH",
-      "companyName": "Biglari Holdings Inc.",
-      "score": 73,
-      "reason": "$1.6M bought · CEO · pullback → dip buyer detected",
+      "ticker": "AIRJ",
+      "companyName": "AirJoule Technologies Corporation",
+      "score": 85,
+      "reason": "$1.0M bought · CEO + CFO · major dip → conviction buy",
       "metrics": {
-        "totalValueBought": 1648102.09,
-        "pctMarketCapBought": 0.16501144986876762,
-        "insiderCount": 1,
-        "purchaseCount": 3,
-        "priceChange30d": -10.958714708403615,
-        "priceContext": "pullback",
+        "totalValueBought": 1036117.4199999999,
+        "pctMarketCapBought": 0.4841603467810156,
+        "insiderCount": 3,
+        "purchaseCount": 7,
+        "priceChange30d": -23.917748917748916,
+        "priceContext": "major dip",
         "hasCEO": true,
-        "hasCFO": false
+        "hasCFO": true
       },
       "breakdown": {
         "valueImpact": 10,
-        "priceContext": 20,
+        "priceContext": 25,
         "seniority": 25,
-        "cluster": 8,
+        "cluster": 15,
         "recency": 10
       }
     },
     {
       "rank": 2,
-      "ticker": "UTI",
-      "companyName": "Universal Technical Institute, Inc.",
-      "score": 63,
-      "reason": "$13.7M bought · cluster · pullback → smart money entry",
+      "ticker": "MDRR",
+      "companyName": "Medalist Diversified REIT, Inc.",
+      "score": 84,
+      "reason": "$1.0M bought · CEO + CFO · flat base → smart money entry",
       "metrics": {
-        "totalValueBought": 13682697.989999998,
-        "pctMarketCapBought": 1.018979161597165,
-        "insiderCount": 1,
+        "totalValueBought": 1035062.4,
+        "pctMarketCapBought": 6.333886581800151,
+        "insiderCount": 2,
         "purchaseCount": 3,
-        "priceChange30d": -12.44239631336406,
-        "priceContext": "pullback",
-        "hasCEO": false,
-        "hasCFO": false
+        "priceChange30d": -4.669384729429214,
+        "priceContext": "flat base",
+        "hasCEO": true,
+        "hasCFO": true
       },
       "breakdown": {
-        "valueImpact": 20,
-        "priceContext": 20,
-        "seniority": 5,
-        "cluster": 8,
+        "valueImpact": 25,
+        "priceContext": 12,
+        "seniority": 25,
+        "cluster": 12,
         "recency": 10
       }
     },
     {
       "rank": 3,
-      "ticker": "SELF",
-      "companyName": "Global Self Storage, Inc.",
-      "score": 60,
-      "reason": "$84K bought · CEO · flat base → quiet accumulation",
+      "ticker": "SEVN",
+      "companyName": "Seven Hills Realty Trust",
+      "score": 65,
+      "reason": "$34.9M bought · 10% owner · slight uptick → insiders buying strength",
       "metrics": {
-        "totalValueBought": 83983.4,
-        "pctMarketCapBought": 0.14624744051219565,
-        "insiderCount": 1,
-        "purchaseCount": 4,
-        "priceChange30d": 2.8571428571428505,
-        "priceContext": "flat base",
-        "hasCEO": true,
+        "totalValueBought": 34872440.4,
+        "pctMarketCapBought": 23.913011553146667,
+        "insiderCount": 2,
+        "purchaseCount": 2,
+        "priceChange30d": 10.913043478260862,
+        "priceContext": "slight uptick",
+        "hasCEO": false,
         "hasCFO": false
       },
       "breakdown": {
-        "valueImpact": 10,
-        "priceContext": 12,
-        "seniority": 20,
-        "cluster": 8,
+        "valueImpact": 25,
+        "priceContext": 5,
+        "seniority": 13,
+        "cluster": 12,
         "recency": 10
       }
     },
     {
       "rank": 4,
-      "ticker": "NRDY",
-      "companyName": "Nerdy, Inc.",
-      "score": 51,
-      "reason": "$495K bought · CEO + 10% owner · rally → insiders buying strength",
+      "ticker": "DOMH",
+      "companyName": "Dominari Holdings Inc.",
+      "score": 65,
+      "reason": "$186K bought · CEO · pullback → dip buyer detected",
       "metrics": {
-        "totalValueBought": 494950.98,
-        "pctMarketCapBought": 0.3038490902824133,
-        "insiderCount": 1,
-        "purchaseCount": 3,
-        "priceChange30d": 42.76547962784728,
-        "priceContext": "rally",
-        "hasCEO": true,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 10,
-        "priceContext": 0,
-        "seniority": 25,
-        "cluster": 8,
-        "recency": 8
-      }
-    },
-    {
-      "rank": 5,
-      "ticker": "GRND",
-      "companyName": "Grindr Inc.",
-      "score": 51,
-      "reason": "$4.7M bought · 10% owner · flat base → confidence buy",
-      "metrics": {
-        "totalValueBought": 4742000,
-        "pctMarketCapBought": 0.18383825073619778,
-        "insiderCount": 1,
-        "purchaseCount": 4,
-        "priceChange30d": 0.7726269315673321,
-        "priceContext": "flat base",
-        "hasCEO": false,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 10,
-        "priceContext": 12,
-        "seniority": 13,
-        "cluster": 8,
-        "recency": 8
-      }
-    },
-    {
-      "rank": 6,
-      "ticker": "UFI",
-      "companyName": "Unifi, Inc.",
-      "score": 51,
-      "reason": "$230K bought · 10% owner · dip → conviction buy",
-      "metrics": {
-        "totalValueBought": 229852.12,
-        "pctMarketCapBought": 0.3447450362122185,
-        "insiderCount": 1,
-        "purchaseCount": 2,
-        "priceChange30d": -9.950248756218894,
-        "priceContext": "dip",
-        "hasCEO": false,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 10,
-        "priceContext": 15,
-        "seniority": 13,
-        "cluster": 5,
-        "recency": 8
-      }
-    },
-    {
-      "rank": 7,
-      "ticker": "TBTC",
-      "companyName": "Table Trac, Inc.",
-      "score": 51,
-      "reason": "$166K bought · multiple insiders · dip → loading before move",
-      "metrics": {
-        "totalValueBought": 165516.35,
-        "pctMarketCapBought": 0.8830518436807983,
-        "insiderCount": 1,
-        "purchaseCount": 3,
-        "priceChange30d": -5.386416861826688,
-        "priceContext": "dip",
-        "hasCEO": false,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 15,
-        "priceContext": 15,
-        "seniority": 5,
-        "cluster": 8,
-        "recency": 8
-      }
-    },
-    {
-      "rank": 8,
-      "ticker": "TPVG",
-      "companyName": "TriplePoint Venture Growth BDC Corp.",
-      "score": 50,
-      "reason": "$947K bought · CEO + insider · rally → rare bullish tell",
-      "metrics": {
-        "totalValueBought": 947485.4221999999,
-        "pctMarketCapBought": 0.350992455494648,
+        "totalValueBought": 185851.2,
+        "pctMarketCapBought": 0.24913581864134093,
         "insiderCount": 2,
-        "purchaseCount": 4,
-        "priceChange30d": 16.579406631762637,
-        "priceContext": "rally",
+        "purchaseCount": 2,
+        "priceChange30d": -15.045871559633031,
+        "priceContext": "pullback",
         "hasCEO": true,
         "hasCFO": false
       },
       "breakdown": {
         "valueImpact": 10,
-        "priceContext": 0,
-        "seniority": 20,
+        "priceContext": 20,
+        "seniority": 15,
         "cluster": 12,
         "recency": 8
       }
     },
     {
-      "rank": 9,
-      "ticker": "MXF",
-      "companyName": "The Mexico Fund, Inc.",
-      "score": 48,
-      "reason": "$323K bought · multiple insiders · flat base → accumulation signal",
+      "rank": 5,
+      "ticker": "BH",
+      "companyName": "Biglari Holdings Inc.",
+      "score": 60,
+      "reason": "$706K bought · CEO · flat base → quiet accumulation",
       "metrics": {
-        "totalValueBought": 322967.68,
-        "pctMarketCapBought": 0.11357672165824681,
+        "totalValueBought": 705671.2799999999,
+        "pctMarketCapBought": 0.0695917322296379,
         "insiderCount": 1,
         "purchaseCount": 3,
-        "priceChange30d": 2.477829942618664,
+        "priceChange30d": 2.506273525721458,
         "priceContext": "flat base",
-        "hasCEO": false,
+        "hasCEO": true,
         "hasCFO": false
       },
       "breakdown": {
-        "valueImpact": 10,
+        "valueImpact": 5,
         "priceContext": 12,
-        "seniority": 8,
+        "seniority": 25,
         "cluster": 8,
         "recency": 10
       }
     },
     {
-      "rank": 10,
-      "ticker": "SINT",
-      "companyName": "Sintx Technologies, Inc.",
-      "score": 48,
-      "reason": "$255K bought · management · rally → high-conviction momentum buy",
+      "rank": 6,
+      "ticker": "SURG",
+      "companyName": "SurgePays, Inc.",
+      "score": 55,
+      "reason": "$62K bought · insider · major dip → accumulation signal",
       "metrics": {
-        "totalValueBought": 255350,
-        "pctMarketCapBought": 2.285540694841964,
+        "totalValueBought": 61646.778,
+        "pctMarketCapBought": 0.1829413105176038,
         "insiderCount": 1,
-        "purchaseCount": 13,
-        "priceChange30d": 17.55162241887905,
+        "purchaseCount": 2,
+        "priceChange30d": -30.185185185185194,
+        "priceContext": "major dip",
+        "hasCEO": false,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 10,
+        "priceContext": 25,
+        "seniority": 5,
+        "cluster": 5,
+        "recency": 10
+      }
+    },
+    {
+      "rank": 7,
+      "ticker": "LYFT",
+      "companyName": "Lyft, Inc.",
+      "score": 55,
+      "reason": "$100K bought · CEO · pullback → confidence buy",
+      "metrics": {
+        "totalValueBought": 99617.138,
+        "pctMarketCapBought": 0.0012084662532562036,
+        "insiderCount": 1,
+        "purchaseCount": 1,
+        "priceChange30d": -15.995115995115993,
+        "priceContext": "pullback",
+        "hasCEO": true,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 5,
+        "priceContext": 20,
+        "seniority": 20,
+        "cluster": 0,
+        "recency": 10
+      }
+    },
+    {
+      "rank": 8,
+      "ticker": "KYMR",
+      "companyName": "Kymera Therapeutics, Inc.",
+      "score": 53,
+      "reason": "$172.5M bought · 10% owner · rally → rare bullish tell",
+      "metrics": {
+        "totalValueBought": 172499918,
+        "pctMarketCapBought": 2.670152072155071,
+        "insiderCount": 1,
+        "purchaseCount": 2,
+        "priceChange30d": 40.63733669132694,
         "priceContext": "rally",
         "hasCEO": false,
         "hasCFO": false
@@ -237,16 +189,64 @@
       "breakdown": {
         "valueImpact": 25,
         "priceContext": 0,
-        "seniority": 5,
+        "seniority": 13,
+        "cluster": 5,
+        "recency": 10
+      }
+    },
+    {
+      "rank": 9,
+      "ticker": "NEXT",
+      "companyName": "NextDecade Corporation",
+      "score": 51,
+      "reason": "$5.7M bought · 10% owner · dip → loading before move",
+      "metrics": {
+        "totalValueBought": 5742413.6534,
+        "pctMarketCapBought": 0.3802195853595833,
+        "insiderCount": 1,
+        "purchaseCount": 3,
+        "priceChange30d": -6.219312602291324,
+        "priceContext": "dip",
+        "hasCEO": false,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 10,
+        "priceContext": 15,
+        "seniority": 8,
         "cluster": 8,
+        "recency": 10
+      }
+    },
+    {
+      "rank": 10,
+      "ticker": "NRDY",
+      "companyName": "Nerdy, Inc.",
+      "score": 50,
+      "reason": "$499K bought · CEO · rally → high-conviction momentum buy",
+      "metrics": {
+        "totalValueBought": 498675.39999999997,
+        "pctMarketCapBought": 0.290773863923212,
+        "insiderCount": 1,
+        "purchaseCount": 2,
+        "priceChange30d": 55.590131140253376,
+        "priceContext": "rally",
+        "hasCEO": true,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 10,
+        "priceContext": 0,
+        "seniority": 25,
+        "cluster": 5,
         "recency": 10
       }
     }
   ],
   "stats": {
     "totalTransactions": 2000,
-    "tickersWithPurchases": 64,
-    "analyzed": 31,
+    "tickersWithPurchases": 48,
+    "analyzed": 25,
     "qualified": 10
   }
 }
