@@ -86,6 +86,10 @@ async function fmpGet(endpoint) {
   }
 }
 
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // SEC EDGAR SHELF FILING SCANNER
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -99,13 +103,35 @@ async function searchSECFilings(query, forms, startDate, endDate, limit = 200) {
   url.searchParams.set('forms', forms);
   url.searchParams.set('size', limit.toString());
 
-  const res = await fetch(url.toString(), {
-    headers: { 'User-Agent': SEC_USER_AGENT }
-  });
+  // Retry logic with exponential backoff (SEC API can be flaky)
+  const maxRetries = 3;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const res = await fetch(url.toString(), {
+        headers: { 'User-Agent': SEC_USER_AGENT }
+      });
 
-  if (!res.ok) throw new Error(`SEC API error: ${res.status}`);
-  const data = await res.json();
-  return data.hits?.hits || [];
+      if (res.ok) {
+        const data = await res.json();
+        return data.hits?.hits || [];
+      }
+      
+      // 5xx errors - SEC server issue, retry
+      if (res.status >= 500 && attempt < maxRetries) {
+        console.log(`   ⚠️ SEC API returned ${res.status}, retrying in ${attempt * 5}s... (attempt ${attempt}/${maxRetries})`);
+        await sleep(attempt * 5000);
+        continue;
+      }
+      
+      throw new Error(`SEC API error: ${res.status}`);
+    } catch (err) {
+      if (attempt === maxRetries) throw err;
+      console.log(`   ⚠️ SEC API error, retrying in ${attempt * 5}s... (attempt ${attempt}/${maxRetries})`);
+      await sleep(attempt * 5000);
+    }
+  }
+  
+  return [];
 }
 
 function extractTicker(displayName) {

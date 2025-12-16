@@ -1,159 +1,159 @@
 {
-  "generatedAt": "2025-12-08T17:45:43.192Z",
+  "generatedAt": "2025-12-16T18:18:47.219Z",
   "period": "7d",
-  "dateRange": "12/1–12/8",
-  "totalFilings": 38,
-  "enriched": 37,
+  "dateRange": "12/9–12/16",
+  "totalFilings": 53,
+  "enriched": 53,
   "qualified": 10,
   "leaderboard": [
     {
       "rank": 1,
-      "ticker": "EUDA",
-      "companyName": "EUDA Health Holdings Ltd",
-      "score": 64,
-      "reason": "1.1mo runway · debt 24.6x cash → dilution overhang building",
+      "ticker": "MIGI",
+      "companyName": "Mawson Infrastructure Group Inc.",
+      "score": 69,
+      "reason": "6.0mo runway · debt 24.0x cash → dilution overhang building",
       "metrics": {
-        "runway": "1.1",
-        "pullback": "9.9",
-        "peakGain": "13.4",
-        "daysSinceFiling": 4,
-        "marketCap": 108918765,
-        "debtCashRatio": "24.6"
+        "runway": "6.0",
+        "pullback": "138.6",
+        "peakGain": "85.9",
+        "daysSinceFiling": 5,
+        "marketCap": 3931365,
+        "debtCashRatio": "24.0"
       }
     },
     {
       "rank": 2,
-      "ticker": "CAPR",
-      "companyName": "CAPRICOR THERAPEUTICS, INC.",
-      "score": 50,
-      "reason": "4.2mo runway · -6% off peak → momentum reversed",
+      "ticker": "ELBM",
+      "companyName": "Electra Battery Materials Corp",
+      "score": 68,
+      "reason": "2.8mo runway · debt 48.4x cash → heavy dilution pressure",
       "metrics": {
-        "runway": "4.2",
-        "pullback": "6.3",
-        "peakGain": "17.5",
-        "daysSinceFiling": 3,
-        "marketCap": 1361953370,
-        "debtCashRatio": "0.7"
+        "runway": "2.8",
+        "pullback": "13.6",
+        "peakGain": "0.0",
+        "daysSinceFiling": 5,
+        "marketCap": 81357821,
+        "debtCashRatio": "48.4"
       }
     },
     {
       "rank": 3,
-      "ticker": "MIRA",
-      "companyName": "MIRA PHARMACEUTICALS, INC.",
-      "score": 45,
-      "reason": "5.9mo runway · $60M cap → likely raise into weakness",
+      "ticker": "TGL",
+      "companyName": "TREASURE GLOBAL INC",
+      "score": 68,
+      "reason": "1.4mo runway · debt 0.2x cash → cash position collapsing",
       "metrics": {
-        "runway": "5.9",
-        "pullback": "4.5",
-        "peakGain": "3.4",
-        "daysSinceFiling": 3,
-        "marketCap": 59868577,
-        "debtCashRatio": "0.0"
+        "runway": "1.4",
+        "pullback": "80.6",
+        "peakGain": "41.3",
+        "daysSinceFiling": 5,
+        "marketCap": 21152562,
+        "debtCashRatio": "0.2"
       }
     },
     {
       "rank": 4,
-      "ticker": "TARA",
-      "companyName": "Protara Therapeutics, Inc.",
-      "score": 45,
-      "reason": "3.1mo runway · -2% off peak → fading after spike",
+      "ticker": "REKR",
+      "companyName": "Rekor Systems, Inc.",
+      "score": 67,
+      "reason": "1.5mo runway · debt 14.2x cash → likely raise into weakness",
       "metrics": {
-        "runway": "3.1",
-        "pullback": "1.9",
-        "peakGain": "8.6",
-        "daysSinceFiling": 3,
-        "marketCap": 220410429,
-        "debtCashRatio": "0.3"
+        "runway": "1.5",
+        "pullback": "7.1",
+        "peakGain": "0.6",
+        "daysSinceFiling": 1,
+        "marketCap": 207137817,
+        "debtCashRatio": "14.2"
       }
     },
     {
       "rank": 5,
-      "ticker": "TOVX",
-      "companyName": "Theriva Biologics, Inc.",
-      "score": 44,
-      "reason": "4.9mo runway · $7M cap → cash almost gone",
+      "ticker": "KYTX",
+      "companyName": "Kyverna Therapeutics, Inc.",
+      "score": 65,
+      "reason": "2.6mo runway · debt 0.3x cash → cash almost gone",
       "metrics": {
-        "runway": "4.9",
-        "pullback": "16.5",
-        "peakGain": "25.0",
-        "daysSinceFiling": 5,
-        "marketCap": 7314755,
-        "debtCashRatio": "0.7"
+        "runway": "2.6",
+        "pullback": "29.9",
+        "peakGain": "12.0",
+        "daysSinceFiling": 1,
+        "marketCap": 440106675,
+        "debtCashRatio": "0.3"
       }
     },
     {
       "rank": 6,
-      "ticker": "KALA",
-      "companyName": "KALA BIO, Inc.",
-      "score": 41,
-      "reason": "7.9mo runway · $6M cap → attention-driven risk",
+      "ticker": "ADTX",
+      "companyName": "Aditxt, Inc.",
+      "score": 65,
+      "reason": "0.1mo runway · debt 67.8x cash → distressed setup",
       "metrics": {
-        "runway": "7.9",
-        "pullback": "18.9",
-        "peakGain": "2.0",
-        "daysSinceFiling": 3,
-        "marketCap": 5959459,
-        "debtCashRatio": "2.8"
+        "runway": "0.1",
+        "pullback": "42.5",
+        "peakGain": "3.4",
+        "daysSinceFiling": 4,
+        "marketCap": 30982,
+        "debtCashRatio": "67.8"
       }
     },
     {
       "rank": 7,
-      "ticker": "INTS",
-      "companyName": "INTENSITY THERAPEUTICS, INC.",
-      "score": 40,
-      "reason": "8.9mo runway · $23M cap → setup despite runway",
+      "ticker": "SNYR",
+      "companyName": "Synergy CHC Corp.",
+      "score": 63,
+      "reason": "2.0mo runway · debt 45.4x cash → pressure to raise high",
       "metrics": {
-        "runway": "8.9",
-        "pullback": "11.4",
-        "peakGain": "22.0",
-        "daysSinceFiling": 4,
-        "marketCap": 23192562,
-        "debtCashRatio": "0.0"
+        "runway": "2.0",
+        "pullback": "13.7",
+        "peakGain": "12.9",
+        "daysSinceFiling": 7,
+        "marketCap": 16398287,
+        "debtCashRatio": "45.4"
       }
     },
     {
       "rank": 8,
-      "ticker": "CMND",
-      "companyName": "Clearmind Medicine Inc.",
-      "score": 35,
-      "reason": "11.7mo runway · $1M cap → volume-driven distress signal",
+      "ticker": "TE",
+      "companyName": "T1 Energy Inc.",
+      "score": 60,
+      "reason": "2.7mo runway · debt 36.6x cash → fading after spike",
       "metrics": {
-        "runway": "11.7",
-        "pullback": "11.9",
-        "peakGain": "22.4",
-        "daysSinceFiling": 5,
-        "marketCap": 653394,
-        "debtCashRatio": "0.0"
+        "runway": "2.7",
+        "pullback": "3.8",
+        "peakGain": "1.1",
+        "daysSinceFiling": 1,
+        "marketCap": 805973612,
+        "debtCashRatio": "36.6"
       }
     },
     {
       "rank": 9,
-      "ticker": "BTBD",
-      "companyName": "BT Brands, Inc.",
-      "score": 34,
-      "reason": "9.2mo runway · $10M cap → setup despite runway",
+      "ticker": "FBLG",
+      "companyName": "FibroBiologics, Inc.",
+      "score": 59,
+      "reason": "3.6mo runway · debt 2.9x cash → reversal forming",
       "metrics": {
-        "runway": "9.2",
-        "pullback": "6.9",
-        "peakGain": "5.0",
-        "daysSinceFiling": 7,
-        "marketCap": 9608755,
-        "debtCashRatio": "4.8"
+        "runway": "3.6",
+        "pullback": "22.0",
+        "peakGain": "13.5",
+        "daysSinceFiling": 1,
+        "marketCap": 10354099,
+        "debtCashRatio": "2.9"
       }
     },
     {
       "rank": 10,
-      "ticker": "PINE",
-      "companyName": "Alpine Income Property Trust, Inc.",
-      "score": 33,
-      "reason": "999.0mo runway · debt 611.4x cash → distressed setup",
+      "ticker": "BKSY",
+      "companyName": "BlackSky Technology Inc.",
+      "score": 57,
+      "reason": "5.5mo runway · debt 13.8x cash → momentum reversed",
       "metrics": {
-        "runway": "999.0",
-        "pullback": "2.0",
-        "peakGain": "1.7",
-        "daysSinceFiling": 3,
-        "marketCap": 244198773,
-        "debtCashRatio": "611.4"
+        "runway": "5.5",
+        "pullback": "10.2",
+        "peakGain": "0.0",
+        "daysSinceFiling": 4,
+        "marketCap": 630359537,
+        "debtCashRatio": "13.8"
       }
     }
   ]
