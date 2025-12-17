@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-12-17T15:56:54.747Z",
+  "generatedAt": "2025-12-17T16:05:28.379Z",
   "period": "7d",
   "dateRange": "12/10–12/17",
   "totalFilings": 63,
@@ -12,11 +12,11 @@
       "companyName": "Digital Brands Group, Inc.",
       "score": 93,
       "formType": "S-1/A",
-      "reason": "0.3mo runway · 39.8x debt/cash → dilution imminent",
+      "reason": "0.3mo runway · debt 39.8x cash → dilution imminent",
       "metrics": {
         "runway": "0.3",
         "daysSinceFiling": 2,
-        "marketCap": 48876405,
+        "marketCap": 48832012,
         "debtCashRatio": "39.8",
         "monthlyBurn": 512694.8333333333
       }
@@ -27,11 +27,11 @@
       "companyName": "Heritage Distilling Holding Company, Inc.",
       "score": 88,
       "formType": "S-1/A",
-      "reason": "0.5mo runway · 37.9x debt/cash → emergency capital needed",
+      "reason": "0.5mo runway · debt 37.9x cash → emergency capital needed",
       "metrics": {
         "runway": "0.5",
         "daysSinceFiling": 5,
-        "marketCap": 35778425,
+        "marketCap": 36145383,
         "debtCashRatio": "37.9",
         "monthlyBurn": 934635.25
       }
@@ -42,7 +42,7 @@
       "companyName": "Alpha One Inc.",
       "score": 88,
       "formType": "S-1/A",
-      "reason": "0.0mo runway · 2310.3x debt/cash → filing suggests raise incoming",
+      "reason": "0.0mo runway · debt 2310.3x cash → shelf prepped for use",
       "metrics": {
         "runway": "0.0",
         "daysSinceFiling": 5,
@@ -57,7 +57,7 @@
       "companyName": "APPlife Digital Solutions, Inc.",
       "score": 83,
       "formType": "S-1/A",
-      "reason": "8.4mo runway · 25.1x debt/cash → early shelf positioning",
+      "reason": "8.4mo runway · debt 25.1x cash → early shelf positioning",
       "metrics": {
         "runway": "8.4",
         "daysSinceFiling": 0,
@@ -87,11 +87,11 @@
       "companyName": "Energous Corporation",
       "score": 80,
       "formType": "S-3/A",
-      "reason": "0.9mo runway · $7M cap → shelf prepped for use",
+      "reason": "0.9mo runway · $7M cap → filing suggests raise incoming",
       "metrics": {
         "runway": "0.9",
         "daysSinceFiling": 1,
-        "marketCap": 7165555,
+        "marketCap": 7036897,
         "debtCashRatio": "1.1",
         "monthlyBurn": 1464416.6666666667
       }
@@ -102,11 +102,11 @@
       "companyName": "Atlantic International Corp.",
       "score": 80,
       "formType": "S-3/A",
-      "reason": "1.4mo runway · 121.9x debt/cash → high re-pricing risk",
+      "reason": "1.4mo runway · debt 121.9x cash → high re-pricing risk",
       "metrics": {
         "runway": "1.4",
         "daysSinceFiling": 7,
-        "marketCap": 78080840,
+        "marketCap": 82861300,
         "debtCashRatio": "121.9",
         "monthlyBurn": 498753
       }
@@ -117,7 +117,7 @@
       "companyName": "Signing Day Sports, Inc.",
       "score": 78,
       "formType": "S-8",
-      "reason": "0.7mo runway · $4M cap → funding likely soon",
+      "reason": "0.7mo runway · $5M cap → funding likely soon",
       "metrics": {
         "runway": "0.7",
         "daysSinceFiling": 1,
@@ -132,11 +132,11 @@
       "companyName": "NRx Pharmaceuticals, Inc.",
       "score": 78,
       "formType": "S-3/A",
-      "reason": "1.6mo runway · 4.6x debt/cash → dilution setup forming",
+      "reason": "1.6mo runway · $41M cap → dilution setup forming",
       "metrics": {
         "runway": "1.6",
         "daysSinceFiling": 5,
-        "marketCap": 39757142,
+        "marketCap": 40621428,
         "debtCashRatio": "4.6",
         "monthlyBurn": 886416.6666666666
       }
@@ -147,11 +147,11 @@
       "companyName": "Beyond Air, Inc.",
       "score": 75,
       "formType": "S-1/A",
-      "reason": "1.5mo runway · $4M cap → preemptive shelf filing",
+      "reason": "1.5mo runway · $5M cap → preemptive shelf filing",
       "metrics": {
         "runway": "1.5",
         "daysSinceFiling": 6,
-        "marketCap": 4812365,
+        "marketCap": 4776388,
         "debtCashRatio": "2.5",
         "monthlyBurn": 3184833.3333333335
       }
