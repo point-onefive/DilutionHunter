@@ -40,8 +40,8 @@ async function searchSECFilings(query, forms, startDate, endDate, limit = 100) {
   url.searchParams.set('forms', forms);
   url.searchParams.set('size', limit.toString());
 
-  // Retry logic with exponential backoff (SEC API can be flaky)
-  const maxRetries = 3;
+  // Retry logic with exponential backoff (SEC API can be very flaky)
+  const maxRetries = 5;
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       const res = await fetch(url.toString(), {
@@ -55,16 +55,23 @@ async function searchSECFilings(query, forms, startDate, endDate, limit = 100) {
       
       // 5xx errors - SEC server issue, retry
       if (res.status >= 500 && attempt < maxRetries) {
-        console.log(`   ⚠️ SEC API returned ${res.status}, retrying in ${attempt * 5}s... (attempt ${attempt}/${maxRetries})`);
-        await sleep(attempt * 5000);
+        const waitTime = attempt * 10; // 10s, 20s, 30s, 40s
+        console.log(`   ⚠️ SEC API returned ${res.status}, retrying in ${waitTime}s... (attempt ${attempt}/${maxRetries})`);
+        await sleep(waitTime * 1000);
         continue;
       }
       
-      throw new Error(`SEC API error: ${res.status}`);
+      // After all retries failed, return empty instead of crashing
+      console.log(`   ❌ SEC API returned ${res.status} after ${maxRetries} attempts - returning empty results`);
+      return [];
     } catch (err) {
-      if (attempt === maxRetries) throw err;
-      console.log(`   ⚠️ SEC API error, retrying in ${attempt * 5}s... (attempt ${attempt}/${maxRetries})`);
-      await sleep(attempt * 5000);
+      if (attempt === maxRetries) {
+        console.log(`   ❌ SEC API error after ${maxRetries} attempts: ${err.message} - returning empty results`);
+        return [];
+      }
+      const waitTime = attempt * 10;
+      console.log(`   ⚠️ SEC API error, retrying in ${waitTime}s... (attempt ${attempt}/${maxRetries})`);
+      await sleep(waitTime * 1000);
     }
   }
   

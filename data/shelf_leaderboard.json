@@ -1,159 +1,159 @@
 {
-  "generatedAt": "2025-12-08T17:43:16.038Z",
+  "generatedAt": "2025-12-17T15:56:54.747Z",
   "period": "7d",
-  "dateRange": "12/1–12/8",
-  "totalFilings": 58,
-  "enriched": 39,
+  "dateRange": "12/10–12/17",
+  "totalFilings": 63,
+  "enriched": 52,
   "qualified": 10,
   "leaderboard": [
     {
       "rank": 1,
-      "ticker": "MITI",
-      "companyName": "Mitesco, Inc.",
-      "score": 88,
+      "ticker": "DBGI",
+      "companyName": "Digital Brands Group, Inc.",
+      "score": 93,
       "formType": "S-1/A",
-      "reason": "0.1mo runway · debt 324.9x cash → dilution imminent",
+      "reason": "0.3mo runway · 39.8x debt/cash → dilution imminent",
       "metrics": {
-        "runway": "0.1",
-        "daysSinceFiling": 3,
-        "marketCap": 1058000,
-        "debtCashRatio": "324.9",
-        "monthlyBurn": 42867.416666666664
+        "runway": "0.3",
+        "daysSinceFiling": 2,
+        "marketCap": 48876405,
+        "debtCashRatio": "39.8",
+        "monthlyBurn": 512694.8333333333
       }
     },
     {
       "rank": 2,
-      "ticker": "IVP",
-      "companyName": "Inspire Veterinary Partners, Inc.",
+      "ticker": "IPST",
+      "companyName": "Heritage Distilling Holding Company, Inc.",
       "score": 88,
       "formType": "S-1/A",
-      "reason": "0.6mo runway · $0.2M cap → ultra-microcap funding likely",
+      "reason": "0.5mo runway · 37.9x debt/cash → emergency capital needed",
       "metrics": {
-        "runway": "0.6",
-        "daysSinceFiling": 3,
-        "marketCap": 204214,
-        "debtCashRatio": "31.3",
-        "monthlyBurn": 833822.1666666666
+        "runway": "0.5",
+        "daysSinceFiling": 5,
+        "marketCap": 35778425,
+        "debtCashRatio": "37.9",
+        "monthlyBurn": 934635.25
       }
     },
     {
       "rank": 3,
-      "ticker": "CYCU",
-      "companyName": "Cycurion, Inc. Common Stock",
+      "ticker": "AOAO",
+      "companyName": "Alpha One Inc.",
       "score": 88,
       "formType": "S-1/A",
-      "reason": "0.3mo runway · debt 263.7x cash → emergency capital needed",
+      "reason": "0.0mo runway · 2310.3x debt/cash → filing suggests raise incoming",
       "metrics": {
-        "runway": "0.3",
+        "runway": "0.0",
         "daysSinceFiling": 5,
-        "marketCap": 9433356,
-        "debtCashRatio": "263.7",
-        "monthlyBurn": 114273.41666666667
+        "marketCap": 38954459,
+        "debtCashRatio": "2310.3",
+        "monthlyBurn": 141324.33333333334
       }
     },
     {
       "rank": 4,
-      "ticker": "HYPD",
-      "companyName": "Hyperion DeFi, Inc.",
-      "score": 85,
-      "formType": "S-3/A",
-      "reason": "0.8mo runway · $21.98M cap → watch for offerings",
+      "ticker": "ALDS",
+      "companyName": "APPlife Digital Solutions, Inc.",
+      "score": 83,
+      "formType": "S-1/A",
+      "reason": "8.4mo runway · 25.1x debt/cash → early shelf positioning",
       "metrics": {
-        "runway": "0.8",
-        "daysSinceFiling": 3,
-        "marketCap": 21976296,
-        "debtCashRatio": "5.3",
-        "monthlyBurn": 2510081.75
+        "runway": "8.4",
+        "daysSinceFiling": 0,
+        "marketCap": 15822892,
+        "debtCashRatio": "25.1",
+        "monthlyBurn": 13330.333333333334
       }
     },
     {
       "rank": 5,
-      "ticker": "BENF",
-      "companyName": "Beneficient",
-      "score": 85,
+      "ticker": "GSUN",
+      "companyName": "Golden Sun Education Group Limited",
+      "score": 83,
       "formType": "S-8",
-      "reason": "1.6mo runway · debt 16.5x cash → shelf prepped for use",
+      "reason": "2.1mo runway · $2M cap → watch for offerings",
       "metrics": {
-        "runway": "1.6",
-        "daysSinceFiling": 3,
-        "marketCap": 6485332,
-        "debtCashRatio": "16.5",
-        "monthlyBurn": 4851333.333333333
+        "runway": "2.1",
+        "daysSinceFiling": 1,
+        "marketCap": 2416774,
+        "debtCashRatio": "5.4",
+        "monthlyBurn": 408406.9166666667
       }
     },
     {
       "rank": 6,
-      "ticker": "NVVE",
-      "companyName": "Nuvve Holding Corp.",
-      "score": 85,
-      "formType": "S-8",
-      "reason": "0.3mo runway · debt 28.7x cash → filing suggests raise incoming",
+      "ticker": "WATT",
+      "companyName": "Energous Corporation",
+      "score": 80,
+      "formType": "S-3/A",
+      "reason": "0.9mo runway · $7M cap → shelf prepped for use",
       "metrics": {
-        "runway": "0.3",
-        "daysSinceFiling": 5,
-        "marketCap": 1840294,
-        "debtCashRatio": "28.7",
-        "monthlyBurn": 1311194.5
+        "runway": "0.9",
+        "daysSinceFiling": 1,
+        "marketCap": 7165555,
+        "debtCashRatio": "1.1",
+        "monthlyBurn": 1464416.6666666667
       }
     },
     {
       "rank": 7,
-      "ticker": "BLNE",
-      "companyName": "Beeline Holdings, Inc.",
-      "score": 78,
-      "formType": "S-8",
-      "reason": "1.5mo runway · debt 36.3x cash → high re-pricing risk",
+      "ticker": "ATLN",
+      "companyName": "Atlantic International Corp.",
+      "score": 80,
+      "formType": "S-3/A",
+      "reason": "1.4mo runway · 121.9x debt/cash → high re-pricing risk",
       "metrics": {
-        "runway": "1.5",
-        "daysSinceFiling": 6,
-        "marketCap": 18773224,
-        "debtCashRatio": "36.3",
-        "monthlyBurn": 269083.3333333333
+        "runway": "1.4",
+        "daysSinceFiling": 7,
+        "marketCap": 78080840,
+        "debtCashRatio": "121.9",
+        "monthlyBurn": 498753
       }
     },
     {
       "rank": 8,
-      "ticker": "COCH",
-      "companyName": "Envoy Medical, Inc.",
-      "score": 70,
-      "formType": "S-1/A",
-      "reason": "3.7mo runway · debt 3.6x cash → preemptive shelf filing",
+      "ticker": "SGN",
+      "companyName": "Signing Day Sports, Inc.",
+      "score": 78,
+      "formType": "S-8",
+      "reason": "0.7mo runway · $4M cap → funding likely soon",
       "metrics": {
-        "runway": "3.7",
-        "daysSinceFiling": 7,
-        "marketCap": 17650880,
-        "debtCashRatio": "3.6",
-        "monthlyBurn": 1495750
+        "runway": "0.7",
+        "daysSinceFiling": 1,
+        "marketCap": 4510352,
+        "debtCashRatio": "3.2",
+        "monthlyBurn": 255500
       }
     },
     {
       "rank": 9,
-      "ticker": "LEXX",
-      "companyName": "Lexaria Bioscience Corp.",
-      "score": 68,
-      "formType": "S-1/A",
-      "reason": "2.1mo runway · debt 0.1x cash → early shelf positioning",
+      "ticker": "NRXP",
+      "companyName": "NRx Pharmaceuticals, Inc.",
+      "score": 78,
+      "formType": "S-3/A",
+      "reason": "1.6mo runway · 4.6x debt/cash → dilution setup forming",
       "metrics": {
-        "runway": "2.1",
-        "daysSinceFiling": 3,
-        "marketCap": 19711541,
-        "debtCashRatio": "0.1",
-        "monthlyBurn": 870865.5833333334
+        "runway": "1.6",
+        "daysSinceFiling": 5,
+        "marketCap": 39757142,
+        "debtCashRatio": "4.6",
+        "monthlyBurn": 886416.6666666666
       }
     },
     {
       "rank": 10,
-      "ticker": "IGC",
-      "companyName": "IGC Pharma, Inc.",
-      "score": 68,
-      "formType": "S-3/A",
-      "reason": "1.0mo runway · debt 0.6x cash → funding likely soon",
+      "ticker": "XAIR",
+      "companyName": "Beyond Air, Inc.",
+      "score": 75,
+      "formType": "S-1/A",
+      "reason": "1.5mo runway · $4M cap → preemptive shelf filing",
       "metrics": {
-        "runway": "1.0",
-        "daysSinceFiling": 5,
-        "marketCap": 25004108,
-        "debtCashRatio": "0.6",
-        "monthlyBurn": 399583.3333333333
+        "runway": "1.5",
+        "daysSinceFiling": 6,
+        "marketCap": 4812365,
+        "debtCashRatio": "2.5",
+        "monthlyBurn": 3184833.3333333335
       }
     }
   ]

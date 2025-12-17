@@ -547,7 +547,10 @@ export async function runDilutionLeaderboard(options = {}) {
   console.log(`Characters: ${tweet.length}`);
 
   if (post) {
-    if (DRY_RUN) {
+    // Don't post empty/no-data tweets
+    if (!leaderboardData?.entries?.length) {
+      console.log('\n⚠️ No ATM filings found - skipping post (SEC API may be down)');
+    } else if (DRY_RUN) {
       console.log('\n[DRY_RUN] Would post. Set DRY_RUN=false to post.');
     } else {
       console.log('\n🚀 Posting to Twitter...');
