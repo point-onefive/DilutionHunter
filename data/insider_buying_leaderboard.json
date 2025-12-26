@@ -1,19 +1,91 @@
 {
-  "generatedAt": "2025-12-19T14:39:52.102Z",
+  "generatedAt": "2025-12-26T14:38:54.711Z",
   "scanner": "insider-buying-radar",
   "leaderboard": [
     {
       "rank": 1,
-      "ticker": "TPVG",
-      "companyName": "TriplePoint Venture Growth BDC Corp.",
-      "score": 64,
-      "reason": "$828K bought · management · flat base → smart money entry",
+      "ticker": "AGIG",
+      "companyName": "Houston American Energy Corporation",
+      "score": 75,
+      "reason": "$87.8K bought · cluster · major dip → conviction buy",
       "metrics": {
-        "totalValueBought": 828419.8936000001,
-        "pctMarketCapBought": 0.32608856530672453,
+        "totalValueBought": 87790.65,
+        "pctMarketCapBought": 0.15843210226780546,
         "insiderCount": 2,
+        "purchaseCount": 3,
+        "priceChange30d": -41.92634560906516,
+        "priceContext": "major dip",
+        "hasCEO": true,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 10,
+        "priceContext": 25,
+        "seniority": 20,
+        "cluster": 12,
+        "recency": 8
+      }
+    },
+    {
+      "rank": 2,
+      "ticker": "BMNM",
+      "companyName": "Bimini Capital Management, Inc.",
+      "score": 73,
+      "reason": "$828.5K bought · CEO + CFO · rally → insiders buying strength",
+      "metrics": {
+        "totalValueBought": 828467.25,
+        "pctMarketCapBought": 3.8078427747819927,
+        "insiderCount": 4,
         "purchaseCount": 4,
-        "priceChange30d": 3.801652892561991,
+        "priceChange30d": 44.66666666666666,
+        "priceContext": "rally",
+        "hasCEO": true,
+        "hasCFO": true
+      },
+      "breakdown": {
+        "valueImpact": 25,
+        "priceContext": 0,
+        "seniority": 25,
+        "cluster": 15,
+        "recency": 8
+      }
+    },
+    {
+      "rank": 3,
+      "ticker": "UPXI",
+      "companyName": "Upexi, Inc.",
+      "score": 60,
+      "reason": "$90K bought · CEO · major dip → dip buyer detected",
+      "metrics": {
+        "totalValueBought": 90000,
+        "pctMarketCapBought": 0.08089415436729473,
+        "insiderCount": 1,
+        "purchaseCount": 1,
+        "priceChange30d": -32.384341637010685,
+        "priceContext": "major dip",
+        "hasCEO": true,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 5,
+        "priceContext": 25,
+        "seniority": 20,
+        "cluster": 0,
+        "recency": 10
+      }
+    },
+    {
+      "rank": 4,
+      "ticker": "EPSN",
+      "companyName": "Epsilon Energy Ltd.",
+      "score": 55,
+      "reason": "$131.1K bought · CEO · flat base → smart money entry",
+      "metrics": {
+        "totalValueBought": 131097,
+        "pctMarketCapBought": 0.12265020660109537,
+        "insiderCount": 1,
+        "purchaseCount": 2,
+        "priceChange30d": 2.9661016949152663,
         "priceContext": "flat base",
         "hasCEO": true,
         "hasCFO": false
@@ -22,22 +94,22 @@
         "valueImpact": 10,
         "priceContext": 12,
         "seniority": 20,
-        "cluster": 12,
-        "recency": 10
+        "cluster": 5,
+        "recency": 8
       }
     },
     {
-      "rank": 2,
-      "ticker": "SEI",
-      "companyName": "Solaris Energy Infrastructure, Inc.",
-      "score": 59,
-      "reason": "$349K bought · multiple insiders · flat base → quiet accumulation",
+      "rank": 5,
+      "ticker": "WHF",
+      "companyName": "WhiteHorse Finance, Inc.",
+      "score": 52,
+      "reason": "$116.6K bought · CEO · flat base → quiet accumulation",
       "metrics": {
-        "totalValueBought": 349239.81000000006,
-        "pctMarketCapBought": 0.01059635333868547,
-        "insiderCount": 2,
-        "purchaseCount": 3,
-        "priceChange30d": 0.4494382022471974,
+        "totalValueBought": 116600,
+        "pctMarketCapBought": 0.07085515727374707,
+        "insiderCount": 1,
+        "purchaseCount": 2,
+        "priceChange30d": -2.5000000000000084,
         "priceContext": "flat base",
         "hasCEO": true,
         "hasCFO": false
@@ -46,94 +118,46 @@
         "valueImpact": 5,
         "priceContext": 12,
         "seniority": 20,
-        "cluster": 12,
-        "recency": 10
-      }
-    },
-    {
-      "rank": 3,
-      "ticker": "OVID",
-      "companyName": "Ovid Therapeutics Inc.",
-      "score": 52,
-      "reason": "$116K bought · CEO · flat base → confidence buy",
-      "metrics": {
-        "totalValueBought": 115966.2,
-        "pctMarketCapBought": 0.11647025765165969,
-        "insiderCount": 1,
-        "purchaseCount": 2,
-        "priceChange30d": 1.5625000000000013,
-        "priceContext": "flat base",
-        "hasCEO": true,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 10,
-        "priceContext": 12,
-        "seniority": 20,
-        "cluster": 5,
-        "recency": 5
-      }
-    },
-    {
-      "rank": 4,
-      "ticker": "PROP",
-      "companyName": "Prairie Operating Co.",
-      "score": 48,
-      "reason": "$325K bought · 10% owner · flat base → loading before move",
-      "metrics": {
-        "totalValueBought": 325047.1845,
-        "pctMarketCapBought": 0.3726246016218166,
-        "insiderCount": 1,
-        "purchaseCount": 5,
-        "priceChange30d": -0.5813953488372098,
-        "priceContext": "flat base",
-        "hasCEO": false,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 10,
-        "priceContext": 12,
-        "seniority": 8,
-        "cluster": 8,
-        "recency": 10
-      }
-    },
-    {
-      "rank": 5,
-      "ticker": "MRUS",
-      "companyName": "Merus N.V.",
-      "score": 45,
-      "reason": "$26.3M bought · 10% owner · flat base → accumulation signal",
-      "metrics": {
-        "totalValueBought": 26340059,
-        "pctMarketCapBought": 0.3585623197907967,
-        "insiderCount": 1,
-        "purchaseCount": 2,
-        "priceChange30d": 0.8447521865889093,
-        "priceContext": "flat base",
-        "hasCEO": false,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 10,
-        "priceContext": 12,
-        "seniority": 8,
         "cluster": 5,
         "recency": 10
       }
     },
     {
       "rank": 6,
-      "ticker": "DLHC",
-      "companyName": "DLH Holdings Corp.",
-      "score": 45,
-      "reason": "$244K bought · 10% owner · flat base → dip buyer detected",
+      "ticker": "MCFT",
+      "companyName": "MasterCraft Boat Holdings, Inc.",
+      "score": 51,
+      "reason": "$2.6M bought · 10% owner · flat base → loading before move",
       "metrics": {
-        "totalValueBought": 243573,
-        "pctMarketCapBought": 0.30205285898370243,
+        "totalValueBought": 2649367.38,
+        "pctMarketCapBought": 0.8329557324605176,
         "insiderCount": 1,
-        "purchaseCount": 2,
-        "priceChange30d": -4.095563139931744,
+        "purchaseCount": 3,
+        "priceChange30d": 4.951560818083971,
+        "priceContext": "flat base",
+        "hasCEO": false,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 15,
+        "priceContext": 12,
+        "seniority": 8,
+        "cluster": 8,
+        "recency": 8
+      }
+    },
+    {
+      "rank": 7,
+      "ticker": "BNTC",
+      "companyName": "Benitec Biopharma Inc.",
+      "score": 51,
+      "reason": "$539K bought · 10% owner · flat base → accumulation signal",
+      "metrics": {
+        "totalValueBought": 538972.28,
+        "pctMarketCapBought": 0.1590595519016527,
+        "insiderCount": 1,
+        "purchaseCount": 6,
+        "priceChange30d": 1.3921113689095106,
         "priceContext": "flat base",
         "hasCEO": false,
         "hasCFO": false
@@ -141,23 +165,47 @@
       "breakdown": {
         "valueImpact": 10,
         "priceContext": 12,
-        "seniority": 8,
-        "cluster": 5,
-        "recency": 10
+        "seniority": 13,
+        "cluster": 8,
+        "recency": 8
       }
     },
     {
-      "rank": 7,
-      "ticker": "NRDE",
-      "companyName": "Nu Ride Inc.",
-      "score": 45,
-      "reason": "$58K bought · insider · dip → conviction buy",
+      "rank": 8,
+      "ticker": "ESOA",
+      "companyName": "Energy Services of America Corporation",
+      "score": 49,
+      "reason": "$75.6K bought · 10% owner · dip → confidence buy",
       "metrics": {
-        "totalValueBought": 58024.909999999996,
-        "pctMarketCapBought": 0.2690194745365776,
+        "totalValueBought": 75615,
+        "pctMarketCapBought": 0.055269346533518136,
         "insiderCount": 1,
-        "purchaseCount": 2,
-        "priceChange30d": -7.586206896551715,
+        "purchaseCount": 3,
+        "priceChange30d": -8.680947012401349,
+        "priceContext": "dip",
+        "hasCEO": false,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 5,
+        "priceContext": 15,
+        "seniority": 13,
+        "cluster": 8,
+        "recency": 8
+      }
+    },
+    {
+      "rank": 9,
+      "ticker": "WRB",
+      "companyName": "W. R. Berkley Corporation",
+      "score": 49,
+      "reason": "$42.5M bought · 10% owner · dip → loading the dip",
+      "metrics": {
+        "totalValueBought": 42548370.171,
+        "pctMarketCapBought": 0.15862174184462766,
+        "insiderCount": 1,
+        "purchaseCount": 4,
+        "priceChange30d": -8.886882497097897,
         "priceContext": "dip",
         "hasCEO": false,
         "hasCFO": false
@@ -165,23 +213,23 @@
       "breakdown": {
         "valueImpact": 10,
         "priceContext": 15,
-        "seniority": 5,
-        "cluster": 5,
-        "recency": 10
+        "seniority": 8,
+        "cluster": 8,
+        "recency": 8
       }
     },
     {
-      "rank": 8,
-      "ticker": "ABTC",
-      "companyName": "American Bitcoin Corp",
+      "rank": 10,
+      "ticker": "ALT",
+      "companyName": "Altimmune, Inc.",
       "score": 45,
-      "reason": "$291K bought · insider · major dip → loading the dip",
+      "reason": "$51.2K bought · insider · major dip → conviction buy",
       "metrics": {
-        "totalValueBought": 290500,
-        "pctMarketCapBought": 0.018803488387694734,
+        "totalValueBought": 51249.99999999999,
+        "pctMarketCapBought": 0.014700602748520492,
         "insiderCount": 1,
         "purchaseCount": 1,
-        "priceChange30d": -68.63905325443788,
+        "priceChange30d": -23.15175097276264,
         "priceContext": "major dip",
         "hasCEO": false,
         "hasCFO": false
@@ -193,60 +241,12 @@
         "cluster": 0,
         "recency": 10
       }
-    },
-    {
-      "rank": 9,
-      "ticker": "GLSI",
-      "companyName": "Greenwich LifeSciences, Inc.",
-      "score": 40,
-      "reason": "$52K bought · CEO · rally → insiders buying strength",
-      "metrics": {
-        "totalValueBought": 51742,
-        "pctMarketCapBought": 0.030674223608438547,
-        "insiderCount": 1,
-        "purchaseCount": 1,
-        "priceChange30d": 49.56949569495694,
-        "priceContext": "rally",
-        "hasCEO": true,
-        "hasCFO": true
-      },
-      "breakdown": {
-        "valueImpact": 5,
-        "priceContext": 0,
-        "seniority": 25,
-        "cluster": 0,
-        "recency": 10
-      }
-    },
-    {
-      "rank": 10,
-      "ticker": "IMNM",
-      "companyName": "Immunome, Inc.",
-      "score": 40,
-      "reason": "$1M bought · CEO · slight uptick → high-conviction momentum buy",
-      "metrics": {
-        "totalValueBought": 999986.5,
-        "pctMarketCapBought": 0.05321806713461139,
-        "insiderCount": 1,
-        "purchaseCount": 1,
-        "priceChange30d": 11.702127659574469,
-        "priceContext": "slight uptick",
-        "hasCEO": true,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 5,
-        "priceContext": 5,
-        "seniority": 20,
-        "cluster": 0,
-        "recency": 10
-      }
     }
   ],
   "stats": {
     "totalTransactions": 2000,
     "tickersWithPurchases": 48,
-    "analyzed": 28,
+    "analyzed": 26,
     "qualified": 10
   }
 }
