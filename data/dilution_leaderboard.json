@@ -1,159 +1,159 @@
 {
-  "generatedAt": "2025-12-22T20:20:17.954Z",
+  "generatedAt": "2025-12-29T16:16:08.368Z",
   "period": "7d",
-  "dateRange": "12/15–12/22",
-  "totalFilings": 40,
-  "enriched": 40,
+  "dateRange": "12/22–12/29",
+  "totalFilings": 20,
+  "enriched": 19,
   "qualified": 10,
   "leaderboard": [
     {
       "rank": 1,
-      "ticker": "PRPH",
-      "companyName": "ProPhase Labs, Inc.",
-      "score": 68,
-      "reason": "0.1mo runway · -49% off peak → cash almost gone",
+      "ticker": "QNTM",
+      "companyName": "Quantum Biopharma Ltd.",
+      "score": 70,
+      "reason": "0.6mo runway · debt 11.1x cash → heavy dilution pressure",
       "metrics": {
-        "runway": "0.1",
-        "pullback": "49.2",
-        "peakGain": "1.1",
-        "daysSinceFiling": 3,
-        "marketCap": 4363916,
-        "debtCashRatio": "35.6"
+        "runway": "0.6",
+        "pullback": "30.9",
+        "peakGain": "10.7",
+        "daysSinceFiling": 7,
+        "marketCap": 31451813,
+        "debtCashRatio": "11.1"
       }
     },
     {
       "rank": 2,
-      "ticker": "REKR",
-      "companyName": "Rekor Systems, Inc.",
-      "score": 68,
-      "reason": "1.5mo runway · debt 14.2x cash → likely raise into weakness",
+      "ticker": "IBRX",
+      "companyName": "ImmunityBio, Inc.",
+      "score": 65,
+      "reason": "ATM filed 0d ago · debt 999.0x cash → dilution overhang severe",
       "metrics": {
-        "runway": "1.5",
-        "pullback": "10.0",
-        "peakGain": "0.6",
-        "daysSinceFiling": 7,
-        "marketCap": 200217200,
-        "debtCashRatio": "14.2"
+        "runway": "0.0",
+        "pullback": "17.7",
+        "peakGain": "23.2",
+        "daysSinceFiling": 0,
+        "marketCap": 2076181800,
+        "debtCashRatio": "999.0"
       }
     },
     {
       "rank": 3,
-      "ticker": "TE",
-      "companyName": "T1 Energy Inc.",
-      "score": 65,
-      "reason": "2.7mo runway · +36% spike → spike losing momentum",
+      "ticker": "RBOT",
+      "companyName": "Vicarious Surgical Inc.",
+      "score": 60,
+      "reason": "0.8mo runway · $12M cap → dilution overhang building",
       "metrics": {
-        "runway": "2.7",
-        "pullback": "0.5",
-        "peakGain": "35.5",
+        "runway": "0.8",
+        "pullback": "18.2",
+        "peakGain": "5.0",
         "daysSinceFiling": 7,
-        "marketCap": 1114840525,
-        "debtCashRatio": "36.6"
+        "marketCap": 12474073,
+        "debtCashRatio": "4.5"
       }
     },
     {
       "rank": 4,
-      "ticker": "HUMA",
-      "companyName": "Humacyte, Inc.",
-      "score": 61,
-      "reason": "2.2mo runway · debt 3.1x cash → rally unwinding",
+      "ticker": "VVPR",
+      "companyName": "VivoPower International PLC",
+      "score": 59,
+      "reason": "0.0mo runway · debt 2230.2x cash → cash almost gone",
       "metrics": {
-        "runway": "2.2",
-        "pullback": "7.1",
-        "peakGain": "0.0",
+        "runway": "0.0",
+        "pullback": "5.9",
+        "peakGain": "2.8",
         "daysSinceFiling": 6,
-        "marketCap": 156385908,
-        "debtCashRatio": "3.1"
+        "marketCap": 21406665,
+        "debtCashRatio": "2230.2"
       }
     },
     {
       "rank": 5,
-      "ticker": "PMT",
-      "companyName": "PennyMac Mortgage Investment Trust",
-      "score": 60,
-      "reason": "0.6mo runway · debt 23.7x cash → distressed setup",
+      "ticker": "EFC",
+      "companyName": "Ellington Financial Inc.",
+      "score": 57,
+      "reason": "2.9mo runway · debt 168.5x cash → likely raise into weakness",
       "metrics": {
-        "runway": "0.6",
-        "pullback": "0.1",
-        "peakGain": "1.5",
-        "daysSinceFiling": 3,
-        "marketCap": 1161671663,
-        "debtCashRatio": "23.7"
+        "runway": "2.9",
+        "pullback": "1.0",
+        "peakGain": "0.2",
+        "daysSinceFiling": 6,
+        "marketCap": 1320019755,
+        "debtCashRatio": "168.5"
       }
     },
     {
       "rank": 6,
-      "ticker": "PCN",
-      "companyName": "PIMCO CORPORATE & INCOME STRATEGY FUND",
-      "score": 57,
-      "reason": "0.9mo runway · debt 45.2x cash → heavy dilution pressure",
+      "ticker": "SCWO",
+      "companyName": "374Water Inc.",
+      "score": 55,
+      "reason": "0.8mo runway · $28M cap → cash position collapsing",
       "metrics": {
-        "runway": "0.9",
-        "pullback": "0.4",
-        "peakGain": "0.2",
-        "daysSinceFiling": 5,
-        "marketCap": 844201060,
-        "debtCashRatio": "45.2"
+        "runway": "0.8",
+        "pullback": "0.0",
+        "peakGain": "0.0",
+        "daysSinceFiling": 0,
+        "marketCap": 28034238,
+        "debtCashRatio": "2.5"
       }
     },
     {
       "rank": 7,
-      "ticker": "FBLG",
-      "companyName": "FibroBiologics, Inc.",
-      "score": 56,
-      "reason": "3.6mo runway · $11M cap → attention-driven risk",
+      "ticker": "CVKD",
+      "companyName": "Cadrenal Therapeutics, Inc.",
+      "score": 41,
+      "reason": "3.9mo runway · $15M cap → fading after spike",
       "metrics": {
-        "runway": "3.6",
-        "pullback": "20.0",
-        "peakGain": "13.5",
-        "daysSinceFiling": 7,
-        "marketCap": 10538545,
-        "debtCashRatio": "2.9"
+        "runway": "3.9",
+        "pullback": "5.0",
+        "peakGain": "2.6",
+        "daysSinceFiling": 6,
+        "marketCap": 15295049,
+        "debtCashRatio": "0.0"
       }
     },
     {
       "rank": 8,
-      "ticker": "MGRX",
-      "companyName": "MANGOCEUTICALS, INC.",
-      "score": 55,
-      "reason": "1.0mo runway · $9M cap → dilution overhang building",
+      "ticker": "SIDU",
+      "companyName": "Sidus Space Inc.",
+      "score": 40,
+      "reason": "7.8mo runway · $57M cap → setup despite runway",
       "metrics": {
-        "runway": "1.0",
-        "pullback": "27.6",
-        "peakGain": "2.9",
-        "daysSinceFiling": 3,
-        "marketCap": 9031988,
-        "debtCashRatio": "0.9"
+        "runway": "7.8",
+        "pullback": "0.0",
+        "peakGain": "0.0",
+        "daysSinceFiling": 0,
+        "marketCap": 56807963,
+        "debtCashRatio": "1.5"
       }
     },
     {
       "rank": 9,
-      "ticker": "KYTX",
-      "companyName": "Kyverna Therapeutics, Inc.",
-      "score": 54,
-      "reason": "2.6mo runway · +18% spike → reversal forming",
+      "ticker": "MBRX",
+      "companyName": "Moleculin Biotech, Inc.",
+      "score": 40,
+      "reason": "3.6mo runway · $5M cap → pressure to raise high",
       "metrics": {
-        "runway": "2.6",
-        "pullback": "3.3",
-        "peakGain": "18.5",
-        "daysSinceFiling": 4,
-        "marketCap": 357664404,
-        "debtCashRatio": "0.3"
+        "runway": "3.6",
+        "pullback": "10.3",
+        "peakGain": "6.5",
+        "daysSinceFiling": 6,
+        "marketCap": 4582565,
+        "debtCashRatio": "0.1"
       }
     },
     {
       "rank": 10,
-      "ticker": "NXTC",
-      "companyName": "NextCure, Inc.",
-      "score": 52,
-      "reason": "1.8mo runway · $31M cap → fading after spike",
+      "ticker": "AIRE",
+      "companyName": "reAlpha Tech Corp.",
+      "score": 40,
+      "reason": "10.0mo runway · $21M cap → attention-driven risk",
       "metrics": {
-        "runway": "1.8",
-        "pullback": "0.2",
-        "peakGain": "8.1",
-        "daysSinceFiling": 3,
-        "marketCap": 31218948,
-        "debtCashRatio": "1.2"
+        "runway": "10.0",
+        "pullback": "25.3",
+        "peakGain": "2.9",
+        "daysSinceFiling": 6,
+        "marketCap": 21263456,
+        "debtCashRatio": "0.1"
       }
     }
   ]

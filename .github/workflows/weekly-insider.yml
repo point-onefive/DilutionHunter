@@ -49,8 +49,28 @@ jobs:
           echo "DRY_RUN env: ${{ env.DRY_RUN }}"
           echo "Is schedule: ${{ github.event_name == 'schedule' }}"
       
+      - name: Check if already posted today
+        id: check_duplicate
+        if: github.event_name == 'schedule'
+        run: |
+          if [ -f data/insider_posted.json ]; then
+            LAST_POST=$(jq -r '.updatedAt[:10]' data/insider_posted.json 2>/dev/null || echo "")
+            TODAY=$(date -u +%Y-%m-%d)
+            echo "Last post date: $LAST_POST"
+            echo "Today: $TODAY"
+            if [ "$LAST_POST" = "$TODAY" ]; then
+              echo "⚠️ Already posted today, skipping to prevent duplicate"
+              echo "skip=true" >> $GITHUB_OUTPUT
+            else
+              echo "skip=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+      
       - name: Run Insider Selling Watch
         id: leaderboard
+        if: steps.check_duplicate.outputs.skip != 'true'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
