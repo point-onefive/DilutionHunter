@@ -1,187 +1,91 @@
 {
-  "generatedAt": "2026-01-02T14:39:40.629Z",
+  "generatedAt": "2026-01-09T14:41:37.714Z",
   "scanner": "insider-buying-radar",
   "leaderboard": [
     {
       "rank": 1,
-      "ticker": "DLPN",
-      "companyName": "Dolphin Entertainment, Inc.",
+      "ticker": "SRZN",
+      "companyName": "Surrozen, Inc.",
       "score": 65,
-      "reason": "$4.9M bought · CEO · flat base → conviction buy",
+      "reason": "$600K bought · cluster · pullback → smart money entry",
       "metrics": {
-        "totalValueBought": 4957200,
-        "pctMarketCapBought": 27.61761162591585,
-        "insiderCount": 1,
-        "purchaseCount": 1,
-        "priceChange30d": -3.105590062111804,
-        "priceContext": "flat base",
-        "hasCEO": true,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 25,
-        "priceContext": 12,
-        "seniority": 20,
-        "cluster": 0,
-        "recency": 8
-      }
-    },
-    {
-      "rank": 2,
-      "ticker": "STRR",
-      "companyName": "Star Equity Holdings, Inc.",
-      "score": 58,
-      "reason": "$190K bought · 3 insiders · rally → insiders buying strength",
-      "metrics": {
-        "totalValueBought": 190714.265,
-        "pctMarketCapBought": 0.480347475053583,
-        "insiderCount": 1,
-        "purchaseCount": 3,
-        "priceChange30d": 13.14851485148516,
-        "priceContext": "slight uptick",
-        "hasCEO": true,
+        "totalValueBought": 600593.44,
+        "pctMarketCapBought": 0.35370669644290026,
+        "insiderCount": 2,
+        "purchaseCount": 4,
+        "priceChange30d": -10.99547511312217,
+        "priceContext": "pullback",
+        "hasCEO": false,
         "hasCFO": false
       },
       "breakdown": {
         "valueImpact": 10,
-        "priceContext": 5,
-        "seniority": 25,
+        "priceContext": 20,
+        "seniority": 13,
+        "cluster": 12,
+        "recency": 10
+      }
+    },
+    {
+      "rank": 2,
+      "ticker": "STAA",
+      "companyName": "STAAR Surgical Company",
+      "score": 61,
+      "reason": "$8.8M bought · 10% owner · pullback → conviction buy",
+      "metrics": {
+        "totalValueBought": 8817663.7234,
+        "pctMarketCapBought": 0.7923083206766508,
+        "insiderCount": 1,
+        "purchaseCount": 4,
+        "priceChange30d": -11.382434029145335,
+        "priceContext": "pullback",
+        "hasCEO": false,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 15,
+        "priceContext": 20,
+        "seniority": 8,
         "cluster": 8,
         "recency": 10
       }
     },
     {
       "rank": 3,
-      "ticker": "SLGL",
-      "companyName": "Sol-Gel Technologies Ltd.",
-      "score": 56,
-      "reason": "$2.8M bought · multiple insiders · rally → high-conviction momentum buy",
+      "ticker": "GTE",
+      "companyName": "Gran Tierra Energy Inc.",
+      "score": 48,
+      "reason": "$724K bought · 10% owner · dip → confidence buy",
       "metrics": {
-        "totalValueBought": 2782904.2410000004,
-        "pctMarketCapBought": 2.3231748615048375,
+        "totalValueBought": 724346,
+        "pctMarketCapBought": 0.47347812058497685,
         "insiderCount": 1,
-        "purchaseCount": 3,
-        "priceChange30d": 12.961528530854643,
-        "priceContext": "slight uptick",
-        "hasCEO": false,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 25,
-        "priceContext": 5,
-        "seniority": 8,
-        "cluster": 8,
-        "recency": 10
-      }
-    },
-    {
-      "rank": 4,
-      "ticker": "FUND",
-      "companyName": "Sprott Focus Trust, Inc.",
-      "score": 56,
-      "reason": "$2.3M bought · cluster · flat base → smart money entry",
-      "metrics": {
-        "totalValueBought": 2324038.1999999997,
-        "pctMarketCapBought": 0.891848633256184,
-        "insiderCount": 1,
-        "purchaseCount": 7,
-        "priceChange30d": 2.6995305164319303,
-        "priceContext": "flat base",
-        "hasCEO": false,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 15,
-        "priceContext": 12,
-        "seniority": 13,
-        "cluster": 8,
-        "recency": 8
-      }
-    },
-    {
-      "rank": 5,
-      "ticker": "UA",
-      "companyName": "Under Armour, Inc.",
-      "score": 54,
-      "reason": "$70.9M bought · management · slight uptick → accumulation signal",
-      "metrics": {
-        "totalValueBought": 70963522.73020001,
-        "pctMarketCapBought": 3.327198771147573,
-        "insiderCount": 1,
-        "purchaseCount": 10,
-        "priceChange30d": 9.589041095890408,
-        "priceContext": "slight uptick",
-        "hasCEO": false,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 25,
-        "priceContext": 5,
-        "seniority": 8,
-        "cluster": 8,
-        "recency": 8
-      }
-    },
-    {
-      "rank": 6,
-      "ticker": "HYPD",
-      "companyName": "Hyperion DeFi, Inc.",
-      "score": 51,
-      "reason": "$113K bought · cluster · dip → dip buyer detected",
-      "metrics": {
-        "totalValueBought": 113091.17199999999,
-        "pctMarketCapBought": 0.5548536879872551,
-        "insiderCount": 1,
-        "purchaseCount": 4,
-        "priceChange30d": -8.43989769820972,
+        "purchaseCount": 2,
+        "priceChange30d": -7.5107296137339175,
         "priceContext": "dip",
         "hasCEO": false,
         "hasCFO": false
       },
       "breakdown": {
-        "valueImpact": 15,
+        "valueImpact": 10,
         "priceContext": 15,
-        "seniority": 5,
-        "cluster": 8,
-        "recency": 8
-      }
-    },
-    {
-      "rank": 7,
-      "ticker": "LGL",
-      "companyName": "The LGL Group, Inc.",
-      "score": 50,
-      "reason": "$453K bought · 10% owner · flat base → confidence buy",
-      "metrics": {
-        "totalValueBought": 453088.25,
-        "pctMarketCapBought": 1.4715860097422104,
-        "insiderCount": 1,
-        "purchaseCount": 1,
-        "priceChange30d": 0.5244755244755288,
-        "priceContext": "flat base",
-        "hasCEO": false,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 20,
-        "priceContext": 12,
         "seniority": 8,
-        "cluster": 0,
+        "cluster": 5,
         "recency": 10
       }
     },
     {
-      "rank": 8,
-      "ticker": "CLPR",
-      "companyName": "Clipper Realty Inc.",
-      "score": 46,
-      "reason": "$216K bought · multiple insiders · slight uptick → quiet accumulation",
+      "rank": 4,
+      "ticker": "PAR",
+      "companyName": "PAR Technology Corporation",
+      "score": 41,
+      "reason": "$7.1M bought · 10% owner · slight uptick → quiet accumulation",
       "metrics": {
-        "totalValueBought": 216031.12350000002,
-        "pctMarketCapBought": 0.3502461137766873,
+        "totalValueBought": 7103701.9944,
+        "pctMarketCapBought": 0.46855875032930344,
         "insiderCount": 1,
-        "purchaseCount": 5,
-        "priceChange30d": 5.234159779614324,
+        "purchaseCount": 4,
+        "priceChange30d": 5.092853123241425,
         "priceContext": "slight uptick",
         "hasCEO": false,
         "hasCFO": false
@@ -189,64 +93,16 @@
       "breakdown": {
         "valueImpact": 10,
         "priceContext": 5,
-        "seniority": 13,
-        "cluster": 8,
-        "recency": 10
-      }
-    },
-    {
-      "rank": 9,
-      "ticker": "AVO",
-      "companyName": "Mission Produce, Inc.",
-      "score": 46,
-      "reason": "$2.3M bought · 10% owner · flat base → loading before move",
-      "metrics": {
-        "totalValueBought": 2336868.21,
-        "pctMarketCapBought": 0.2874693257882399,
-        "insiderCount": 1,
-        "purchaseCount": 4,
-        "priceChange30d": -4.2113955408753085,
-        "priceContext": "flat base",
-        "hasCEO": false,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 10,
-        "priceContext": 12,
         "seniority": 8,
         "cluster": 8,
-        "recency": 8
-      }
-    },
-    {
-      "rank": 10,
-      "ticker": "NKE",
-      "companyName": "NIKE, Inc.",
-      "score": 45,
-      "reason": "$1M bought · CEO · flat base → conviction buy",
-      "metrics": {
-        "totalValueBought": 1001306.8,
-        "pctMarketCapBought": 0.0010679203567631156,
-        "insiderCount": 1,
-        "purchaseCount": 1,
-        "priceChange30d": -1.23209610349609,
-        "priceContext": "flat base",
-        "hasCEO": true,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 5,
-        "priceContext": 12,
-        "seniority": 20,
-        "cluster": 0,
-        "recency": 8
+        "recency": 10
       }
     }
   ],
   "stats": {
     "totalTransactions": 2000,
-    "tickersWithPurchases": 52,
-    "analyzed": 26,
-    "qualified": 10
+    "tickersWithPurchases": 25,
+    "analyzed": 9,
+    "qualified": 4
   }
 }
