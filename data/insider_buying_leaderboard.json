@@ -1,108 +1,132 @@
 {
-  "generatedAt": "2026-01-09T14:41:37.714Z",
+  "generatedAt": "2026-01-16T14:41:14.043Z",
   "scanner": "insider-buying-radar",
   "leaderboard": [
     {
       "rank": 1,
-      "ticker": "SRZN",
-      "companyName": "Surrozen, Inc.",
-      "score": 65,
-      "reason": "$600K bought · cluster · pullback → smart money entry",
+      "ticker": "SQNS",
+      "companyName": "Sequans Communications S.A.",
+      "score": 60,
+      "reason": "$404K bought · 10% owner · flat base → quiet accumulation",
       "metrics": {
-        "totalValueBought": 600593.44,
-        "pctMarketCapBought": 0.35370669644290026,
-        "insiderCount": 2,
-        "purchaseCount": 4,
-        "priceChange30d": -10.99547511312217,
-        "priceContext": "pullback",
-        "hasCEO": false,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 10,
-        "priceContext": 20,
-        "seniority": 13,
-        "cluster": 12,
-        "recency": 10
-      }
-    },
-    {
-      "rank": 2,
-      "ticker": "STAA",
-      "companyName": "STAAR Surgical Company",
-      "score": 61,
-      "reason": "$8.8M bought · 10% owner · pullback → conviction buy",
-      "metrics": {
-        "totalValueBought": 8817663.7234,
-        "pctMarketCapBought": 0.7923083206766508,
-        "insiderCount": 1,
-        "purchaseCount": 4,
-        "priceChange30d": -11.382434029145335,
-        "priceContext": "pullback",
-        "hasCEO": false,
-        "hasCFO": false
-      },
-      "breakdown": {
-        "valueImpact": 15,
-        "priceContext": 20,
-        "seniority": 8,
-        "cluster": 8,
-        "recency": 10
-      }
-    },
-    {
-      "rank": 3,
-      "ticker": "GTE",
-      "companyName": "Gran Tierra Energy Inc.",
-      "score": 48,
-      "reason": "$724K bought · 10% owner · dip → confidence buy",
-      "metrics": {
-        "totalValueBought": 724346,
-        "pctMarketCapBought": 0.47347812058497685,
+        "totalValueBought": 404362.8073,
+        "pctMarketCapBought": 2.874430275539199,
         "insiderCount": 1,
         "purchaseCount": 2,
-        "priceChange30d": -7.5107296137339175,
-        "priceContext": "dip",
+        "priceChange30d": 2.0036429872495343,
+        "priceContext": "flat base",
         "hasCEO": false,
         "hasCFO": false
       },
       "breakdown": {
-        "valueImpact": 10,
-        "priceContext": 15,
+        "valueImpact": 25,
+        "priceContext": 12,
         "seniority": 8,
         "cluster": 5,
         "recency": 10
       }
     },
     {
-      "rank": 4,
-      "ticker": "PAR",
-      "companyName": "PAR Technology Corporation",
-      "score": 41,
-      "reason": "$7.1M bought · 10% owner · slight uptick → quiet accumulation",
+      "rank": 2,
+      "ticker": "IMRX",
+      "companyName": "Immuneering Corporation",
+      "score": 52,
+      "reason": "$98K bought · cluster · pullback → smart money entry",
       "metrics": {
-        "totalValueBought": 7103701.9944,
-        "pctMarketCapBought": 0.46855875032930344,
-        "insiderCount": 1,
+        "totalValueBought": 97809.77799999999,
+        "pctMarketCapBought": 0.057694019600486084,
+        "insiderCount": 2,
+        "purchaseCount": 2,
+        "priceChange30d": -19.51219512195122,
+        "priceContext": "pullback",
+        "hasCEO": false,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 5,
+        "priceContext": 20,
+        "seniority": 5,
+        "cluster": 12,
+        "recency": 10
+      }
+    },
+    {
+      "rank": 3,
+      "ticker": "NEWT",
+      "companyName": "NewtekOne, Inc.",
+      "score": 50,
+      "reason": "$120K bought · CEO + 3 insiders · rally → rare bullish tell",
+      "metrics": {
+        "totalValueBought": 120404.96,
+        "pctMarketCapBought": 0.03301027330601738,
+        "insiderCount": 4,
         "purchaseCount": 4,
-        "priceChange30d": 5.092853123241425,
-        "priceContext": "slight uptick",
+        "priceChange30d": 21.836228287841198,
+        "priceContext": "rally",
+        "hasCEO": true,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 5,
+        "priceContext": 0,
+        "seniority": 20,
+        "cluster": 15,
+        "recency": 10
+      }
+    },
+    {
+      "rank": 4,
+      "ticker": "SPRU",
+      "companyName": "Spruce Power Holding Corporation",
+      "score": 48,
+      "reason": "$101K bought · 10% owner · flat base → accumulation signal",
+      "metrics": {
+        "totalValueBought": 100939.93479999999,
+        "pctMarketCapBought": 0.1071318026735356,
+        "insiderCount": 1,
+        "purchaseCount": 3,
+        "priceChange30d": 2.9469548133595356,
+        "priceContext": "flat base",
         "hasCEO": false,
         "hasCFO": false
       },
       "breakdown": {
         "valueImpact": 10,
-        "priceContext": 5,
+        "priceContext": 12,
         "seniority": 8,
         "cluster": 8,
         "recency": 10
+      }
+    },
+    {
+      "rank": 5,
+      "ticker": "TCI",
+      "companyName": "Transcontinental Realty Investors, Inc.",
+      "score": 46,
+      "reason": "$3.9M bought · 10% owner · dip → confidence buy",
+      "metrics": {
+        "totalValueBought": 3886276.5,
+        "pctMarketCapBought": 0.8493884690605324,
+        "insiderCount": 1,
+        "purchaseCount": 1,
+        "priceChange30d": -8.689655172413792,
+        "priceContext": "dip",
+        "hasCEO": false,
+        "hasCFO": false
+      },
+      "breakdown": {
+        "valueImpact": 15,
+        "priceContext": 15,
+        "seniority": 8,
+        "cluster": 0,
+        "recency": 8
       }
     }
   ],
   "stats": {
     "totalTransactions": 2000,
-    "tickersWithPurchases": 25,
-    "analyzed": 9,
-    "qualified": 4
+    "tickersWithPurchases": 35,
+    "analyzed": 16,
+    "qualified": 5
   }
 }
